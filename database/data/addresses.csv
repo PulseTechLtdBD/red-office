@@ -1,0 +1,2 @@
+type,name,street_address,apartment_address,area_id,zip_code,latitude,longitude,is_primary,contact_name,contact_phone,addressable_type,addressable_id
+type 1,name1,street_address1,apartment_address1,1111,1100,latitude1,longitude1,1,contact_name1,contact_phone1,'App\Models\User', 1
