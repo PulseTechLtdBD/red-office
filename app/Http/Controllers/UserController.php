@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\IndexUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Inertia\Inertia;
 
 class UserController extends CRUDController
 {
@@ -18,6 +19,7 @@ class UserController extends CRUDController
      */
     public function index(IndexUserRequest $request) : mixed
     {
+        return Inertia::render('Admin/Users/Index');
         try{
             $validated = $request->validated();
 
