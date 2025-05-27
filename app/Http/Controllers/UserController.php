@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Exception;
 use App\Models\Role;
+use App\Models\User;
 use App\Models\Department;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\IndexUserRequest;
@@ -19,20 +20,24 @@ class UserController extends CRUDController
      */
     public function index(IndexUserRequest $request) : mixed
     {
-        return Inertia::render('Admin/Users/Index');
+        
         try{
             $validated = $request->validated();
 
             $paginate = $validated['paginate'] ?? $this->paginate;
-            $orderBy  = $validated['order_by'] ?? $this->orderBy;
-            $order    = $validated['order'] ?? $this->order;
+            $orderBy  = $validated['order_by'] ?? 'id';
+            $order    = $validated['order'] ?? 'asc';
 
-            $data = User::orderBy($orderBy, $order)->paginate($paginate);
+            $data = User::orderBy($orderBy, $order)->get();
 
             if($data){
-                return $this->sendResponseIndexSuccess($data);
+                return Inertia::render('Admin/Users/Index', [
+                    'users' => $data
+                ]);
             } else{
-                return $this->sendResponseIndexFailed();
+                return Inertia::render('Admin/Users/Index', [
+                    'users' => []
+                ]);
             }
         } catch(Exception $e){
             return $this->sendExceptionError($e);
@@ -44,7 +49,7 @@ class UserController extends CRUDController
      */
     public function create()
     {
-        //
+       return Inertia::render('Admin/Users/CreateUpadte');
     }
 
     /**
@@ -79,9 +84,19 @@ class UserController extends CRUDController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+        info($user);
+        if($user) {
+            return Inertia::render('Admin/Users/CreateUpadte', [
+                'user' => $user
+            ]);
+        } else {
+            return Inertia::render('Admin/Users/CreateUpadte', [
+                'user' => []
+            ]);
+        }
     }
 
     /**
