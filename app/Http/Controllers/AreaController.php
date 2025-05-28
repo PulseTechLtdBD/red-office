@@ -9,6 +9,7 @@ use App\Http\Requests\StoreAreaRequest;
 use App\Http\Requests\UpdateAreaRequest;
 use App\Http\Requests\IndexAreaRequest;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class AreaController extends CRUDController
 {
@@ -24,19 +25,31 @@ class AreaController extends CRUDController
             $validated = $request->validated();
     
             $paginate = $validated['paginate'] ?? $this->paginate;
-            $orderBy  = $validated['order_by'] ?? $this->orderBy;
-            $order    = $validated['order'] ?? $this->order;
+            $orderBy  = $validated['order_by'] ?? 'id';
+            $order    = $validated['order'] ?? 'asc';
     
-            $data = Area::orderBy($orderBy, $order)->paginate($paginate);
+            $data = Area::orderBy($orderBy, $order)->get();
     
             if($data){
-                return $this->sendResponseIndexSuccess($data);
+                return Inertia::render('Admin/Areas/Index', [
+                    'areas' => $data
+                ]);
             } else{
-                return $this->sendResponseIndexFailed();
+                return Inertia::render('Admin/Users/Index', [
+                    'areas' => []
+                ]);
             }     
         } catch(Exception $e){
             return $this->sendExceptionError($e);
         }
+    }
+
+    public function create()
+    {
+       return Inertia::render('Admin/Areas/CreateUpdate', [
+        'pageTitle' => 'Area Create xxxx',
+        'user' => null,
+       ]);
     }
 
     /**
@@ -56,7 +69,7 @@ class AreaController extends CRUDController
     /**
      * Display the specified resource.
      */
-    public function show(int $id) : mixed
+    public function show(string $id) : mixed
     {
         try{
             $area = Area::find($id);
@@ -67,6 +80,20 @@ class AreaController extends CRUDController
             }
         } catch(Exception $e){
             return $this->sendExceptionError($e);
+        }
+    }
+
+    public function edit($id)
+    {
+        $area = Area::find($id);
+        if($area) {
+            return Inertia::render('Admin/Areas/CreateUpdate', [
+                'area' => $area
+            ]);
+        } else {
+            return Inertia::render('Admin/Users/CreateUpdate', [
+                'area' => []
+            ]);
         }
     }
 

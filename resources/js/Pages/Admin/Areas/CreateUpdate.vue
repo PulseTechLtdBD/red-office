@@ -9,18 +9,20 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 const props = defineProps({
     pageTitle: String,
-    user: Object
+    area: Object
 });
 
 const form  = useForm({
     _method: 'POST',
     name: props.user?.name,
-    email: props.user?.email,
-    password: '',
+    parentId: props.user?.parentId,
+    latitude: props.user?.latitude,
+    longitude: props.user?.longitude,
+    
 });
 
-const createNewUser = () => {
-    form.post(route('users.store')), {
+const createNewArea = () => {
+    form.post(route('areas.store')), {
         preserveScroll: true,
     }
 };
@@ -32,12 +34,12 @@ const createNewUser = () => {
     <AppLayout>
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <FormSection @submitted="createNewUser">
+                <FormSection @submitted="createNewArea">
                     <template #title>
-                        User Information
+                        Area Information
                     </template>
                     <template #description>
-                        This Section Creates New User
+                        This Section Creates New Area
                     </template>
                 
                     <template #form>
@@ -53,31 +55,45 @@ const createNewUser = () => {
                                 autocomplete="name"
                             />
                         </div>
-                        <!-- Email -->
+                        <!-- ParentID -->
                         <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="email" value="Email" />
-                        <TextInput
-                            id="email"
-                            v-model="form.email"
-                            type="email"
-                            class="mt-1 block w-full"
-                            required
-                            autocomplete="email"
-                        />
-                        <InputError :message="form.errors.email" class="mt-2" />
+                            <InputLabel for="parentArea" value="Parent Area" />
+                            <select name="" id=""></select>t
+                            <TextInput
+                                id="parentId"
+                                v-model="form.parentId"
+                                type="parentId"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="parentId"
+                            />
+                            <InputError :message="form.errors.parentId" class="mt-2" />
                         </div>
-                        <!-- Password -->
+                        <!-- Latitude -->
                         <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="password" value="Password" />
-                        <TextInput
-                            id="password"
-                            v-model="form.password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            required
-                            autocomplete="password"
-                        />
-                        <InputError :message="form.errors.email" class="mt-2" />
+                            <InputLabel for="latitude" value="Latitude" />
+                            <TextInput
+                                id="latitude"
+                                v-model="form.latitude"
+                                type="text"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="latitude"
+                            />
+                            <InputError :message="form.errors.latitude" class="mt-2" />
+                        </div>
+                        <!-- Longitude -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="longitude" value="Longitude" />
+                            <TextInput
+                                id="longitude"
+                                v-model="form.longitude"
+                                type="text"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="longitude"
+                            />
+                            <InputError :message="form.errors.longitude" class="mt-2" />
                         </div>
                     </template>
 

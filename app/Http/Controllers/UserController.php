@@ -49,19 +49,23 @@ class UserController extends CRUDController
      */
     public function create()
     {
-       return Inertia::render('Admin/Users/CreateUpadte');
+       return Inertia::render('Admin/Users/CreateUpdate', [
+        'pageTitle' => 'User Create xxxx',
+        'user' => null,
+       ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store($request)
     {
-        try{
-            return $this->storeOrUpdate($request, 0);
-        } catch(Exception $e){
-            return $this->sendExceptionError($e);
-        }
+        info($request->input('name'));
+        // try{
+        //     return $this->storeOrUpdate($request, 0);
+        // } catch(Exception $e){
+        //     return $this->sendExceptionError($e);
+        // }
     }
 
     /**
@@ -87,13 +91,12 @@ class UserController extends CRUDController
     public function edit($id)
     {
         $user = User::find($id);
-        info($user);
         if($user) {
-            return Inertia::render('Admin/Users/CreateUpadte', [
+            return Inertia::render('Admin/Users/CreateUpdate', [
                 'user' => $user
             ]);
         } else {
-            return Inertia::render('Admin/Users/CreateUpadte', [
+            return Inertia::render('Admin/Users/CreateUpdate', [
                 'user' => []
             ]);
         }

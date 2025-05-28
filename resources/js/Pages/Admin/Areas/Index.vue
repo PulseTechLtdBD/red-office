@@ -3,12 +3,12 @@ import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { useForm, router } from '@inertiajs/vue3';
 const props = defineProps({
-    users: Object
+    areas: Object
 });
 
 function onEdit(id) {
     const form = useForm({});
-    router.get(route('users.edit', id));
+    router.get(route('areas.edit', id));
 }
 
 function onDelete(id) {
@@ -18,10 +18,10 @@ function onDelete(id) {
 </script>
 
 <template>
-    <AppLayout title="User">
+    <AppLayout title="Areas">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Users
+                Areas
             </h2>
         </template>
         <div class="py-9">
@@ -32,17 +32,18 @@ function onDelete(id) {
                             <tr>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Created At</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ParentID</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Latitude</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Longitude</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr v-for="item in props.users">
                                 <td class="px-4 py-2">{{ item.id }}</td>
                                 <td class="px-4 py-2">{{ item.name }}</td>
-                                <td class="px-4 py-2">{{ item.email }}</td>
-                                <td class="px-4 py-2">{{ item.created_at }}</td>
+                                <td class="px-4 py-2">{{ item.parent_id }}</td>
+                                <td class="px-4 py-2">{{ item.latitude }}</td>
+                                <td class="px-4 py-2">{{ item.longitude }}</td>
                                 <td class="px-4 py-2 space-x-2">
                                     <button @click="onEdit(item.id)" class="text-blue-600 hover:underline">Edit</button>
                                     <button @click="onDelete(item.id)" class="text-red-600 hover:underline">Delete</button>
