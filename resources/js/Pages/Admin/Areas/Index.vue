@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { useForm, router } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 const props = defineProps({
     areas: Object
 });
@@ -15,14 +16,24 @@ function onDelete(id) {
     console.log(id);
 }
 
+function onCreate() {
+    const form = useForm({});
+    router.get(route('areas.create'));
+}
+
 </script>
 
 <template>
     <AppLayout title="Areas">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Areas
-            </h2>
+            <div class="flex items-center justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    Areas
+                </h2>
+                <PrimaryButton @click="onCreate()">
+                    Create 
+                </PrimaryButton>
+            </div>
         </template>
         <div class="py-9">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -35,6 +46,7 @@ function onDelete(id) {
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ParentID</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Latitude</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Longitude</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">

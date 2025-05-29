@@ -10,6 +10,7 @@ use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 use App\Http\Requests\IndexDepartmentRequest;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class DepartmentController extends CRUDController
 {
@@ -23,15 +24,21 @@ class DepartmentController extends CRUDController
             $validated = $request->validated();
 
             $paginate = $validated['paginate']??$this->paginate;
-            $orderBy  = $validated['order_by']??$this->orderBy;
-            $order    = $validated['order']??$this->order;
+            $orderBy  = $validated['order_by']?? 'id';
+            $order    = $validated['order']?? 'asc';
 
-            $data = Department::orderBy($orderBy, $order)->paginate($paginate);
+            $data = Department::orderBy($orderBy, $order)->get();
 
             if($data){
-                return $this->sendResponseIndexSuccess($data);
+                return Inertia::render('Admin/Departments/Index',[
+                    'departments' => $data,
+                ]);
+                // return $this->sendResponseIndexSuccess($data);
             } else{
-                return $this->sendResponseIndexFailed();
+                return Inertia::render('Admin/Departments/Index',[
+                    'departments' => []
+                ]);
+                // return $this->sendResponseIndexFailed();
             }
         } catch(Exception $e){
             return $this->sendExceptionError($e);

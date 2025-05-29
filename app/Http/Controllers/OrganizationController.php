@@ -9,6 +9,7 @@ use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use App\Http\Requests\IndexOrganizationRequest;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class OrganizationController extends CRUDController
 {
@@ -22,21 +23,32 @@ class OrganizationController extends CRUDController
             $validated = $request->validated();
 
             $paginate = $validated['paginate'] ?? $this->paginate;
-            $orderBy  = $validated['order_by'] ?? $this->orderBy;
-            $order    = $validated['order'] ?? $this->order;
+            $orderBy  = $validated['order_by'] ?? 'id';
+            $order    = $validated['order'] ?? 'asc';
 
-            $data = Organization::orderBy($orderBy, $order)->paginate($paginate);
+            $data = Organization::orderBy($orderBy, $order)->get();
 
             if($data){
-                return $this->sendResponseIndexSuccess($data);
+                return Inertia::render('Admin/Organizations/Index', [
+                    'organizations' => $data
+                ]);
             } else{
-                return $this->sendResponseIndexFailed();
+                return Inertia::render('Admin/Organizations/Index', [
+                    'areas' => []
+                ]);
             }
         } catch(Exception $e){
             return $this->sendExceptionError($e);
         }
     }
 
+    public function create()
+    {
+       return Inertia::render('Admin/Organizations/CreateUpdate', [
+        'pageTitle' => 'Organizations Create',
+        'user' => null,
+       ]);
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -46,6 +58,20 @@ class OrganizationController extends CRUDController
             return $this->storeOrUpdate($request, 0);
         } catch(Exception $e){
             return $this->sendExceptionError($e);
+        }
+    }
+
+    public function edit($id) : mixed
+    {
+        $org = Organization::find($id);
+        if($org){
+            return Inertia::render('Admin/Organizations/CreateUpdate', [
+                'organization' => $org
+            ]);
+        } else {
+            return Inertia::render('Admin/Organizations/CreateUpdate', [
+                'organization' => []
+            ]);
         }
     }
 

@@ -47,7 +47,7 @@ class AreaController extends CRUDController
     public function create()
     {
        return Inertia::render('Admin/Areas/CreateUpdate', [
-        'pageTitle' => 'Area Create xxxx',
+        'pageTitle' => 'Area Create',
         'user' => null,
        ]);
     }
@@ -83,7 +83,7 @@ class AreaController extends CRUDController
         }
     }
 
-    public function edit($id)
+    public function edit($id) : mixed
     {
         $area = Area::find($id);
         if($area) {

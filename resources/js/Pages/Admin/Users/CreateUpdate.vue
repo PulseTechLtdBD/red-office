@@ -29,7 +29,12 @@ const createNewUser = () => {
 </script>
 
 <template>
-    <AppLayout>
+    <AppLayout title="Users">
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                Users
+            </h2>
+        </template>
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <FormSection @submitted="createNewUser">
@@ -55,29 +60,29 @@ const createNewUser = () => {
                         </div>
                         <!-- Email -->
                         <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="email" value="Email" />
-                        <TextInput
-                            id="email"
-                            v-model="form.email"
-                            type="email"
-                            class="mt-1 block w-full"
-                            required
-                            autocomplete="email"
-                        />
-                        <InputError :message="form.errors.email" class="mt-2" />
+                            <InputLabel for="email" value="Email" />
+                            <TextInput
+                                id="email"
+                                v-model="form.email"
+                                type="email"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="email"
+                            />
+                            <InputError :message="form.errors.email" class="mt-2" />
                         </div>
                         <!-- Password -->
                         <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="password" value="Password" />
-                        <TextInput
-                            id="password"
-                            v-model="form.password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            required
-                            autocomplete="password"
-                        />
-                        <InputError :message="form.errors.email" class="mt-2" />
+                            <InputLabel for="password" value="Password" />
+                            <TextInput
+                                id="password"
+                                v-model="form.password"
+                                type="password"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="password"
+                            />
+                            <InputError :message="form.errors.email" class="mt-2" />
                         </div>
                     </template>
 

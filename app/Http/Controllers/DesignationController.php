@@ -10,6 +10,7 @@ use App\Http\Requests\StoreDesignationRequest;
 use App\Http\Requests\UpdateDesignationRequest;
 use App\Http\Requests\IndexDesignationRequest;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 
 class DesignationController extends CRUDController
@@ -24,15 +25,21 @@ class DesignationController extends CRUDController
             $validated = $request->validated();
 
             $paginate = $validated['paginate']??$this->paginate;
-            $orderBy  = $validated['order_by']??$this->orderBy;
-            $order    = $validated['order']??$this->order;
+            $orderBy  = $validated['order_by']?? 'id';
+            $order    = $validated['order']?? 'asc';
 
-            $data = Designation::orderBy($orderBy, $order)->paginate($paginate);
+            $data = Designation::orderBy($orderBy, $order)->get();
 
             if($data){
-                return $this->sendResponseIndexSuccess($data);
+                return Inertia::render('Admin/Designations/Index',[
+                    'designations' => $data,
+                ]);
+                // return $this->sendResponseIndexSuccess($data);
             } else{
-                return $this->sendResponseIndexFailed();
+                return Inertia::render('Admin/Designations/Index',[
+                    'designations' => []
+                ]);
+                // return $this->sendResponseIndexFailed();
             }
         } catch(Exception $e){
             return $this->sendExceptionError($e);
@@ -44,7 +51,10 @@ class DesignationController extends CRUDController
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Designations/CreateUpdate',[
+            'pageTitle' => 'Designation Create',
+            'user' => null,
+        ]);
     }
 
     /**
@@ -59,14 +69,15 @@ class DesignationController extends CRUDController
         }
     }
 
+    
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show($id)
     {
         try{
             $desig = Designation::find($id);
-
+            
             if($desig){
                 return $this->sendResponseShowSuccess($desig);
             } else{
@@ -76,14 +87,24 @@ class DesignationController extends CRUDController
             return $this->sendExceptionError($e);
         }
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Designation $designation)
+    public function edit($id) : mixed
     {
-        //
+        $desig = Designation::find($id);
+        if($desig) {
+            return Inertia::render('Admin/Areas/CreateUpdate', [
+                'area' => $desig
+            ]);
+        } else {
+            return Inertia::render('Admin/Users/CreateUpdate', [
+                'area' => []
+            ]);
+        }
     }
+    
 
     /**
      * Update the specified resource in storage.
