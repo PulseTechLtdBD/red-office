@@ -37,10 +37,10 @@ Route::resource('areas', AreaController::class);
 //Organization APIS
 Route::resource('organizations', OrganizationController::class);
 
-Route::resource('users/profiles', UserProfileController::class);
 
 //User APIS
 Route::resource('users', UserController::class);
+Route::resource('users/profiles', UserProfileController::class);
 
 //Department APIS
 Route::resource('departments', DepartmentController::class);

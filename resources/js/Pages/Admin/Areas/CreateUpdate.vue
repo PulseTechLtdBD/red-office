@@ -15,10 +15,10 @@ const props = defineProps({
 
 const form  = useForm({
     _method: 'POST',
-    name: props.user?.name,
-    parentId: props.user?.parentId,
-    latitude: props.user?.latitude,
-    longitude: props.user?.longitude,
+    name: props.area?.name,
+    parentId: props.area?.parentId,
+    latitude: props.area?.latitude,
+    longitude: props.area?.longitude,
     
 });
 

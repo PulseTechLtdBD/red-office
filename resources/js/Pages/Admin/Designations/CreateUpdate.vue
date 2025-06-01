@@ -15,11 +15,11 @@ const props = defineProps({
 
 const form  = useForm({
     _method: 'POST',
-    name: props.organization?.name,
-    description: props.organization?.description,
-    level: props.organization?.level,
-    contact_email: props.organization?.contact_email,
-    contact_phone: props.organization?.contact_phone,
+    name: props.designation?.name,
+    description: props.designation?.description,
+    level: props.designation?.level,
+    contact_email: props.designation?.contact_email,
+    contact_phone: props.designation?.contact_phone,
     
 });
 
@@ -41,7 +41,7 @@ const createNewDesignation = () => {
         </template>
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <FormSection @submitted="createNewOrg">
+                <FormSection @submitted="createNewDesignation">
                     <template #title>
                         Designation Information
                     </template>
@@ -73,7 +73,7 @@ const createNewDesignation = () => {
                                 required
                                 autocomplete="description"
                             />
-                            <InputError :message="form.errors.parentId" class="mt-2" />
+                            <InputError :message="form.errors.description" class="mt-2" />
                         </div>
                         <!-- Level -->
                         <div class="col-span-6 sm:col-span-4">
@@ -86,7 +86,7 @@ const createNewDesignation = () => {
                                 required
                                 autocomplete="level"
                             />
-                            <InputError :message="form.errors.latitude" class="mt-2" />
+                            <InputError :message="form.errors.level" class="mt-2" />
                         </div>
                         <!-- Contact Email -->
                         <div class="col-span-6 sm:col-span-4">
@@ -99,7 +99,7 @@ const createNewDesignation = () => {
                                 required
                                 autocomplete="contactEmail"
                             />
-                            <InputError :message="form.errors.longitude" class="mt-2" />
+                            <InputError :message="form.errors.contactEmail" class="mt-2" />
                         </div>
                         <!-- Contact Phone -->
                         <div class="col-span-6 sm:col-span-4">
@@ -112,7 +112,7 @@ const createNewDesignation = () => {
                                 required
                                 autocomplete="contactPhone"
                             />
-                            <InputError :message="form.errors.longitude" class="mt-2" />
+                            <InputError :message="form.errors.contactPhone" class="mt-2" />
                         </div>
                     </template>
 

@@ -9,6 +9,7 @@ use App\Http\Requests\IndexAddressRequest;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class AddressController extends CRUDController
 {
@@ -22,15 +23,21 @@ class AddressController extends CRUDController
             $validated = $request->validated();
 
             $paginate = $validated['paginate']??$this->paginate;
-            $orderBy  = $validated['order_by']??$this->orderBy;
-            $order    = $validated['order']??$this->order;
+            $orderBy  = $validated['order_by']?? 'id';
+            $order    = $validated['order']?? 'asc';
 
-            $data = Address::orderBy($orderBy, $order)->paginate($paginate);
+            $data = Address::orderBy($orderBy, $order)->get();
 
             if($data){
-                return $this->sendResponseIndexSuccess($data);
+                return Inertia::render('Admin/Addresses/Index', [
+                    'addresses' => $data,
+                ]);
+                // return $this->sendResponseIndexSuccess($data);
             } else{
-                return $this->sendResponseIndexFailed();
+                return Inertia::render('Admin/Addresses/Index', [
+                    'addresses' => [],
+                ]);
+                // return $this->sendResponseIndexFailed();
             }
         } catch(Exception $e){
             return $this->sendExceptionError($e);
@@ -42,7 +49,10 @@ class AddressController extends CRUDController
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Addresses/CreateUpdate', [
+            'pageTitle' => 'Address Create',
+            'address' => null,
+           ]);
     }
 
     /**
@@ -78,9 +88,18 @@ class AddressController extends CRUDController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Address $address)
+    public function edit(int $id) : mixed
     {
-        //
+        $address = Address::find($id);
+        if($address){
+            return Inertia::render('Admin/Addresses/CreateUpdate',[
+                'address' => $address,
+            ]);
+        } else {
+            return Inertia::render('Admin/Addresses/CreateUpdate',[
+                'address' => [],
+            ]);
+        }
     }
 
     /**

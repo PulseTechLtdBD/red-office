@@ -10,6 +10,7 @@ use App\Http\Requests\IndexUserProfileRequest;
 use App\Http\Requests\StoreUserProfileRequest;
 use App\Http\Requests\UpdateUserProfileRequest;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class UserProfileController extends CRUDController
 {
@@ -17,20 +18,26 @@ class UserProfileController extends CRUDController
     /**
      * Display a listing of the resource.
      */
-    public function index(IndexUserProfileRequest $request)
+    public function index(IndexUserProfileRequest $request) : mixed
     {
         try{
             $validated = $request->validated();
 
             $paginate = $validated['paginate']??$this->paginate;
-            $orderBy  = $validated['order_by']??$this->orderBy;
-            $order    = $validated['order']??$this->order;
+            $orderBy  = $validated['order_by']?? 'id';
+            $order    = $validated['order']?? 'asc';
 
-            $data = UserProfile::orderBy($orderBy, $order)->paginate($paginate);
+            $data = UserProfile::orderBy($orderBy, $order)->get();
             if($data){
-                return $this->sendResponseIndexSuccess($data);
+                return Inertia::render('Admin/UserProfiles/Index', [
+                    'user_profiles' => $data,
+                ]);
+                // return $this->sendResponseIndexSuccess($data);
             } else{
-                return $this->sendResponseIndexFailed();
+                return Inertia::render('Admin/UserProfiles/Index', [
+                    'user_profiles' => [],
+                ]);
+                // return $this->sendResponseIndexFailed();
             }
 
         } catch(Exception $e){
@@ -43,7 +50,10 @@ class UserProfileController extends CRUDController
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/UserProfiles/CreateUpdate', [
+            'pageTitle' => 'User Profile Create',
+            'user_profiles' => null,
+        ]);
     }
 
     /**
@@ -61,7 +71,7 @@ class UserProfileController extends CRUDController
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(int $id) : mixed
     {
         try{
             $userProfile = UserProfile::find($id);
@@ -78,9 +88,18 @@ class UserProfileController extends CRUDController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UserProfile $userProfile)
+    public function edit($id) : mixed
     {
-        //
+        $userProfiles = UserProfile::find($id);
+        if($userProfiles){
+            return Inertia::render('Admin/UserProfiles/CreateUpdate', [
+                'user_profiles' => $userProfiles,
+            ]);
+        } else {
+            return Inertia::render('Admin/UserProfiles/CreateUpdate', [
+                'user_profiles' => [],
+            ]);
+        }
     }
 
     /**

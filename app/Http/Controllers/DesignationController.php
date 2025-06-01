@@ -95,11 +95,11 @@ class DesignationController extends CRUDController
     {
         $desig = Designation::find($id);
         if($desig) {
-            return Inertia::render('Admin/Areas/CreateUpdate', [
+            return Inertia::render('Admin/Designations/CreateUpdate', [
                 'area' => $desig
             ]);
         } else {
-            return Inertia::render('Admin/Users/CreateUpdate', [
+            return Inertia::render('Admin/Designations/CreateUpdate', [
                 'area' => []
             ]);
         }

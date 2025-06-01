@@ -66,7 +66,7 @@ const createNewOrg = () => {
                         </div>
                         <!-- ParentID -->
                         <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="parentId" value="Parent Area" />
+                            <InputLabel for="parentId" value="Parent Organization" />
                             <TextInput
                                 id="parentId"
                                 v-model="form.parentId"
@@ -88,7 +88,7 @@ const createNewOrg = () => {
                                 required
                                 autocomplete="type"
                             />
-                            <InputError :message="form.errors.latitude" class="mt-2" />
+                            <InputError :message="form.errors.type" class="mt-2" />
                         </div>
                         <!-- Contact Email -->
                         <div class="col-span-6 sm:col-span-4">
@@ -101,7 +101,7 @@ const createNewOrg = () => {
                                 required
                                 autocomplete="contactEmail"
                             />
-                            <InputError :message="form.errors.longitude" class="mt-2" />
+                            <InputError :message="form.errors.contactEmail" class="mt-2" />
                         </div>
                         <!-- Contact Name -->
                         <div class="col-span-6 sm:col-span-4">
@@ -114,7 +114,7 @@ const createNewOrg = () => {
                                 required
                                 autocomplete="contactName"
                             />
-                            <InputError :message="form.errors.longitude" class="mt-2" />
+                            <InputError :message="form.errors.contactName" class="mt-2" />
                         </div>
                         <!-- Website URL -->
                         <div class="col-span-6 sm:col-span-4">
@@ -127,7 +127,7 @@ const createNewOrg = () => {
                                 required
                                 autocomplete="websiteUrl"
                             />
-                            <InputError :message="form.errors.longitude" class="mt-2" />
+                            <InputError :message="form.errors.websiteUrl" class="mt-2" />
                         </div>
                         <!-- Founded At -->
                         <div class="col-span-6 sm:col-span-4">
@@ -140,7 +140,7 @@ const createNewOrg = () => {
                                 required
                                 autocomplete="foundedAt"
                             />
-                            <InputError :message="form.errors.longitude" class="mt-2" />
+                            <InputError :message="form.errors.foundedAt" class="mt-2" />
                         </div>
                     </template>
 

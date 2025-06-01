@@ -50,7 +50,10 @@ class DepartmentController extends CRUDController
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Departments/CreateUpdate', [
+            'pageCreate' => 'Area Create',
+            'user' => null,
+        ]);
     }
 
     /**
@@ -85,9 +88,18 @@ class DepartmentController extends CRUDController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department)
+    public function edit($id)
     {
-        //
+        $department = Department::find($id);
+        if($department){
+            return Inertia::render('Admin/Departments/CreateUpdate', [
+                'department' => $department
+            ]);
+        } else {
+            return Inertia::render('Admin/Departments/CreateUpdate', [
+                'department' => [],
+            ]);
+        }
     }
 
     /**

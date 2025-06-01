@@ -44,7 +44,7 @@ class AreaController extends CRUDController
         }
     }
 
-    public function create()
+    public function create() : mixed
     {
        return Inertia::render('Admin/Areas/CreateUpdate', [
         'pageTitle' => 'Area Create',
@@ -91,7 +91,7 @@ class AreaController extends CRUDController
                 'area' => $area
             ]);
         } else {
-            return Inertia::render('Admin/Users/CreateUpdate', [
+            return Inertia::render('Admin/Areas/CreateUpdate', [
                 'area' => []
             ]);
         }
