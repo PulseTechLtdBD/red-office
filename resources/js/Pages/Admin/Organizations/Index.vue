@@ -37,7 +37,7 @@ function onCreate() {
         </template>
         <div class="py-9">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white dark:bg-gray-800 overflow-x-auto shadow-xl sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
                             <tr>
@@ -53,7 +53,7 @@ function onCreate() {
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="item in props.departments">
+                            <tr v-for="item in props.organizations">
                                 <td class="px-4 py-2">{{ item.id }}</td>
                                 <td class="px-4 py-2">{{ item.name }}</td>
                                 <td class="px-4 py-2">{{ item.parent_id }}</td>

@@ -10,15 +10,15 @@ import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
     pageTitle: String,
-    area: Object
+    areas: Object
 });
 
 const form  = useForm({
     _method: 'POST',
-    name: props.area?.name,
-    parentId: props.area?.parentId,
-    latitude: props.area?.latitude,
-    longitude: props.area?.longitude,
+    name: props.areas?.name,
+    parent_id: props.areas?.parent_id,
+    latitude: props.areas?.latitude,
+    longitude: props.areas?.longitude,
     
 });
 
@@ -60,19 +60,20 @@ const createNewArea = () => {
                                 required
                                 autocomplete="name"
                             />
+                            <InputError :message="form.errors.name" class="mt-2" />
                         </div>
-                        <!-- ParentID -->
+                        <!-- Parent Area -->
                         <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="parentId" value="Parent Area" />
+                            <InputLabel for="parentArea" value="Parent Area" />
                             <TextInput
-                                id="parentId"
-                                v-model="form.parentId"
+                                id="parentArea"
+                                v-model="form.parent_id"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
-                                autocomplete="parentId"
+                                autocomplete="parentArea"
                             />
-                            <InputError :message="form.errors.parentId" class="mt-2" />
+                            <InputError :message="form.errors.parent_id" class="mt-2" />
                         </div>
                         <!-- Latitude -->
                         <div class="col-span-6 sm:col-span-4">

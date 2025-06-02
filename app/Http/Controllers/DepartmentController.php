@@ -51,8 +51,8 @@ class DepartmentController extends CRUDController
     public function create()
     {
         return Inertia::render('Admin/Departments/CreateUpdate', [
-            'pageCreate' => 'Area Create',
-            'user' => null,
+            'pageCreate' => 'Department Create',
+            'departments' => null,
         ]);
     }
 
@@ -93,11 +93,11 @@ class DepartmentController extends CRUDController
         $department = Department::find($id);
         if($department){
             return Inertia::render('Admin/Departments/CreateUpdate', [
-                'department' => $department
+                'departments' => $department
             ]);
         } else {
             return Inertia::render('Admin/Departments/CreateUpdate', [
-                'department' => [],
+                'departments' => [],
             ]);
         }
     }

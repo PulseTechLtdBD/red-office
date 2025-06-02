@@ -74,7 +74,7 @@ function onCreate() {
                                 <td class="px-4 py-2">{{ item.contact_phone }}</td>
                                 <td class="px-4 py-2">{{ item.addressable_id }}</td>
                                 <td class="px-4 py-2">{{ item.addressable_type?.split('\\').pop() }}</td>
-                                <td class="px-4 py-2 space-x-2">
+                                <td class="px-4 py-2 space-x-2 flex items-center">
                                     <button @click="onEdit(item.id)" class="text-blue-600 hover:underline">Edit</button>
                                     <button @click="onDelete(item.id)" class="text-red-600 hover:underline">Delete</button>
                                 </td>

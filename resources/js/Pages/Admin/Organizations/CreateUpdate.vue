@@ -10,18 +10,18 @@ import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
     pageTitle: String,
-    organization: Object
+    organizations: Object
 });
 
 const form  = useForm({
     _method: 'POST',
-    name: props.organization?.name,
-    parentId: props.organization?.parentId,
-    type: props.organization?.type,
-    contact_email: props.organization?.contact_email,
-    contact_name: props.organization?.contact_name,
-    website_url: props.organization?.website_url,
-    founded_at: props.organization?.founded_at,
+    name: props.organizations?.name,
+    parent_id: props.organizations?.parent_id,
+    type: props.organizations?.type,
+    contact_email: props.organizations?.contact_email,
+    contact_name: props.organizations?.contact_name,
+    website_url: props.organizations?.website_url,
+    founded_at: props.organizations?.founded_at,
     
 });
 
@@ -63,19 +63,20 @@ const createNewOrg = () => {
                                 required
                                 autocomplete="name"
                             />
+                            <InputError :message="form.errors.name" class="mt-2" />
                         </div>
-                        <!-- ParentID -->
+                        <!-- Parent Organization -->
                         <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="parentId" value="Parent Organization" />
+                            <InputLabel for="parentOrganization" value="Parent Organization" />
                             <TextInput
-                                id="parentId"
-                                v-model="form.parentId"
+                                id="parentOrganization"
+                                v-model="form.parent_id"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
-                                autocomplete="parentId"
+                                autocomplete="parentOrganization"
                             />
-                            <InputError :message="form.errors.parentId" class="mt-2" />
+                            <InputError :message="form.errors.parent_id" class="mt-2" />
                         </div>
                         <!-- Type -->
                         <div class="col-span-6 sm:col-span-4">
@@ -95,52 +96,52 @@ const createNewOrg = () => {
                             <InputLabel for="contactEmail" value="Contact Email" />
                             <TextInput
                                 id="contactEmail"
-                                v-model="form.contactEmail"
+                                v-model="form.contact_email"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="contactEmail"
                             />
-                            <InputError :message="form.errors.contactEmail" class="mt-2" />
+                            <InputError :message="form.errors.contact_email" class="mt-2" />
                         </div>
                         <!-- Contact Name -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="contactName" value="Contact Name" />
                             <TextInput
                                 id="contactName"
-                                v-model="form.contactName"
+                                v-model="form.contact_name"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="contactName"
                             />
-                            <InputError :message="form.errors.contactName" class="mt-2" />
+                            <InputError :message="form.errors.contact_name" class="mt-2" />
                         </div>
                         <!-- Website URL -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="websiteUrl" value="Website URL" />
                             <TextInput
                                 id="websiteUrl"
-                                v-model="form.websiteUrl"
+                                v-model="form.website_url"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="websiteUrl"
                             />
-                            <InputError :message="form.errors.websiteUrl" class="mt-2" />
+                            <InputError :message="form.errors.website_url" class="mt-2" />
                         </div>
                         <!-- Founded At -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="foundedAt" value="Founded At" />
                             <TextInput
                                 id="foundedAt"
-                                v-model="form.foundedAt"
+                                v-model="form.founded_at"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="foundedAt"
                             />
-                            <InputError :message="form.errors.foundedAt" class="mt-2" />
+                            <InputError :message="form.errors.founded_at" class="mt-2" />
                         </div>
                     </template>
 

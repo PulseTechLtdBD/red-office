@@ -34,7 +34,7 @@ class OrganizationController extends CRUDController
                 ]);
             } else{
                 return Inertia::render('Admin/Organizations/Index', [
-                    'areas' => []
+                    'organizations' => []
                 ]);
             }
         } catch(Exception $e){
@@ -46,7 +46,7 @@ class OrganizationController extends CRUDController
     {
        return Inertia::render('Admin/Organizations/CreateUpdate', [
         'pageTitle' => 'Organizations Create',
-        'user' => null,
+        'organizations' => null,
        ]);
     }
     /**
@@ -66,11 +66,11 @@ class OrganizationController extends CRUDController
         $org = Organization::find($id);
         if($org){
             return Inertia::render('Admin/Organizations/CreateUpdate', [
-                'organization' => $org
+                'organizations' => $org
             ]);
         } else {
             return Inertia::render('Admin/Organizations/CreateUpdate', [
-                'organization' => []
+                'organizations' => []
             ]);
         }
     }

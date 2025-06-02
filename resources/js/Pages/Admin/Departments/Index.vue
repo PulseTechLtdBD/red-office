@@ -37,7 +37,7 @@ function onCreate() {
         </template>
         <div class="py-9">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white dark:bg-gray-800 overflow-x-auto shadow-xl sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
                             <tr>
@@ -45,23 +45,25 @@ function onCreate() {
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Code</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Head of Department</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Parent Department</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Budget</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Contact Email</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Contact Name</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Website Url</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Founded At</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Contact Phone</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="item in props.organizations">
+                            <tr v-for="item in props.departments">
                                 <td class="px-4 py-2">{{ item.id }}</td>
                                 <td class="px-4 py-2">{{ item.name }}</td>
-                                <td class="px-4 py-2">{{ item.parent_id }}</td>
-                                <td class="px-4 py-2">{{ item.type }}</td>
+                                <td class="px-4 py-2">{{ item.code }}</td>
+                                <td class="px-4 py-2">{{ item.description }}</td>
+                                <td class="px-4 py-2">{{ item.head_of_department_id }}</td>
+                                <td class="px-4 py-2">{{ item.parent_department_id }}</td>
+                                <td class="px-4 py-2">{{ item.budget }}</td>
                                 <td class="px-4 py-2">{{ item.contact_email }}</td>
-                                <td class="px-4 py-2">{{ item.contact_name }}</td>
-                                <td class="px-4 py-2">{{ item.website_url }}</td>
-                                <td class="px-4 py-2">{{ item.founded_at }}</td>
+                                <td class="px-4 py-2">{{ item.contact_phone }}</td>
                                 <td class="px-4 py-2 space-x-2">
                                     <button @click="onEdit(item.id)" class="text-blue-600 hover:underline">Edit</button>
                                     <button @click="onDelete(item.id)" class="text-red-600 hover:underline">Delete</button>

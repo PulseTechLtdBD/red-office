@@ -30,12 +30,12 @@ class UserProfileController extends CRUDController
             $data = UserProfile::orderBy($orderBy, $order)->get();
             if($data){
                 return Inertia::render('Admin/UserProfiles/Index', [
-                    'user_profiles' => $data,
+                    'userProfiles' => $data,
                 ]);
                 // return $this->sendResponseIndexSuccess($data);
             } else{
                 return Inertia::render('Admin/UserProfiles/Index', [
-                    'user_profiles' => [],
+                    'userProfiles' => [],
                 ]);
                 // return $this->sendResponseIndexFailed();
             }
@@ -52,7 +52,7 @@ class UserProfileController extends CRUDController
     {
         return Inertia::render('Admin/UserProfiles/CreateUpdate', [
             'pageTitle' => 'User Profile Create',
-            'user_profiles' => null,
+            'userProfiles' => null,
         ]);
     }
 
@@ -93,11 +93,11 @@ class UserProfileController extends CRUDController
         $userProfiles = UserProfile::find($id);
         if($userProfiles){
             return Inertia::render('Admin/UserProfiles/CreateUpdate', [
-                'user_profiles' => $userProfiles,
+                'userProfiles' => $userProfiles,
             ]);
         } else {
             return Inertia::render('Admin/UserProfiles/CreateUpdate', [
-                'user_profiles' => [],
+                'userProfiles' => [],
             ]);
         }
     }

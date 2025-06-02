@@ -29,7 +29,7 @@ const form  = useForm({
     addressable_type: props.address?.addressable_type,
 });
 
-const createNewUser = () => {
+const createNewAddress = () => {
     form.post(route('addresses.store')), {
         preserveScroll: true,
     }
@@ -47,7 +47,7 @@ const createNewUser = () => {
         </template>
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <FormSection @submitted="createNewUser">
+                <FormSection @submitted="createNewAddress">
                     <template #title>
                         Address Information
                     </template>
@@ -67,6 +67,7 @@ const createNewUser = () => {
                                 required
                                 autocomplete="type"
                             />
+                            <InputError :message="form.errors.type" class="mt-2" />
                         </div>
                         <!---Name-->
                         <div class="col-span-6 sm:col-span-4">
@@ -79,58 +80,59 @@ const createNewUser = () => {
                                 required
                                 autocomplete="name"
                             />
+                            <InputError :message="form.errors.name" class="mt-2" />
                         </div>
                         <!-- Street Address -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="streetAddress" value="Street Address" />
                             <TextInput
                                 id="streetAddress"
-                                v-model="form.streetAddress"
+                                v-model="form.street_address"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="streetAddress"
                             />
-                            <InputError :message="form.errors.streetAddress" class="mt-2" />
+                            <InputError :message="form.errors.street_address" class="mt-2" />
                         </div>
                         <!-- Apartment Address -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="apartmentAddress" value="Apartment Address" />
                             <TextInput
                                 id="apartmentAddress"
-                                v-model="form.apartmentAddress"
+                                v-model="form.apartment_address"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="apartmentAddress"
                             />
-                            <InputError :message="form.errors.apartmentAddress" class="mt-2" />
+                            <InputError :message="form.errors.apartment_address" class="mt-2" />
                         </div>
                         <!-- Area ID -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="areaID" value="Area ID" />
                             <TextInput
                                 id="areaID"
-                                v-model="form.areaID"
+                                v-model="form.area_id"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="areaID"
                             />
-                            <InputError :message="form.errors.areaID" class="mt-2" />
+                            <InputError :message="form.errors.area_id" class="mt-2" />
                         </div>
                         <!-- Zip Code -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="zipCode" value="Zip Code" />
                             <TextInput
                                 id="zipCode"
-                                v-model="form.zipCode"
+                                v-model="form.zip_code"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="zipCode"
                             />
-                            <InputError :message="form.errors.zipCode" class="mt-2" />
+                            <InputError :message="form.errors.zip_code" class="mt-2" />
                         </div>
                         <!-- Latitude -->
                         <div class="col-span-6 sm:col-span-4">
@@ -163,65 +165,65 @@ const createNewUser = () => {
                             <InputLabel for="isPrimary" value="Is Primary" />
                             <TextInput
                                 id="isPrimary"
-                                v-model="form.isPrimary"
+                                v-model="form.is_primary"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="isPrimary"
                             />
-                            <InputError :message="form.errors.isPrimary" class="mt-2" />
+                            <InputError :message="form.errors.is_primary" class="mt-2" />
                         </div>
                         <!-- Contact Name -->
                         <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="contactName" value="Is Primary" />
+                            <InputLabel for="contactName" value="Contact Name" />
                             <TextInput
-                                id="isPrimary"
-                                v-model="form.isPrimary"
+                                id="contactName"
+                                v-model="form.contact_name"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
-                                autocomplete="isPrimary"
+                                autocomplete="contactName"
                             />
-                            <InputError :message="form.errors.isPrimary" class="mt-2" />
+                            <InputError :message="form.errors.contact_name" class="mt-2" />
                         </div>
                         <!-- Contact Phone -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="contactPhone" value="Contact Phone" />
                             <TextInput
                                 id="contactPhone"
-                                v-model="form.contactPhone"
+                                v-model="form.contact_phone"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="contactPhone"
                             />
-                            <InputError :message="form.errors.contactPhone" class="mt-2" />
+                            <InputError :message="form.errors.contact_phone" class="mt-2" />
                         </div>
                         <!-- Addressable ID -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="addressableId" value="Addressable ID" />
                             <TextInput
                                 id="addressableId"
-                                v-model="form.addressableId"
+                                v-model="form.addressable_id"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="addressableId"
                             />
-                            <InputError :message="form.errors.addressableId" class="mt-2" />
+                            <InputError :message="form.errors.addressable_id" class="mt-2" />
                         </div>
                         <!-- Addressable Type -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="addressableType" value="Addressable Type" />
                             <TextInput
                                 id="addressableType"
-                                v-model="form.addressableType"
+                                v-model="form.addressable_type"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="addressableType"
                             />
-                            <InputError :message="form.errors.addressableType" class="mt-2" />
+                            <InputError :message="form.errors.addressable_type" class="mt-2" />
                         </div>
                     </template>
 

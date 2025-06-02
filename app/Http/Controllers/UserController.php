@@ -50,8 +50,8 @@ class UserController extends CRUDController
     public function create()
     {
        return Inertia::render('Admin/Users/CreateUpdate', [
-        'pageTitle' => 'User Create xxxx',
-        'user' => null,
+        'pageTitle' => 'User Create',
+        'users' => null,
        ]);
     }
 
@@ -93,11 +93,11 @@ class UserController extends CRUDController
         $user = User::find($id);
         if($user) {
             return Inertia::render('Admin/Users/CreateUpdate', [
-                'user' => $user
+                'users' => $user
             ]);
         } else {
             return Inertia::render('Admin/Users/CreateUpdate', [
-                'user' => []
+                'users' => []
             ]);
         }
     }

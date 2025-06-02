@@ -53,7 +53,7 @@ class DesignationController extends CRUDController
     {
         return Inertia::render('Admin/Designations/CreateUpdate',[
             'pageTitle' => 'Designation Create',
-            'user' => null,
+            'designations' => null,
         ]);
     }
 
@@ -96,11 +96,11 @@ class DesignationController extends CRUDController
         $desig = Designation::find($id);
         if($desig) {
             return Inertia::render('Admin/Designations/CreateUpdate', [
-                'area' => $desig
+                'designations' => $desig
             ]);
         } else {
             return Inertia::render('Admin/Designations/CreateUpdate', [
-                'area' => []
+                'designations' => []
             ]);
         }
     }

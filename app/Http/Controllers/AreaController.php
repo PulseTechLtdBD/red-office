@@ -35,7 +35,7 @@ class AreaController extends CRUDController
                     'areas' => $data
                 ]);
             } else{
-                return Inertia::render('Admin/Users/Index', [
+                return Inertia::render('Admin/Areas/Index', [
                     'areas' => []
                 ]);
             }     
@@ -48,7 +48,7 @@ class AreaController extends CRUDController
     {
        return Inertia::render('Admin/Areas/CreateUpdate', [
         'pageTitle' => 'Area Create',
-        'user' => null,
+        'areas' => null,
        ]);
     }
 
@@ -88,11 +88,11 @@ class AreaController extends CRUDController
         $area = Area::find($id);
         if($area) {
             return Inertia::render('Admin/Areas/CreateUpdate', [
-                'area' => $area
+                'areas' => $area
             ]);
         } else {
             return Inertia::render('Admin/Areas/CreateUpdate', [
-                'area' => []
+                'areas' => []
             ]);
         }
     }

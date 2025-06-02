@@ -43,14 +43,14 @@ function onCreate() {
                             <tr>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ParentID</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Parent Area</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Latitude</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Longitude</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="item in props.users">
+                            <tr v-for="item in props.areas">
                                 <td class="px-4 py-2">{{ item.id }}</td>
                                 <td class="px-4 py-2">{{ item.name }}</td>
                                 <td class="px-4 py-2">{{ item.parent_id }}</td>

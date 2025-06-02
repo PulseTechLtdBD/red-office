@@ -10,16 +10,16 @@ import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
     pageTitle: String,
-    designation: Object
+    designations: Object
 });
 
 const form  = useForm({
     _method: 'POST',
-    name: props.designation?.name,
-    description: props.designation?.description,
-    level: props.designation?.level,
-    contact_email: props.designation?.contact_email,
-    contact_phone: props.designation?.contact_phone,
+    name: props.designations?.name,
+    description: props.designations?.description,
+    level: props.designations?.level,
+    contact_email: props.designations?.contact_email,
+    contact_phone: props.designations?.contact_phone,
     
 });
 
@@ -61,6 +61,7 @@ const createNewDesignation = () => {
                                 required
                                 autocomplete="name"
                             />
+                            <InputError :message="form.errors.name" class="mt-2" />
                         </div>
                         <!-- Description -->
                         <div class="col-span-6 sm:col-span-4">
@@ -93,26 +94,26 @@ const createNewDesignation = () => {
                             <InputLabel for="contactEmail" value="Contact Email" />
                             <TextInput
                                 id="contactEmail"
-                                v-model="form.contactEmail"
+                                v-model="form.contact_email"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="contactEmail"
                             />
-                            <InputError :message="form.errors.contactEmail" class="mt-2" />
+                            <InputError :message="form.errors.contact_email" class="mt-2" />
                         </div>
                         <!-- Contact Phone -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="contactPhone" value="Contact Phone" />
                             <TextInput
                                 id="contactPhone"
-                                v-model="form.contactPhone"
+                                v-model="form.contact_phone"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="contactPhone"
                             />
-                            <InputError :message="form.errors.contactPhone" class="mt-2" />
+                            <InputError :message="form.errors.contact_phone" class="mt-2" />
                         </div>
                     </template>
 

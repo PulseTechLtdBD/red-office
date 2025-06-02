@@ -4,7 +4,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 import { useForm, router } from '@inertiajs/vue3';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 const props = defineProps({
-    user_profiles: Object
+    userProfiles: Object
 });
 
 function onEdit(id) {
@@ -71,7 +71,7 @@ function onCreate() {
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="item in props.user_profiles">
+                            <tr v-for="item in props.userProfiles">
                                 <td class="px-4 py-2">{{ item.id }}</td>
                                 <td class="px-4 py-2">{{ item.user_id }}</td>
                                 <td class="px-4 py-2">{{ item.first_name }}</td>

@@ -9,13 +9,13 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 const props = defineProps({
     pageTitle: String,
-    user: Object
+    users: Object
 });
 
 const form  = useForm({
     _method: 'POST',
-    name: props.user?.name,
-    email: props.user?.email,
+    name: props.users?.name,
+    email: props.users?.email,
     password: '',
 });
 

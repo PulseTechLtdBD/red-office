@@ -10,7 +10,7 @@ import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
     pageTitle: String,
-    department: Object
+    departments: Object
 });
 
 const form  = useForm({
@@ -26,7 +26,7 @@ const form  = useForm({
     
 });
 
-const createNewOrg = () => {
+const createNewDept = () => {
     form.post(route('organizations.store')), {
         preserveScroll: true,
     }
@@ -44,7 +44,7 @@ const createNewOrg = () => {
         </template>
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <FormSection @submitted="createNewOrg">
+                <FormSection @submitted="createNewDept">
                     <template #title>
                         Department Information
                     </template>
@@ -64,6 +64,7 @@ const createNewOrg = () => {
                                 required
                                 autocomplete="name"
                             />
+                            <InputError :message="form.errors.name" class="mt-2" />
                         </div>
                         <!-- Code -->
                         <div class="col-span-6 sm:col-span-4">
@@ -93,29 +94,29 @@ const createNewOrg = () => {
                         </div>
                         <!-- Head of Department -->
                         <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="headOfDepartmentId" value="Head Of Department" />
+                            <InputLabel for="headOfDepartment" value="Head Of Department" />
                             <TextInput
-                                id="headOfDepartmentId"
-                                v-model="form.headOfDepartmentId"
+                                id="headOfDepartment"
+                                v-model="form.head_of_department_id"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
-                                autocomplete="headOfDepartmentId"
+                                autocomplete="headOfDepartment"
                             />
-                            <InputError :message="form.errors.headOfDepartmentId" class="mt-2" />
+                            <InputError :message="form.errors.head_of_department_id" class="mt-2" />
                         </div>
                         <!-- Parent Department -->
                         <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="parentDepartmentId" value="Parent Department" />
+                            <InputLabel for="parentDepartment" value="Parent Department" />
                             <TextInput
-                                id="parentDepartmentId"
-                                v-model="form.parentDepartmentId"
+                                id="parentDepartment"
+                                v-model="form.parent_department_id"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
-                                autocomplete="parentDepartmentId"
+                                autocomplete="parentDepartment"
                             />
-                            <InputError :message="form.errors.parentDepartmentId" class="mt-2" />
+                            <InputError :message="form.errors.parent_department_id" class="mt-2" />
                         </div>
                         <!-- Budget -->
                         <div class="col-span-6 sm:col-span-4">
@@ -135,26 +136,26 @@ const createNewOrg = () => {
                             <InputLabel for="contactEmail" value="Contact Email" />
                             <TextInput
                                 id="contactEmail"
-                                v-model="form.contactEmail"
+                                v-model="form.contact_email"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="contactEmail"
                             />
-                            <InputError :message="form.errors.contactEmail" class="mt-2" />
+                            <InputError :message="form.errors.contact_email" class="mt-2" />
                         </div>
                         <!-- Contact Phone -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="contactPhone" value="Contact Phone" />
                             <TextInput
                                 id="contactPhone"
-                                v-model="form.contactPhone"
+                                v-model="form.contact_phone"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="contactPhone"
                             />
-                            <InputError :message="form.errors.contactPhone" class="mt-2" />
+                            <InputError :message="form.errors.contact_phone" class="mt-2" />
                         </div>
                     </template>
 
