@@ -55,15 +55,15 @@ function onCreate() {
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr v-for="item in props.departments">
-                                <td class="px-4 py-2">{{ item.id }}</td>
-                                <td class="px-4 py-2">{{ item.name }}</td>
-                                <td class="px-4 py-2">{{ item.code }}</td>
-                                <td class="px-4 py-2">{{ item.description }}</td>
-                                <td class="px-4 py-2">{{ item.head_of_department_id }}</td>
-                                <td class="px-4 py-2">{{ item.parent_department_id }}</td>
-                                <td class="px-4 py-2">{{ item.budget }}</td>
-                                <td class="px-4 py-2">{{ item.contact_email }}</td>
-                                <td class="px-4 py-2">{{ item.contact_phone }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.name }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.code }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.description }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.head_of_department_id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.parent_department_id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.budget }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.contact_email }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.contact_phone }}</td>
                                 <td class="px-4 py-2 space-x-2">
                                     <PrimaryButton @click="onEdit(item.id)" >Edit</PrimaryButton>
                                     <PrimaryButton @click="onDelete(item.id)" >Delete</PrimaryButton>

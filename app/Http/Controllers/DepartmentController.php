@@ -48,7 +48,7 @@ class DepartmentController extends CRUDController
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : mixed
     {
         return Inertia::render('Admin/Departments/CreateUpdate', [
             'pageCreate' => 'Department Create',
@@ -59,7 +59,7 @@ class DepartmentController extends CRUDController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDepartmentRequest $request)
+    public function store(StoreDepartmentRequest $request) : mixed
     {
         try{
             return $this->storeOrUpdate($request, 0);
@@ -88,7 +88,7 @@ class DepartmentController extends CRUDController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id) : mixed
     {
         $department = Department::find($id);
         if($department){

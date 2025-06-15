@@ -199,9 +199,9 @@ const createNewAddress = () => {
                             />
                             <InputError :message="form.errors.contact_phone" class="mt-2" />
                         </div>
-                        <!-- Addressable ID -->
+                        <!-- Address -->
                         <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="addressableId" value="Addressable ID" />
+                            <InputLabel for="addressableId" value="Address" />
                             <TextInput
                                 id="addressableId"
                                 v-model="form.addressable_id"
@@ -212,9 +212,9 @@ const createNewAddress = () => {
                             />
                             <InputError :message="form.errors.addressable_id" class="mt-2" />
                         </div>
-                        <!-- Addressable Type -->
+                        <!-- Address Type -->
                         <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="addressableType" value="Addressable Type" />
+                            <InputLabel for="addressableType" value="Address Type" />
                             <TextInput
                                 id="addressableType"
                                 v-model="form.addressable_type"

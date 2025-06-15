@@ -41,30 +41,32 @@ function onCreate() {
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
                             <tr>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Parent Organization </th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Contact Email</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Contact Name</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Website URL</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Founded At</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">ID</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Name</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Parent Organization </th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Type</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Contact Email</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Contact Name</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Website URL</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Founded At</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr v-for="item in props.organizations">
-                                <td class="px-4 py-2">{{ item.id }}</td>
-                                <td class="px-4 py-2">{{ item.name }}</td>
-                                <td class="px-4 py-2">{{ item.parent_id }}</td>
-                                <td class="px-4 py-2">{{ item.type }}</td>
-                                <td class="px-4 py-2">{{ item.contact_email }}</td>
-                                <td class="px-4 py-2">{{ item.contact_name }}</td>
-                                <td class="px-4 py-2">{{ item.website_url }}</td>
-                                <td class="px-4 py-2">{{ item.founded_at }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.name }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.parent_id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.type }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.contact_email }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.contact_name }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.website_url }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.founded_at }}</td>
                                 <td class="px-4 py-2 space-x-2">
-                                    <button @click="onEdit(item.id)" class="text-blue-600 hover:underline">Edit</button>
-                                    <button @click="onDelete(item.id)" class="text-red-600 hover:underline">Delete</button>
+                                    <div class="flex space-x-2 items-center justify-center">
+                                        <PrimaryButton @click="onEdit(item.id)">Edit</PrimaryButton>
+                                        <PrimaryButton @click="onDelete(item.id)">Delete</PrimaryButton>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

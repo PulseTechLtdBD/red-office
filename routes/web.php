@@ -40,7 +40,7 @@ Route::resource('organizations', OrganizationController::class);
 
 //User APIS
 Route::resource('users', UserController::class);
-Route::resource('users/profiles', UserProfileController::class);
+Route::resource('user-profiles', UserProfileController::class);
 
 //Department APIS
 Route::resource('departments', DepartmentController::class);

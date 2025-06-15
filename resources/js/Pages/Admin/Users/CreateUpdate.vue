@@ -12,10 +12,13 @@ const props = defineProps({
     users: Object
 });
 
+console.log(props.users);
+
+
 const form  = useForm({
     _method: 'POST',
-    name: props.users?.name,
-    email: props.users?.email,
+    name: props.users?.name ?? '',
+    email: props.users?.email ?? '',
     password: '',
 });
 
@@ -57,6 +60,7 @@ const createNewUser = () => {
                                 required
                                 autocomplete="name"
                             />
+                            <InputError :message="form.errors.email" class="mt-2" />
                         </div>
                         <!-- Email -->
                         <div class="col-span-6 sm:col-span-4">

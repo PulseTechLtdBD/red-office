@@ -15,19 +15,19 @@ const props = defineProps({
 
 const form  = useForm({
     _method: 'POST',
-    name: props.department?.name,
-    code: props.department?.code,
-    description: props.department?.description,
-    head_of_department_id: props.department?.head_of_department_id,
-    parent_department_id: props.department?.parent_department_id,
-    budget: props.department?.budget,
-    contact_email: props.department?.contact_email,
-    contact_phone: props.department?.contact_phone,
+    name: props.departments?.name,
+    code: props.departments?.code,
+    description: props.departments?.description,
+    head_of_department_id: props.departments?.head_of_department_id,
+    parent_department_id: props.departments?.parent_department_id,
+    budget: props.departments?.budget,
+    contact_email: props.departments?.contact_email,
+    contact_phone: props.departments?.contact_phone,
     
 });
 
 const createNewDept = () => {
-    form.post(route('organizations.store')), {
+    form.post(route('departments.store')), {
         preserveScroll: true,
     }
 };

@@ -42,7 +42,7 @@ const form  = useForm({
 });
 
 const createNewProfile = () => {
-    form.post(route('profiles.store')), {
+    form.post(route('user-profiles.store')), {
         preserveScroll: true,
     }
 };

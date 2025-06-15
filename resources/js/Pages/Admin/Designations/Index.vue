@@ -41,26 +41,28 @@ function onCreate() {
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
                             <tr>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Level</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Contact Email</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Contact Phone</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">ID</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Name</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Description</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Level</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Contact Email</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Contact Phone</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr v-for="item in props.designations">
-                                <td class="px-4 py-2">{{ item.id }}</td>
-                                <td class="px-4 py-2">{{ item.name }}</td>
-                                <td class="px-4 py-2">{{ item.description }}</td>
-                                <td class="px-4 py-2">{{ item.level }}</td>
-                                <td class="px-4 py-2">{{ item.contact_email }}</td>
-                                <td class="px-4 py-2">{{ item.contact_phone }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.name }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.description }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.level }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.contact_email }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.contact_phone }}</td>
                                 <td class="px-4 py-2 space-x-2">
-                                    <button @click="onEdit(item.id)" class="text-blue-600 hover:underline">Edit</button>
-                                    <button @click="onDelete(item.id)" class="text-red-600 hover:underline">Delete</button>
+                                    <div class="flex space-x-2 items-center justify-center">
+                                        <PrimaryButton @click="onEdit(item.id)">Edit</PrimaryButton>
+                                        <PrimaryButton @click="onDelete(item.id)">Delete</PrimaryButton>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
