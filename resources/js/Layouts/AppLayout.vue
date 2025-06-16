@@ -51,7 +51,30 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('users.index')" :active="route().current('users.index')">
+
+                                <!-- User Management Dropdown -->
+                                <Dropdown>
+                                    <template #trigger>
+                                      <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700">
+                                        User Management
+                                        <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                      </button>
+                                    </template>
+                                    <template #content>
+                                        <DropdownLink :href="route('users.index')">Users</DropdownLink>
+                                        <DropdownLink :href="route('user-profiles.index')">User Profiles</DropdownLink>
+                                        <DropdownLink :href="route('addresses.index')">Addresses</DropdownLink>
+                                        <DropdownLink :href="route('organizations.index')">Organizations</DropdownLink>
+                                        <DropdownLink :href="route('departments.index')">Departments</DropdownLink>
+                                        <DropdownLink :href="route('designations.index')">Designations</DropdownLink>
+                                        <DropdownLink :href="route('areas.index')">Areas</DropdownLink>
+                                    </template>
+                                </Dropdown>
+
+                            
+                                <!-- <NavLink :href="route('users.index')" :active="route().current('users.index')">
                                     Users
                                 </NavLink>
                                 <NavLink :href="route('areas.index')" :active="route().current('areas.index')">
@@ -71,7 +94,7 @@ const logout = () => {
                                 </NavLink>
                                 <NavLink :href="route('addresses.index')" :active="route().current('addresses.index')">
                                     Addresses
-                                </NavLink>
+                                </NavLink> -->
 
                             </div>
                         </div>

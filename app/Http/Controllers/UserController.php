@@ -58,20 +58,20 @@ class UserController extends CRUDController
     /**
      * Store a newly created resource in storage.
      */
-    public function store($request)
+    public function store($request) : mixed
     {
-        info($request->input('name'));
-        // try{
-        //     return $this->storeOrUpdate($request, 0);
-        // } catch(Exception $e){
-        //     return $this->sendExceptionError($e);
-        // }
+        // info($request->input('name'));
+        try{
+            return $this->storeOrUpdate($request, 0);
+        } catch(Exception $e){
+            return $this->sendExceptionError($e);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id) : mixed
     {
         try{
             $user = User::find($id);
@@ -105,7 +105,7 @@ class UserController extends CRUDController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, int $id)
+    public function update(UpdateUserRequest $request, int $id) : mixed
     {
         try{
             return $this->storeOrUpdate($request, $id);
@@ -117,7 +117,7 @@ class UserController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id) : mixed
     {
         try{
             $user = User::find($id);

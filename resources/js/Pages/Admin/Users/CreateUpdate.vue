@@ -12,9 +12,6 @@ const props = defineProps({
     users: Object
 });
 
-console.log(props.users);
-
-
 const form  = useForm({
     _method: 'POST',
     name: props.users?.name ?? '',
