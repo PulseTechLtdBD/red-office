@@ -46,6 +46,8 @@ const alignmentClasses = computed(() => {
 });
 </script>
 
+
+
 <template>
     <div class="relative inline-flex items-center">
         <div @click="open = ! open">
@@ -65,7 +67,7 @@ const alignmentClasses = computed(() => {
         >
             <div
                 v-show="open"
-                class="absolute z-50 mt-2 rounded-md shadow-lg"
+                class="absolute z-50 mt-2 top-9 rounded-md shadow-lg"
                 :class="[widthClass, alignmentClasses]"
                 style="display: none;"
                 @click="open = false"
