@@ -47,7 +47,7 @@ class UserController extends CRUDController
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : mixed
     {
        return Inertia::render('Admin/Users/CreateUpdate', [
         'pageTitle' => 'User Create',
@@ -58,9 +58,8 @@ class UserController extends CRUDController
     /**
      * Store a newly created resource in storage.
      */
-    public function store($request) : mixed
+    public function store(StoreUserRequest $request) : mixed
     {
-        // info($request->input('name'));
         try{
             return $this->storeOrUpdate($request, 0);
         } catch(Exception $e){
@@ -88,7 +87,7 @@ class UserController extends CRUDController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id) : mixed
     {
         $user = User::find($id);
         if($user) {

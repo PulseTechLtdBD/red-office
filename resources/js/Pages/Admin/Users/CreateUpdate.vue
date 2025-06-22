@@ -17,6 +17,7 @@ const form  = useForm({
     name: props.users?.name ?? '',
     email: props.users?.email ?? '',
     password: '',
+    password_confirmation: '',
 });
 
 const createNewUser = () => {
@@ -84,6 +85,19 @@ const createNewUser = () => {
                                 autocomplete="password"
                             />
                             <InputError :message="form.errors.password" class="mt-2" />
+                        </div>
+                        <!-- Password Confirmation -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="passwordConfirmation" value="Confirm Password" />
+                            <TextInput
+                                id="passwordConfirmation"
+                                v-model="form.password_confirmation"
+                                type="password"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="new-password"
+                            />
+                            <InputError :message="form.errors.password_confirmation" class="mt-2" />
                         </div>
                     </template>
 
