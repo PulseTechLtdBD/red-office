@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 const form  = useForm({
-    _method: 'POST',
+    _method: props.userProfiles? 'PUT' : 'POST',
     user_id: props.userProfiles?.user_id,
     first_name: props.userProfiles?.first_name,
     middle_name: props.userProfiles?.middle_name,
@@ -42,9 +42,17 @@ const form  = useForm({
 });
 
 const createNewProfile = () => {
-    form.post(route('user-profiles.store')), {
-        preserveScroll: true,
-    }
+    const id = props.userProfiles?.id ?? null;
+
+    if(id) {
+        form.post(route('user-profiles.update', [id])), {
+            preserveScroll: true,
+        }
+    } else {
+        form.post(route('user-profiles.store')), {
+            preserveScroll: true,
+        }
+    }    
 };
 
 

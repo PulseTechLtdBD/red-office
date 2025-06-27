@@ -14,7 +14,7 @@ const props = defineProps({
 });
 
 const form  = useForm({
-    _method: 'POST',
+    _method: props.organizations?.id ? 'PUT' : 'POST',
     name: props.organizations?.name,
     parent_id: props.organizations?.parent_id,
     type: props.organizations?.type,
@@ -26,8 +26,15 @@ const form  = useForm({
 });
 
 const createNewOrg = () => {
-    form.post(route('organizations.store')), {
-        preserveScroll: true,
+    const id = props.organizations?.id ??null;
+    if(id) {
+        form.post(route('organizations.update', [id])), {
+            preserveScroll: true,
+        }
+    } else {
+        form.post(route('organizations.store')), {
+            preserveScroll: true,
+        }
     }
 };
 
@@ -73,7 +80,6 @@ const createNewOrg = () => {
                                 v-model="form.parent_id"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="parentOrganization"
                             />
                             <InputError :message="form.errors.parent_id" class="mt-2" />

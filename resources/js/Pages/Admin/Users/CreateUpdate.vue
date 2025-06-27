@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 const form  = useForm({
-    _method: props.users ? 'PUT' : 'POST',
+    _method: props.users?.id ? 'PUT' : 'POST',
     name: props.users?.name ?? '',
     email: props.users?.email ?? '',
     password: '',

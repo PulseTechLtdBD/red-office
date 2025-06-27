@@ -14,7 +14,7 @@ const props = defineProps({
 });
 
 const form  = useForm({
-    _method: 'POST',
+    _method: props.areas?.id ? 'PUT' : 'POST',
     name: props.areas?.name,
     parent_id: props.areas?.parent_id,
     latitude: props.areas?.latitude,
@@ -23,8 +23,15 @@ const form  = useForm({
 });
 
 const createNewArea = () => {
-    form.post(route('areas.store')), {
-        preserveScroll: true,
+    const id = props.areas ?.id ?? null;
+    if(id) {
+        form.post(route('areas.update', [id])), {
+            preserveScroll: true,
+        }
+    } else {
+        form.post(route('areas.store')), {
+            preserveScroll: true,
+        }
     }
 };
 
@@ -70,7 +77,6 @@ const createNewArea = () => {
                                 v-model="form.parent_id"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="parentArea"
                             />
                             <InputError :message="form.errors.parent_id" class="mt-2" />

@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 const form  = useForm({
-    _method: 'POST',
+    _method: props.address? 'PUT' : 'POST',
     type: props.address?.type,
     name: props.address?.name,
     street_address: props.address?.street_address,
@@ -30,8 +30,15 @@ const form  = useForm({
 });
 
 const createNewAddress = () => {
-    form.post(route('addresses.store')), {
-        preserveScroll: true,
+    const id = props.address?.id ?? null;
+    if(id) {
+        form.post(route('addresses.update', [id])), {
+            preserveScroll: true,
+        }
+    } else {
+        form.post(route('addresses.store')), {
+            preserveScroll: true,
+        }
     }
 };
 
@@ -199,19 +206,6 @@ const createNewAddress = () => {
                             />
                             <InputError :message="form.errors.contact_phone" class="mt-2" />
                         </div>
-                        <!-- Address -->
-                        <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="addressableId" value="Address" />
-                            <TextInput
-                                id="addressableId"
-                                v-model="form.addressable_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="addressableId"
-                            />
-                            <InputError :message="form.errors.addressable_id" class="mt-2" />
-                        </div>
                         <!-- Address Type -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="addressableType" value="Address Type" />
@@ -224,6 +218,19 @@ const createNewAddress = () => {
                                 autocomplete="addressableType"
                             />
                             <InputError :message="form.errors.addressable_type" class="mt-2" />
+                        </div>
+                        <!-- Address -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="addressableId" value="Address" />
+                            <TextInput
+                                id="addressableId"
+                                v-model="form.addressable_id"
+                                type="text"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="addressableId"
+                            />
+                            <InputError :message="form.errors.addressable_id" class="mt-2" />
                         </div>
                     </template>
 

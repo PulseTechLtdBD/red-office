@@ -17,7 +17,7 @@ class Organization extends Model
         return $this->hasMany(Department::class);
     }
 
-    public function addresses(): MorphTo
+    public function addresses(): MorphMany
     {
         return $this->morphMany(Address::class, 'addressable');
     }

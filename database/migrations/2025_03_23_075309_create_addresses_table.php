@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->string('street_address');
             $table->string('apartment_address');
-            $table->integer('area_id');
+            $table->foreignId('area_id')->constrained('areas');
             $table->integer('zip_code');
             $table->string('latitude');
             $table->string('longitude');

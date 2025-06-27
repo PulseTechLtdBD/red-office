@@ -42,7 +42,7 @@ class OrganizationController extends CRUDController
         }
     }
 
-    public function create()
+    public function create() : mixed
     {
        return Inertia::render('Admin/Organizations/CreateUpdate', [
         'pageTitle' => 'Organizations Create',
@@ -52,7 +52,7 @@ class OrganizationController extends CRUDController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrganizationRequest $request)
+    public function store(StoreOrganizationRequest $request) : mixed
     {
         try{
             return $this->storeOrUpdate($request, 0);
@@ -78,7 +78,7 @@ class OrganizationController extends CRUDController
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(int $id) : mixed
     {
         try{
             $org = Organization::find($id);
@@ -95,7 +95,7 @@ class OrganizationController extends CRUDController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrganizationRequest $request, int $id)
+    public function update(UpdateOrganizationRequest $request, int $id) : mixed
     {
         try{
             return $this->storeOrUpdate($request, $id);
@@ -107,7 +107,7 @@ class OrganizationController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(int $id) : mixed
     {
         try{
             $org = Organization::find($id);

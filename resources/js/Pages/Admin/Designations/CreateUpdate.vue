@@ -14,7 +14,7 @@ const props = defineProps({
 });
 
 const form  = useForm({
-    _method: 'POST',
+    _method: props.designations?.id ? 'PUT' : 'POST',
     name: props.designations?.name,
     description: props.designations?.description,
     level: props.designations?.level,
@@ -24,8 +24,15 @@ const form  = useForm({
 });
 
 const createNewDesignation = () => {
-    form.post(route('designations.store')), {
-        preserveScroll: true,
+    const id = props.designations?.id ?? null;
+    if(id) {
+        form.put(route('designations.update', [id])), {
+            preserveScroll: true,
+        }
+    } else {
+        form.post(route('designations.store')), {
+            preserveScroll: true,
+        }
     }
 };
 
