@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 const form  = useForm({
-    _method: 'POST',
+    _method: props.users ? 'PUT' : 'POST',
     name: props.users?.name ?? '',
     email: props.users?.email ?? '',
     password: '',
@@ -21,8 +21,16 @@ const form  = useForm({
 });
 
 const createNewUser = () => {
-    form.post(route('users.store')), {
-        preserveScroll: true,
+    const id = props.users?.id ?? null;
+
+    if (id) {
+        form.put(route('users.update', [id])), {
+            preserveScroll: true,
+        }
+    } else {
+        form.post(route('users.store')), {
+            preserveScroll: true,
+        }
     }
 };
 
@@ -58,7 +66,7 @@ const createNewUser = () => {
                                 required
                                 autocomplete="name"
                             />
-                            <InputError :message="form.errors.email" class="mt-2" />
+                            <InputError :message="form.errors.name" class="mt-2" />
                         </div>
                         <!-- Email -->
                         <div class="col-span-6 sm:col-span-4">
