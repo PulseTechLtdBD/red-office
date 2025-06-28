@@ -65,8 +65,10 @@ function onCreate() {
                                 <td class="px-4 py-2 text-center">{{ item.contact_email }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.contact_phone }}</td>
                                 <td class="px-4 py-2 space-x-2">
-                                    <PrimaryButton @click="onEdit(item.id)" >Edit</PrimaryButton>
-                                    <PrimaryButton @click="onDelete(item.id)" >Delete</PrimaryButton>
+                                    <div class="flex space-x-2 items-center justify-center">
+                                        <PrimaryButton @click="onEdit(item.id)" >Edit</PrimaryButton>
+                                        <PrimaryButton @click="onDelete(item.id)" >Delete</PrimaryButton>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

@@ -67,13 +67,13 @@ const logout = () => {
                                                 </span>
                                             </template>
                                             <template #content>
+                                                <DropdownLink :href="route('areas.index')">Areas</DropdownLink>
+                                                <DropdownLink :href="route('organizations.index')">Organizations</DropdownLink>
                                                 <DropdownLink :href="route('users.index')">Users</DropdownLink>
+                                                <DropdownLink :href="route('designations.index')">Designations</DropdownLink>
+                                                <DropdownLink :href="route('departments.index')">Departments</DropdownLink>
                                                 <DropdownLink :href="route('user-profiles.index')">User Profiles</DropdownLink>
                                                 <DropdownLink :href="route('addresses.index')">Addresses</DropdownLink>
-                                                <DropdownLink :href="route('organizations.index')">Organizations</DropdownLink>
-                                                <DropdownLink :href="route('departments.index')">Departments</DropdownLink>
-                                                <DropdownLink :href="route('designations.index')">Designations</DropdownLink>
-                                                <DropdownLink :href="route('areas.index')">Areas</DropdownLink>
                                             </template>
                                         </Dropdown>
                                     </div>

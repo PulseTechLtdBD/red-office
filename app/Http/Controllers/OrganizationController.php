@@ -143,7 +143,7 @@ class OrganizationController extends CRUDController
 
             $org->name          = $validated['name'];
             $org->slug          = Str::slug($validated['name'], '-');
-            $org->parent_id     = $validated['parent_id'];
+            $org->parent_id     = $validated['parent_id'] ?? null;
             $org->type          = $validated['type'];
             $org->contact_email = $validated['contact_email'] ?? null;
             $org->contact_name  = $validated['contact_name'];

@@ -49,7 +49,7 @@ class DesignationController extends CRUDController
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : mixed
     {
         return Inertia::render('Admin/Designations/CreateUpdate',[
             'pageTitle' => 'Designation Create',
@@ -60,7 +60,7 @@ class DesignationController extends CRUDController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDesignationRequest $request)
+    public function store(StoreDesignationRequest $request) : mixed
     {
         try{
             return $this->storeOrUpdate($request);
@@ -73,7 +73,7 @@ class DesignationController extends CRUDController
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($id) : mixed
     {
         try{
             $desig = Designation::find($id);
@@ -109,7 +109,7 @@ class DesignationController extends CRUDController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDesignationRequest $request, int $id)
+    public function update(UpdateDesignationRequest $request, int $id) : mixed
     {
         try{
             return $this->storeOrUpdate($request, $id);
@@ -121,7 +121,7 @@ class DesignationController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(int $id) : mixed
     {
         try{
             $desig = Designation::find($id);

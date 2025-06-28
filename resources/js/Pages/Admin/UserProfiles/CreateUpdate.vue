@@ -84,7 +84,6 @@ const createNewProfile = () => {
                                 v-model="form.user_id"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="userId"
                             />
                             <InputError :message="form.errors.user_id" class="mt-2" />
@@ -175,7 +174,6 @@ const createNewProfile = () => {
                                 v-model="form.designation_id"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="designation"
                             />
                             <InputError :message="form.errors.designation_id" class="mt-2" />
@@ -188,7 +186,6 @@ const createNewProfile = () => {
                                 v-model="form.department_id"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="department"
                             />
                             <InputError :message="form.errors.department_id" class="mt-2" />

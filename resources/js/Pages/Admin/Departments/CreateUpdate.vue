@@ -14,7 +14,7 @@ const props = defineProps({
 });
 
 const form  = useForm({
-    _method: 'POST',
+    _method: props.departments?.id ? 'PUT' : 'POST',
     name: props.departments?.name,
     code: props.departments?.code,
     description: props.departments?.description,
@@ -27,8 +27,15 @@ const form  = useForm({
 });
 
 const createNewDept = () => {
-    form.post(route('departments.store')), {
-        preserveScroll: true,
+    const id = props.departments?.id ?? null;
+    if(id) {
+        form.post(route('departments.update', [id])), {
+            preserveScroll: true,
+        }
+    } else {
+        form.post(route('departments.store')), {
+            preserveScroll: true,
+        }
     }
 };
 
@@ -100,7 +107,6 @@ const createNewDept = () => {
                                 v-model="form.head_of_department_id"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="headOfDepartment"
                             />
                             <InputError :message="form.errors.head_of_department_id" class="mt-2" />
@@ -113,7 +119,6 @@ const createNewDept = () => {
                                 v-model="form.parent_department_id"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="parentDepartment"
                             />
                             <InputError :message="form.errors.parent_department_id" class="mt-2" />

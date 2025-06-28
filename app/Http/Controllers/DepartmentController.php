@@ -18,7 +18,7 @@ class DepartmentController extends CRUDController
     /**
      * Display a listing of the resource.
      */
-    public function index(IndexDepartmentRequest $request)
+    public function index(IndexDepartmentRequest $request) : mixed
     {
         try{
             $validated = $request->validated();
@@ -71,7 +71,7 @@ class DepartmentController extends CRUDController
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(int $id) : mixed
     {
         try{
             $dept = Department::find($id);
@@ -105,7 +105,7 @@ class DepartmentController extends CRUDController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDepartmentRequest $request, int $id)
+    public function update(UpdateDepartmentRequest $request, int $id) : mixed
     {
         try{
             return $this->storeOrUpdate($request, $id);
@@ -117,7 +117,7 @@ class DepartmentController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(int $id) :mixed
     {
         try{
             $dept = Department::find($id);
@@ -155,8 +155,8 @@ class DepartmentController extends CRUDController
             $dept->slug                  = Str::of($validated['name'])->slug('-');
             $dept->code                  = $validated['code'];
             $dept->description           = $validated['description'];
-            $dept->head_of_department_id = $validated['head_of_department_id'];
-            $dept->parent_department_id  = $validated['parent_department_id'];
+            $dept->head_of_department_id = $validated['head_of_department_id'] ?? null;
+            $dept->parent_department_id  = $validated['parent_department_id'] ?? null;
             $dept->budget                = $validated['budget'];
             $dept->contact_email         = $validated['contact_email'];
             $dept->contact_phone         = $validated['contact_phone'];

@@ -48,7 +48,7 @@ class UserProfileController extends CRUDController
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : mixed
     {
         return Inertia::render('Admin/UserProfiles/CreateUpdate', [
             'pageTitle' => 'User Profile Create',
@@ -59,7 +59,7 @@ class UserProfileController extends CRUDController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserProfileRequest $request)
+    public function store(StoreUserProfileRequest $request) : mixed
     {
         try{
             return $this->storeOrUpdate($request, 0);
@@ -105,7 +105,7 @@ class UserProfileController extends CRUDController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserProfileRequest $request, int $id)
+    public function update(UpdateUserProfileRequest $request, int $id) : mixed
     {
         try{
             $userProfile = UserProfile::find($id);
@@ -120,7 +120,7 @@ class UserProfileController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(int $id) : mixed
     {
         try{
             $userProfile = UserProfile::find($id);
