@@ -12,6 +12,11 @@ class Organization extends Model
     /** @use HasFactory<\Database\Factories\OrganizationFactory> */
     use HasFactory, SoftDeletes;
 
+    public function parent()
+    {
+        return $this->belongsTo(Organization::class, 'parent_id');
+    }
+
     public function department(): HasMany
     {
         return $this->hasMany(Department::class);

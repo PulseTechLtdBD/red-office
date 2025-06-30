@@ -53,7 +53,7 @@ function onCreate() {
                             <tr v-for="item in props.areas">
                                 <td class="px-4 py-2 text-center">{{ item.id }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.name }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.parent_id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.parent?.name ?? '-' }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.latitude }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.longitude }}</td>
                                 <td class="px-4 py-2 space-x-2">

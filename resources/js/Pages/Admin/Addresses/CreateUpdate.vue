@@ -32,7 +32,7 @@ const form  = useForm({
 const createNewAddress = () => {
     const id = props.address?.id ?? null;
     if(id) {
-        form.post(route('addresses.update', [id])), {
+        form.put(route('addresses.update', [id])), {
             preserveScroll: true,
         }
     } else {

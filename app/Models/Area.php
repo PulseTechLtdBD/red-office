@@ -12,6 +12,10 @@ class Area extends Model
     /** @use HasFactory<\Database\Factories\AreaFactory> */
     use HasFactory, SoftDeletes;
 
+    public function parent()
+    {
+        return $this->belongsTo(Area::class, 'parent_id');
+    }
     public function address(): HasMany
     {
         return $this->hasMany(Address::class);

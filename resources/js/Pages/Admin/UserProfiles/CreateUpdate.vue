@@ -45,7 +45,7 @@ const createNewProfile = () => {
     const id = props.userProfiles?.id ?? null;
 
     if(id) {
-        form.post(route('user-profiles.update', [id])), {
+        form.put(route('user-profiles.update', [id])), {
             preserveScroll: true,
         }
     } else {

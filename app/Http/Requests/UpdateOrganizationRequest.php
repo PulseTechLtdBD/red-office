@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateOrganizationRequest extends FormRequest
 {
@@ -22,7 +23,12 @@ class UpdateOrganizationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'           => 'required|string|max:255|unique:organizations,name',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('organizations', 'name')->ignore($this->route('organization')),
+            ],
             'parent_id'      => 'nullable|exists:organizations,id',
             'type'           => 'required|string|in:private,public',
             'contact_email'  => 'nullable|email|max:255',

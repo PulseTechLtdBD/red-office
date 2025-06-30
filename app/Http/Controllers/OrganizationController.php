@@ -26,7 +26,7 @@ class OrganizationController extends CRUDController
             $orderBy  = $validated['order_by'] ?? 'id';
             $order    = $validated['order'] ?? 'asc';
 
-            $data = Organization::orderBy($orderBy, $order)->get();
+            $data = Organization::with('parent')->orderBy($orderBy, $order)->get();
 
             if($data){
                 return Inertia::render('Admin/Organizations/Index', [
@@ -45,8 +45,8 @@ class OrganizationController extends CRUDController
     public function create() : mixed
     {
        return Inertia::render('Admin/Organizations/CreateUpdate', [
-        'pageTitle' => 'Organizations Create',
         'organizations' => null,
+        'allOrganizations' => Organization::select('id', 'name')->orderBy('name')->get(),
        ]);
     }
     /**
@@ -66,11 +66,13 @@ class OrganizationController extends CRUDController
         $org = Organization::find($id);
         if($org){
             return Inertia::render('Admin/Organizations/CreateUpdate', [
-                'organizations' => $org
+                'organizations' => $org,
+                'allOrganizations' => Organization::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
             ]);
         } else {
             return Inertia::render('Admin/Organizations/CreateUpdate', [
-                'organizations' => []
+                'organizations' => [],
+                'allOrganizations' => Organization::select('id', 'name')->orderBy('name')->get(),
             ]);
         }
     }

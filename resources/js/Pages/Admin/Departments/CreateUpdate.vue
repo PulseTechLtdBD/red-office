@@ -29,7 +29,7 @@ const form  = useForm({
 const createNewDept = () => {
     const id = props.departments?.id ?? null;
     if(id) {
-        form.post(route('departments.update', [id])), {
+        form.put(route('departments.update', [id])), {
             preserveScroll: true,
         }
     } else {

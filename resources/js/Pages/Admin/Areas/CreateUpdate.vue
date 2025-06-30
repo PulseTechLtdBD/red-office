@@ -9,23 +9,23 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
-    pageTitle: String,
-    areas: Object
+    areas: Object,
+    allAreas: Array
 });
 
 const form  = useForm({
     _method: props.areas?.id ? 'PUT' : 'POST',
-    name: props.areas?.name,
-    parent_id: props.areas?.parent_id,
-    latitude: props.areas?.latitude,
-    longitude: props.areas?.longitude,
+    name: props.areas?.name ?? '',
+    parent_id: props.areas?.parent_id ?? '',
+    latitude: props.areas?.latitude ?? '',
+    longitude: props.areas?.longitude ?? '',
     
 });
 
 const createNewArea = () => {
-    const id = props.areas ?.id ?? null;
+    const id = props.areas?.id ?? null;
     if(id) {
-        form.post(route('areas.update', [id])), {
+        form.put(route('areas.update', [id])), {
             preserveScroll: true,
         }
     } else {
@@ -72,13 +72,20 @@ const createNewArea = () => {
                         <!-- Parent Area -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="parentArea" value="Parent Area" />
-                            <TextInput
+                            <select 
                                 id="parentArea"
                                 v-model="form.parent_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                autocomplete="parentArea"
-                            />
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                                <option value="">-- Select Parent Area --</option>
+                                <option 
+                                v-for="areas in props.allAreas"
+                                :key="areas.id"
+                                :value="areas.id"
+                            >
+                                {{ areas.name }}
+                                </option>
+                            </select>
                             <InputError :message="form.errors.parent_id" class="mt-2" />
                         </div>
                         <!-- Latitude -->
@@ -111,11 +118,11 @@ const createNewArea = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            Created.
+                            {{ props.areas?.id ? 'Updated.' : 'Created.' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create
+                            {{ props.areas?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

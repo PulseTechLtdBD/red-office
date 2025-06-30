@@ -28,7 +28,7 @@ class AreaController extends CRUDController
             $orderBy  = $validated['order_by'] ?? 'id';
             $order    = $validated['order'] ?? 'asc';
     
-            $data = Area::orderBy($orderBy, $order)->get();
+            $data = Area::with('parent')->orderBy($orderBy, $order)->get();
     
             if($data){
                 return Inertia::render('Admin/Areas/Index', [
@@ -47,8 +47,8 @@ class AreaController extends CRUDController
     public function create() : mixed
     {
        return Inertia::render('Admin/Areas/CreateUpdate', [
-        'pageTitle' => 'Area Create',
-        'areas' => null,
+        'areas'     => null,
+        'allAreas'  => Area::select('id', 'name')->orderBy('name')->get(),
        ]);
     }
 
@@ -88,11 +88,13 @@ class AreaController extends CRUDController
         $area = Area::find($id);
         if($area) {
             return Inertia::render('Admin/Areas/CreateUpdate', [
-                'areas' => $area
+                'areas'    => $area,
+                'allAreas' => Area::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
             ]);
         } else {
             return Inertia::render('Admin/Areas/CreateUpdate', [
-                'areas' => []
+                'areas'    => [],
+                'allAreas' => Area::select('id', 'name')->orderBy('name')->get(),
             ]);
         }
     }

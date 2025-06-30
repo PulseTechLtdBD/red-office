@@ -9,26 +9,26 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
-    pageTitle: String,
-    organizations: Object
+    organizations: Object,
+    allOrganizations: Array
 });
 
 const form  = useForm({
     _method: props.organizations?.id ? 'PUT' : 'POST',
-    name: props.organizations?.name,
-    parent_id: props.organizations?.parent_id,
-    type: props.organizations?.type,
-    contact_email: props.organizations?.contact_email,
-    contact_name: props.organizations?.contact_name,
-    website_url: props.organizations?.website_url,
-    founded_at: props.organizations?.founded_at,
+    name: props.organizations?.name ?? '',
+    parent_id: props.organizations?.parent_id ?? '',
+    type: props.organizations?.type ?? '',
+    contact_email: props.organizations?.contact_email ?? '',
+    contact_name: props.organizations?.contact_name ?? '',
+    website_url: props.organizations?.website_url ?? '',
+    founded_at: props.organizations?.founded_at ?? '',
     
 });
 
 const createNewOrg = () => {
-    const id = props.organizations?.id ??null;
+    const id = props.organizations?.id ?? null;
     if(id) {
-        form.post(route('organizations.update', [id])), {
+        form.put(route('organizations.update', [id])), {
             preserveScroll: true,
         }
     } else {
@@ -75,13 +75,20 @@ const createNewOrg = () => {
                         <!-- Parent Organization -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="parentOrganization" value="Parent Organization" />
-                            <TextInput
+                            <select 
                                 id="parentOrganization"
                                 v-model="form.parent_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                autocomplete="parentOrganization"
-                            />
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                                <option value="">-- Select Parent Organization --</option>
+                                <option 
+                                v-for="organizations in props.allOrganizations"
+                                :key="organizations.id"
+                                :value="organizations.id"
+                            >
+                                {{ organizations.name }}
+                                </option>
+                            </select>
                             <InputError :message="form.errors.parent_id" class="mt-2" />
                         </div>
                         <!-- Type -->
@@ -153,11 +160,11 @@ const createNewOrg = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            Created.
+                            {{ props.organizations?.id ? 'Updated.' : 'Created.' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create
+                            {{ props.organizations?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>
