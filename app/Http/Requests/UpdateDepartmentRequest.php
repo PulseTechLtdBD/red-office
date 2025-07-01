@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateDepartmentRequest extends FormRequest
 {
@@ -22,8 +23,18 @@ class UpdateDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'                  => 'required|string|max:255|unique:departments,name',
-            'code'                  => 'nullable|string|max:255|unique:departments,code',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('departments', 'name')->ignore($this->route('department')),
+            ],
+            'code' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('departments', 'code')->ignore($this->route('department')),
+            ],
             'description'           => 'nullable|string|max:1000',
             'head_of_department_id' => 'nullable|exists:users,id',
             'parent_department_id'  => 'nullable|exists:departments,id',

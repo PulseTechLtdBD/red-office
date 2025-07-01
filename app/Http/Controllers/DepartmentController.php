@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Exception;
+use App\Models\User;
 use App\Models\Department;
 use App\Models\Organization;
 use App\Http\Requests\StoreDepartmentRequest;
@@ -27,8 +28,8 @@ class DepartmentController extends CRUDController
             $orderBy  = $validated['order_by']?? 'id';
             $order    = $validated['order']?? 'asc';
 
-            $data = Department::orderBy($orderBy, $order)->get();
-
+            $data = Department::with('parent', 'head')->orderBy($orderBy, $order)->get();
+            
             if($data){
                 return Inertia::render('Admin/Departments/Index',[
                     'departments' => $data,
@@ -51,7 +52,8 @@ class DepartmentController extends CRUDController
     public function create() : mixed
     {
         return Inertia::render('Admin/Departments/CreateUpdate', [
-            'pageCreate' => 'Department Create',
+            'users' => User::select('id', 'name')->orderBy('name')->get(),
+            'allDepartments' => Department::select('id', 'name')->orderBy('name')->get(),
             'departments' => null,
         ]);
     }
@@ -93,10 +95,14 @@ class DepartmentController extends CRUDController
         $department = Department::find($id);
         if($department){
             return Inertia::render('Admin/Departments/CreateUpdate', [
+                'users' => User::select('id', 'name')->orderBy('name')->get(),
+                'allDepartments' => Department::whereNotNull('parent_department_id')->select('id', 'name')->orderBy('name')->get(),
                 'departments' => $department
             ]);
         } else {
             return Inertia::render('Admin/Departments/CreateUpdate', [
+                'users' => User::select('id', 'name')->orderBy('name')->get(),
+                'allDepartments' => Department::select('id', 'name')->orderBy('name')->get(),
                 'departments' => [],
             ]);
         }

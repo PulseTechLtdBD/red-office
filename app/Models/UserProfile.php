@@ -12,7 +12,7 @@ class UserProfile extends Model
 {
     /** @use HasFactory<\Database\Factories\UserProfileFactory> */
     use HasFactory, SoftDeletes;
-
+    
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

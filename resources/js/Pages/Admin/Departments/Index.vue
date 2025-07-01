@@ -7,6 +7,7 @@ const props = defineProps({
     departments: Object
 });
 
+
 function onEdit(id) {
     const form = useForm({});
     router.get(route('departments.edit', id));
@@ -59,8 +60,8 @@ function onCreate() {
                                 <td class="px-4 py-2 text-center">{{ item.name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.code }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.description }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.head_of_department_id }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.parent_department_id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.head?.name ?? '-' }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.parent?.name ?? '-' }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.budget }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.contact_email }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.contact_phone }}</td>

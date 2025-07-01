@@ -111,11 +111,11 @@ const createNewUser = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            Created.
+                            {{ props.users?.id ? 'Updated.' : 'Created.' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create
+                            {{ props.users?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

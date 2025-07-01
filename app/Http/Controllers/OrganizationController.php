@@ -61,22 +61,7 @@ class OrganizationController extends CRUDController
         }
     }
 
-    public function edit($id) : mixed
-    {
-        $org = Organization::find($id);
-        if($org){
-            return Inertia::render('Admin/Organizations/CreateUpdate', [
-                'organizations' => $org,
-                'allOrganizations' => Organization::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
-            ]);
-        } else {
-            return Inertia::render('Admin/Organizations/CreateUpdate', [
-                'organizations' => [],
-                'allOrganizations' => Organization::select('id', 'name')->orderBy('name')->get(),
-            ]);
-        }
-    }
-
+    
     /**
      * Display the specified resource.
      */
@@ -93,7 +78,23 @@ class OrganizationController extends CRUDController
             return $this->sendExceptionError($e);
         }
     }
-
+    
+    public function edit($id) : mixed
+    {
+        $org = Organization::find($id);
+        if($org){
+            return Inertia::render('Admin/Organizations/CreateUpdate', [
+                'organizations' => $org,
+                'allOrganizations' => Organization::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
+            ]);
+        } else {
+            return Inertia::render('Admin/Organizations/CreateUpdate', [
+                'organizations' => [],
+                'allOrganizations' => Organization::select('id', 'name')->orderBy('name')->get(),
+            ]);
+        }
+    }
+    
     /**
      * Update the specified resource in storage.
      */
@@ -105,7 +106,8 @@ class OrganizationController extends CRUDController
             return $this->sendExceptionError($e);
         }
     }
-
+    
+    
     /**
      * Remove the specified resource from storage.
      */

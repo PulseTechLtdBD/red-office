@@ -126,11 +126,11 @@ const createNewDesignation = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            Created.
+                            {{ props.designations?.id ? 'Updated.' : 'Created' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create
+                            {{ props.designations?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

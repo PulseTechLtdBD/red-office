@@ -9,20 +9,21 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
-    pageTitle: String,
+    users : Array,
+    allDepartments : Array,
     departments: Object
 });
 
 const form  = useForm({
     _method: props.departments?.id ? 'PUT' : 'POST',
-    name: props.departments?.name,
-    code: props.departments?.code,
-    description: props.departments?.description,
-    head_of_department_id: props.departments?.head_of_department_id,
-    parent_department_id: props.departments?.parent_department_id,
-    budget: props.departments?.budget,
-    contact_email: props.departments?.contact_email,
-    contact_phone: props.departments?.contact_phone,
+    name: props.departments?.name ?? '',
+    code: props.departments?.code ?? '',
+    description: props.departments?.description ?? '',
+    head_of_department_id: props.departments?.head_of_department_id ?? '',
+    parent_department_id: props.departments?.parent_department_id ?? '',
+    budget: props.departments?.budget ?? '',
+    contact_email: props.departments?.contact_email ?? '',
+    contact_phone: props.departments?.contact_phone ?? '',
     
 });
 
@@ -102,25 +103,39 @@ const createNewDept = () => {
                         <!-- Head of Department -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="headOfDepartment" value="Head Of Department" />
-                            <TextInput
+                            <select 
                                 id="headOfDepartment"
                                 v-model="form.head_of_department_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                autocomplete="headOfDepartment"
-                            />
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                                <option value="">-- Select Head of Department --</option>
+                                <option 
+                                v-for="departments in props.users"
+                                :key="departments.id"
+                                :value="departments.id"
+                            >
+                                {{ departments.name }}
+                                </option>
+                            </select>
                             <InputError :message="form.errors.head_of_department_id" class="mt-2" />
                         </div>
                         <!-- Parent Department -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="parentDepartment" value="Parent Department" />
-                            <TextInput
+                            <select 
                                 id="parentDepartment"
                                 v-model="form.parent_department_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                autocomplete="parentDepartment"
-                            />
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                                <option value="">-- Select Parent Department --</option>
+                                <option 
+                                v-for="departments in props.allDepartments"
+                                :key="departments.id"
+                                :value="departments.id"
+                            >
+                                {{ departments.name }}
+                                </option>
+                            </select>
                             <InputError :message="form.errors.parent_department_id" class="mt-2" />
                         </div>
                         <!-- Budget -->
@@ -166,11 +181,11 @@ const createNewDept = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            Created.
+                            {{ props.departments?.id ? 'Updated.' : 'Created.' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create
+                            {{ props.departments?.id ? 'Update' : 'Create.' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>
