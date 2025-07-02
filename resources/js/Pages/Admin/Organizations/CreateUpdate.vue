@@ -9,32 +9,33 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
-    organizations: Object,
-    allOrganizations: Array
+    organization: Object,
+    organizations: Array
 });
 
 const form  = useForm({
-    _method: props.organizations?.id ? 'PUT' : 'POST',
-    name: props.organizations?.name ?? '',
-    parent_id: props.organizations?.parent_id ?? '',
-    type: props.organizations?.type ?? '',
-    contact_email: props.organizations?.contact_email ?? '',
-    contact_name: props.organizations?.contact_name ?? '',
-    website_url: props.organizations?.website_url ?? '',
-    founded_at: props.organizations?.founded_at ?? '',
+    _method: props.organization?.id ? 'PUT' : 'POST',
+    name: props.organization?.name ?? '',
+    parent_id: props.organization?.parent_id ?? '',
+    type: props.organization?.type ?? '',
+    contact_email: props.organization?.contact_email ?? '',
+    contact_name: props.organization?.contact_name ?? '',
+    website_url: props.organization?.website_url ?? '',
+    founded_at: props.organization?.founded_at ?? '',
     
 });
 
 const createNewOrg = () => {
-    const id = props.organizations?.id ?? null;
-    if(id) {
-        form.put(route('organizations.update', [id])), {
+    const id = props.organization?.id ?? null;
+
+    if (id) {
+        form.put(route('organizations.update', [id]), {
             preserveScroll: true,
-        }
+        });
     } else {
-        form.post(route('organizations.store')), {
+        form.post(route('organizations.store'), {
             preserveScroll: true,
-        }
+        });
     }
 };
 
@@ -82,11 +83,11 @@ const createNewOrg = () => {
                             >
                                 <option value="">-- Select Parent Organization --</option>
                                 <option 
-                                v-for="organizations in props.allOrganizations"
-                                :key="organizations.id"
-                                :value="organizations.id"
+                                v-for="organization in props.organizations"
+                                :key="organization.id"
+                                :value="organization.id"
                             >
-                                {{ organizations.name }}
+                                {{ organization.name }}
                                 </option>
                             </select>
                             <InputError :message="form.errors.parent_id" class="mt-2" />
@@ -160,11 +161,11 @@ const createNewOrg = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            {{ props.organizations?.id ? 'Updated.' : 'Created.' }}
+                            {{ props.organization?.id ? 'Updated.' : 'Created.' }}
                         </ActionMessage>
-                    
+                        
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            {{ props.organizations?.id ? 'Update' : 'Create' }}
+                            {{ props.organization?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

@@ -10,25 +10,25 @@ import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
     users : Array,
-    allDepartments : Array,
-    departments: Object
+    departments : Array,
+    department: Object
 });
 
 const form  = useForm({
-    _method: props.departments?.id ? 'PUT' : 'POST',
-    name: props.departments?.name ?? '',
-    code: props.departments?.code ?? '',
-    description: props.departments?.description ?? '',
-    head_of_department_id: props.departments?.head_of_department_id ?? '',
-    parent_department_id: props.departments?.parent_department_id ?? '',
-    budget: props.departments?.budget ?? '',
-    contact_email: props.departments?.contact_email ?? '',
-    contact_phone: props.departments?.contact_phone ?? '',
+    _method: props.department?.id ? 'PUT' : 'POST',
+    name: props.department?.name ?? '',
+    code: props.department?.code ?? '',
+    description: props.department?.description ?? '',
+    head_of_department_id: props.department?.head_of_department_id ?? '',
+    parent_department_id: props.department?.parent_department_id ?? '',
+    budget: props.department?.budget ?? '',
+    contact_email: props.department?.contact_email ?? '',
+    contact_phone: props.department?.contact_phone ?? '',
     
 });
 
 const createNewDept = () => {
-    const id = props.departments?.id ?? null;
+    const id = props.department?.id ?? null;
     if(id) {
         form.put(route('departments.update', [id])), {
             preserveScroll: true,
@@ -110,11 +110,11 @@ const createNewDept = () => {
                             >
                                 <option value="">-- Select Head of Department --</option>
                                 <option 
-                                v-for="departments in props.users"
-                                :key="departments.id"
-                                :value="departments.id"
+                                v-for="user in props.users"
+                                :key="user.id"
+                                :value="user.id"
                             >
-                                {{ departments.name }}
+                                {{ user.name }}
                                 </option>
                             </select>
                             <InputError :message="form.errors.head_of_department_id" class="mt-2" />
@@ -129,11 +129,11 @@ const createNewDept = () => {
                             >
                                 <option value="">-- Select Parent Department --</option>
                                 <option 
-                                v-for="departments in props.allDepartments"
-                                :key="departments.id"
-                                :value="departments.id"
+                                v-for="department in props.departments"
+                                :key="department.id"
+                                :value="department.id"
                             >
-                                {{ departments.name }}
+                                {{ department.name }}
                                 </option>
                             </select>
                             <InputError :message="form.errors.parent_department_id" class="mt-2" />
@@ -181,11 +181,11 @@ const createNewDept = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            {{ props.departments?.id ? 'Updated.' : 'Created.' }}
+                            {{ props.department?.id ? 'Updated.' : 'Created.' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            {{ props.departments?.id ? 'Update' : 'Create.' }}
+                            {{ props.department?.id ? 'Update' : 'Create.' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

@@ -8,41 +8,43 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 const props = defineProps({
-    pageTitle: String,
-    userProfiles: Object
+    users: Array,
+    departments: Array,
+    designations: Array,
+    userProfile: Object
 });
 
 const form  = useForm({
-    _method: props.userProfiles? 'PUT' : 'POST',
-    user_id: props.userProfiles?.user_id,
-    first_name: props.userProfiles?.first_name,
-    middle_name: props.userProfiles?.middle_name,
-    last_name: props.userProfiles?.last_name,
-    father_name: props.userProfiles?.father_name,
-    mother_name: props.userProfiles?.mother_name,
-    spouse_name: props.userProfiles?.spouse_name,
-    designation_id: props.userProfiles?.designation_id,
-    department_id: props.userProfiles?.department_id,
-    joined_at: props.userProfiles?.joined_at,
-    employee_type: props.userProfiles?.employee_type,
-    date_of_birth: props.userProfiles?.date_of_birth,
-    gender: props.userProfiles?.gender,
-    blood_group: props.userProfiles?.blood_group,
-    national_id: props.userProfiles?.national_id,
-    employee_id: props.userProfiles?.employee_id,
-    passport_no: props.userProfiles?.passport_no,
-    driving_license_no: props.userProfiles?.driving_license_no,
-    employee_status: props.userProfiles?.employee_status,
-    marital_status: props.userProfiles?.marital_status,
-    religion: props.userProfiles?.religion,
-    nationality: props.userProfiles?.nationality,
-    emergency_contact_name: props.userProfiles?.emergency_contact_name,
-    emergency_contact_number: props.userProfiles?.emergency_contact_number,
-    profile_picture_src: props.userProfiles?.profile_picture_src,
+    _method: props.userProfile? 'PUT' : 'POST',
+    user_id: props.userProfile?.user_id,
+    first_name: props.userProfile?.first_name,
+    middle_name: props.userProfile?.middle_name,
+    last_name: props.userProfile?.last_name,
+    father_name: props.userProfile?.father_name,
+    mother_name: props.userProfile?.mother_name,
+    spouse_name: props.userProfile?.spouse_name,
+    designation_id: props.userProfile?.designation_id,
+    department_id: props.userProfile?.department_id,
+    joined_at: props.userProfile?.joined_at,
+    employee_type: props.userProfile?.employee_type,
+    date_of_birth: props.userProfile?.date_of_birth,
+    gender: props.userProfile?.gender,
+    blood_group: props.userProfile?.blood_group,
+    national_id: props.userProfile?.national_id,
+    employee_id: props.userProfile?.employee_id,
+    passport_no: props.userProfile?.passport_no,
+    driving_license_no: props.userProfile?.driving_license_no,
+    employee_status: props.userProfile?.employee_status,
+    marital_status: props.userProfile?.marital_status,
+    religion: props.userProfile?.religion,
+    nationality: props.userProfile?.nationality,
+    emergency_contact_name: props.userProfile?.emergency_contact_name,
+    emergency_contact_number: props.userProfile?.emergency_contact_number,
+    profile_picture_src: props.userProfile?.profile_picture_src,
 });
 
 const createNewProfile = () => {
-    const id = props.userProfiles?.id ?? null;
+    const id = props.userProfile?.id ?? null;
 
     if(id) {
         form.put(route('user-profiles.update', [id])), {
@@ -78,14 +80,21 @@ const createNewProfile = () => {
                     <template #form>
                         <!---User ID-->
                         <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="userId" value="User ID" />
-                            <TextInput
+                            <InputLabel for="userId" value="User" />
+                            <select 
                                 id="userId"
                                 v-model="form.user_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                autocomplete="userId"
-                            />
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                                <option value="">-- Select User --</option>
+                                <option 
+                                v-for="user in props.users"
+                                :key="user.id"
+                                :value="user.id"
+                            >
+                                {{ user.name }}
+                                </option>
+                            </select>
                             <InputError :message="form.errors.user_id" class="mt-2" />
                         </div>
                         <!-- First Name -->
@@ -402,11 +411,11 @@ const createNewProfile = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            Created.
+                            {{ props.userProfile?.id ? 'Updated.' : 'Created.' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create
+                            {{ props.userProfile?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

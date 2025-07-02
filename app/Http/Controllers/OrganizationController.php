@@ -45,8 +45,8 @@ class OrganizationController extends CRUDController
     public function create() : mixed
     {
        return Inertia::render('Admin/Organizations/CreateUpdate', [
-        'organizations' => null,
-        'allOrganizations' => Organization::select('id', 'name')->orderBy('name')->get(),
+        'organization' => null,
+        'organizations' => Organization::select('id', 'name')->orderBy('name')->get(),
        ]);
     }
     /**
@@ -84,13 +84,13 @@ class OrganizationController extends CRUDController
         $org = Organization::find($id);
         if($org){
             return Inertia::render('Admin/Organizations/CreateUpdate', [
-                'organizations' => $org,
-                'allOrganizations' => Organization::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
+                'organization' => $org,
+                'organizations' => Organization::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
             ]);
         } else {
             return Inertia::render('Admin/Organizations/CreateUpdate', [
-                'organizations' => [],
-                'allOrganizations' => Organization::select('id', 'name')->orderBy('name')->get(),
+                'organization' => [],
+                'organizations' => Organization::select('id', 'name')->orderBy('name')->get(),
             ]);
         }
     }

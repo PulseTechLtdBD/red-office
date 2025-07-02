@@ -9,21 +9,21 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
-    areas: Object,
-    allAreas: Array
+    area: Object,
+    areas: Array
 });
 
 const form  = useForm({
-    _method: props.areas?.id ? 'PUT' : 'POST',
-    name: props.areas?.name ?? '',
-    parent_id: props.areas?.parent_id ?? '',
-    latitude: props.areas?.latitude ?? '',
-    longitude: props.areas?.longitude ?? '',
+    _method: props.area?.id ? 'PUT' : 'POST',
+    name: props.area?.name ?? '',
+    parent_id: props.area?.parent_id ?? '',
+    latitude: props.area?.latitude ?? '',
+    longitude: props.area?.longitude ?? '',
     
 });
 
 const createNewArea = () => {
-    const id = props.areas?.id ?? null;
+    const id = props.area?.id ?? null;
     if(id) {
         form.put(route('areas.update', [id])), {
             preserveScroll: true,
@@ -79,11 +79,11 @@ const createNewArea = () => {
                             >
                                 <option value="">-- Select Parent Area --</option>
                                 <option 
-                                v-for="areas in props.allAreas"
-                                :key="areas.id"
-                                :value="areas.id"
+                                v-for="area in props.areas"
+                                :key="area.id"
+                                :value="area.id"
                             >
-                                {{ areas.name }}
+                                {{ area.name }}
                                 </option>
                             </select>
                             <InputError :message="form.errors.parent_id" class="mt-2" />
@@ -118,11 +118,11 @@ const createNewArea = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            {{ props.areas?.id ? 'Updated.' : 'Created.' }}
+                            {{ props.area?.id ? 'Updated.' : 'Created.' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            {{ props.areas?.id ? 'Update' : 'Create' }}
+                            {{ props.area?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

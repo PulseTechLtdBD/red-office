@@ -53,8 +53,8 @@ class DepartmentController extends CRUDController
     {
         return Inertia::render('Admin/Departments/CreateUpdate', [
             'users' => User::select('id', 'name')->orderBy('name')->get(),
-            'allDepartments' => Department::select('id', 'name')->orderBy('name')->get(),
-            'departments' => null,
+            'departments' => Department::select('id', 'name')->orderBy('name')->get(),
+            'department' => null,
         ]);
     }
 
@@ -96,14 +96,14 @@ class DepartmentController extends CRUDController
         if($department){
             return Inertia::render('Admin/Departments/CreateUpdate', [
                 'users' => User::select('id', 'name')->orderBy('name')->get(),
-                'allDepartments' => Department::whereNotNull('parent_department_id')->select('id', 'name')->orderBy('name')->get(),
-                'departments' => $department
+                'departments' => Department::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
+                'department' => $department
             ]);
         } else {
             return Inertia::render('Admin/Departments/CreateUpdate', [
                 'users' => User::select('id', 'name')->orderBy('name')->get(),
-                'allDepartments' => Department::select('id', 'name')->orderBy('name')->get(),
-                'departments' => [],
+                'departments' => Department::select('id', 'name')->orderBy('name')->get(),
+                'department' => [],
             ]);
         }
     }
@@ -123,7 +123,7 @@ class DepartmentController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id) :mixed
+    public function destroy(int $id) : mixed
     {
         try{
             $dept = Department::find($id);

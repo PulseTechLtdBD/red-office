@@ -42,7 +42,7 @@ function onCreate() {
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">ID</th>
-                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">User ID</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Users</th>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">First Name</th>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Middle Name</th>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Last Name</th>
@@ -73,15 +73,15 @@ function onCreate() {
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr v-for="item in props.userProfiles">
                                 <td class="px-4 py-2 text-center">{{ item.id }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.user_id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.user?.name ?? '-' }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.first_name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.middle_name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.last_name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.father_name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.mother_name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.spouse_name }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.designation_id }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.department_id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.designation?.name ?? '-' }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.department?.name ?? '-' }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.joined_at }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.employee_type }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.date_of_birth }}</td>
