@@ -16,17 +16,17 @@ const props = defineProps({
 
 const form  = useForm({
     _method: props.userProfile? 'PUT' : 'POST',
-    user_id: props.userProfile?.user_id,
+    user_id: props.userProfile?.user_id ?? '',
     first_name: props.userProfile?.first_name,
     middle_name: props.userProfile?.middle_name,
     last_name: props.userProfile?.last_name,
     father_name: props.userProfile?.father_name,
     mother_name: props.userProfile?.mother_name,
     spouse_name: props.userProfile?.spouse_name,
-    designation_id: props.userProfile?.designation_id,
-    department_id: props.userProfile?.department_id,
+    designation_id: props.userProfile?.designation_id ?? '',
+    department_id: props.userProfile?.department_id ?? '',
     joined_at: props.userProfile?.joined_at,
-    employee_type: props.userProfile?.employee_type,
+    employee_type: props.userProfile?.employee_type ?? '',
     date_of_birth: props.userProfile?.date_of_birth,
     gender: props.userProfile?.gender,
     blood_group: props.userProfile?.blood_group,
@@ -34,8 +34,8 @@ const form  = useForm({
     employee_id: props.userProfile?.employee_id,
     passport_no: props.userProfile?.passport_no,
     driving_license_no: props.userProfile?.driving_license_no,
-    employee_status: props.userProfile?.employee_status,
-    marital_status: props.userProfile?.marital_status,
+    employee_status: props.userProfile?.employee_status ?? 1,
+    marital_status: props.userProfile?.marital_status ?? '',
     religion: props.userProfile?.religion,
     nationality: props.userProfile?.nationality,
     emergency_contact_name: props.userProfile?.emergency_contact_name,
@@ -86,7 +86,7 @@ const createNewProfile = () => {
                                 v-model="form.user_id"
                                 class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                             >
-                                <option value="">-- Select User --</option>
+                                <option value="" disabled>-- Select User --</option>
                                 <option 
                                 v-for="user in props.users"
                                 :key="user.id"
@@ -178,25 +178,41 @@ const createNewProfile = () => {
                         <!-- Designation -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="designation" value="Designation" />
-                            <TextInput
+                            <select 
                                 id="designation"
                                 v-model="form.designation_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                autocomplete="designation"
-                            />
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                required
+                                >
+                                <option value="" disabled>-- Select Designation --</option>
+                                <option 
+                                v-for="designation in props.designations"
+                                :key="designation.id"
+                                :value="designation.id"
+                                >
+                                {{ designation.name }}
+                                </option>
+                            </select>
                             <InputError :message="form.errors.designation_id" class="mt-2" />
                         </div>
                         <!-- Department -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="department" value="Department" />
-                            <TextInput
+                            <select 
                                 id="department"
                                 v-model="form.department_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                autocomplete="department"
-                            />
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                required
+                                >
+                                <option value="" disabled>-- Select Department --</option>
+                                <option 
+                                v-for="department in props.departments"
+                                :key="department.id"
+                                :value="department.id"
+                            >
+                                {{ department.name }}
+                                </option>
+                            </select>
                             <InputError :message="form.errors.department_id" class="mt-2" />
                         </div>
                         <!-- Joined At -->
@@ -215,14 +231,25 @@ const createNewProfile = () => {
                         <!-- Employee Type -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="employeeType" value="Employee Type" />
-                            <TextInput
+                            <!-- <TextInput
                                 id="employeeType"
                                 v-model="form.employee_type"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="employeeType"
-                            />
+                            /> -->
+                            <select id="employeeType"
+                                    v-model="form.employee_type" 
+                                    class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    required
+                                    >
+                                    <option value="" disabled>-- Select Employee Type --</option>
+                                    <option value="fulltime">FullTime</option>
+                                    <option value="parttime">PartTime</option>
+                                    <option value="contract">Contract</option>
+                                    <option value="intern">Intern</option>
+                            </select>
                             <InputError :message="form.errors.employee_type" class="mt-2" />
                         </div>
                         <!-- Date of Birth -->
@@ -319,27 +346,47 @@ const createNewProfile = () => {
                         <!-- Employee Status -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="employeeStatus" value="Employee Status" />
-                            <TextInput
+                            <!-- <TextInput
                                 id="employeeStatus"
                                 v-model="form.employee_status"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="employeeStatus"
-                            />
+                            /> -->
+                            <select id="employeeStatus"
+                                    v-model="form.employee_status" 
+                                    class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    required
+                                    >
+                                <option value="" disabled>-- Select Employee Status --</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
                             <InputError :message="form.errors.employee_status" class="mt-2" />
                         </div>
                         <!-- Marital Status -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="maritalStatus" value="Marital Status" />
-                            <TextInput
+                            <!-- <TextInput
                                 id="maritalStatus"
                                 v-model="form.marital_status"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="maritalStatus"
-                            />
+                            /> -->
+                            <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="maritalStatus"
+                                    required 
+                                    v-model="form.marital_status"
+                                    >
+                                <option value="" disabled>-- Select Marital Status --</option>
+                                <option value="single">Single</option>
+                                <option value="married">Married</option>
+                                <option value="divorced">Divorced</option>
+                                <option value="widowed">Widowed</option>
+                            </select>
                             <InputError :message="form.errors.marital_status" class="mt-2" />
                         </div>
                         <!-- Religion -->

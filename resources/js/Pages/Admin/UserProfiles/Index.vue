@@ -83,7 +83,7 @@ function onCreate() {
                                 <td class="px-4 py-2 text-center">{{ item.designation?.name ?? '-' }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.department?.name ?? '-' }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.joined_at }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.employee_type }}</td>
+                                <td class="px-4 py-2 text-center capitalize">{{ item.employee_type }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.date_of_birth }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.gender }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.blood_group }}</td>
@@ -91,8 +91,8 @@ function onCreate() {
                                 <td class="px-4 py-2 text-center">{{ item.employee_id }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.passport_no }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.driving_license_no }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.employee_status }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.marital_status }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.employee_status === 1 ? 'Active' : 'Inactive' }}</td>
+                                <td class="px-4 py-2 text-center capitalize">{{ item.marital_status }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.religion }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.nationality }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.emergency_contact_name }}</td>

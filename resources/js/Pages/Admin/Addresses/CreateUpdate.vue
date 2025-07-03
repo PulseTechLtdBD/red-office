@@ -8,21 +8,21 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 const props = defineProps({
-    pageTitle: String,
+    areas : Array,
     address: Object
 });
 
 const form  = useForm({
     _method: props.address? 'PUT' : 'POST',
-    type: props.address?.type,
+    type: props.address?.type ?? 'home',
     name: props.address?.name,
     street_address: props.address?.street_address,
     apartment_address: props.address?.apartment_address,
-    area_id: props.address?.area_id,
+    area_id: props.address?.area_id ?? '',
     zip_code: props.address?.zip_code,
     latitude: props.address?.latitude,
     longitude: props.address?.longitude,
-    is_primary: props.address?.is_primary,
+    is_primary: props.address?.is_primary ?? 1,
     contact_name: props.address?.contact_name,
     contact_phone: props.address?.contact_phone,
     addressable_id: props.address?.addressable_id,
@@ -66,14 +66,23 @@ const createNewAddress = () => {
                         <!---Type-->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="type" value="Type" />
-                            <TextInput
+                            <!-- <TextInput
                                 id="type"
                                 v-model="form.type"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="type"
-                            />
+                            /> -->
+
+                            <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="type"
+                                    required
+                                    v-model="form.type"
+                                    >
+                                <option value="home">Home Address</option>
+                                <option value="office">Office Address</option>
+                            </select>
                             <InputError :message="form.errors.type" class="mt-2" />
                         </div>
                         <!---Name-->
@@ -118,14 +127,29 @@ const createNewAddress = () => {
                         <!-- Area ID -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="areaID" value="Area ID" />
-                            <TextInput
+                            <!-- <TextInput
                                 id="areaID"
                                 v-model="form.area_id"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="areaID"
-                            />
+                            /> -->
+                            <select 
+                                id="areaID"
+                                v-model="form.area_id"
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                required
+                                >
+                                <option value="" disabled>-- Select Area --</option>
+                                <option 
+                                v-for="area in props.areas"
+                                :key="area.id"
+                                :value="area.id"
+                            >
+                                {{ area.name }}
+                                </option>
+                            </select>
                             <InputError :message="form.errors.area_id" class="mt-2" />
                         </div>
                         <!-- Zip Code -->
@@ -170,14 +194,22 @@ const createNewAddress = () => {
                         <!-- Is Primary -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="isPrimary" value="Is Primary" />
-                            <TextInput
+                            <!-- <TextInput
                                 id="isPrimary"
                                 v-model="form.is_primary"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="isPrimary"
-                            />
+                            /> -->
+                            <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="isPrimary"
+                                    required
+                                    v-model="form.is_primary"
+                                    >
+                                <option value="1">Primary</option>
+                                <option value="0">Non-Primary</option>
+                            </select>
                             <InputError :message="form.errors.is_primary" class="mt-2" />
                         </div>
                         <!-- Contact Name -->
@@ -236,11 +268,11 @@ const createNewAddress = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            Created.
+                            {{ props.address?.id ? 'Updated' : 'Created' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create
+                            {{ props.address?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

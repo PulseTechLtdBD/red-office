@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Exception;
 use App\Models\Address;
+use App\Models\Area;
 use App\Http\Requests\IndexAddressRequest;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
@@ -26,7 +27,7 @@ class AddressController extends CRUDController
             $orderBy  = $validated['order_by']?? 'id';
             $order    = $validated['order']?? 'asc';
 
-            $data = Address::orderBy($orderBy, $order)->get();
+            $data = Address::with('area')->orderBy($orderBy, $order)->get();
 
             if($data){
                 return Inertia::render('Admin/Addresses/Index', [
@@ -50,7 +51,7 @@ class AddressController extends CRUDController
     public function create()
     {
         return Inertia::render('Admin/Addresses/CreateUpdate', [
-            'pageTitle' => 'Address Create',
+            'areas' => Area::select('id', 'name')->orderBy('name')->get(),
             'address' => null,
            ]);
     }
@@ -93,10 +94,12 @@ class AddressController extends CRUDController
         $address = Address::find($id);
         if($address){
             return Inertia::render('Admin/Addresses/CreateUpdate',[
+                'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'address' => $address,
             ]);
         } else {
             return Inertia::render('Admin/Addresses/CreateUpdate',[
+                'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'address' => [],
             ]);
         }
@@ -166,6 +169,8 @@ class AddressController extends CRUDController
             $add->addressable_id    = $validated['addressable_id'];
             
             $res = $add->save();
+
+            
 
             if ($res) {
                 DB::commit();

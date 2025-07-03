@@ -77,7 +77,7 @@ const createNewArea = () => {
                                 v-model="form.parent_id"
                                 class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                             >
-                                <option value="">-- Select Parent Area --</option>
+                                <option value="" disabled>-- Select Parent Area --</option>
                                 <option 
                                 v-for="area in props.areas"
                                 :key="area.id"

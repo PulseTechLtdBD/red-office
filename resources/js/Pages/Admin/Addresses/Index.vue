@@ -65,11 +65,11 @@ function onCreate() {
                                 <td class="px-4 py-2 text-center">{{ item.name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.street_address }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.apartment_address }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.area_id }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.area?.name ?? '-' }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.zip_code }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.latitude }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.longitude }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.is_primary }}</td>
+                                <td class="px-4 py-2 text-center capitalize">{{ item.is_primary === 1 ? 'Primary' : 'Non-Primary' }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.contact_name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.contact_phone }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.addressable_type }}</td>

@@ -26,7 +26,7 @@ class UpdateAddressRequest extends FormRequest
             'name'              => 'nullable|string|max:255',
             'street_address'    => 'required|string|max:255',
             'apartment_address' => 'required|string|max:255',
-            'area_id'           => 'required|integer',
+            'area_id'           => 'required|exists:areas,id',
             'zip_code'          => 'required|digits_between:4,10',
             'latitude'          => 'required|string|max:255',
             'longitude'         => 'required|string|max:255',
