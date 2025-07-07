@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('areas');
             $table->string('latitude');
             $table->string('longitude');
+            $table->string('area_type')->default('area');
             $table->timestamps();
             $table->softDeletes();
-
             $table->unique(['slug', 'parent_id']);
         });
     }

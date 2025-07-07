@@ -26,6 +26,7 @@ class UpdateAreaRequest extends FormRequest
             'parent_id' => 'nullable|exists:areas,id',
             'latitude'  => 'required|string',
             'longitude' => 'required|string',
+            'area_type' => 'required|string|in:district,division,zone,city,area,sub-area',
         ];
     }
 }

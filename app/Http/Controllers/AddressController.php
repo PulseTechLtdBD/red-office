@@ -6,6 +6,8 @@ use DB;
 use Exception;
 use App\Models\Address;
 use App\Models\Area;
+use App\Models\User;
+use App\Models\Organization;
 use App\Http\Requests\IndexAddressRequest;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
@@ -48,11 +50,13 @@ class AddressController extends CRUDController
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : mixed
     {
         return Inertia::render('Admin/Addresses/CreateUpdate', [
             'areas' => Area::select('id', 'name')->orderBy('name')->get(),
             'address' => null,
+            'users' => User::select('id', 'name')->get(),
+            'organizations' => Organization::select('id', 'name')->get(),
            ]);
     }
 
@@ -96,11 +100,15 @@ class AddressController extends CRUDController
             return Inertia::render('Admin/Addresses/CreateUpdate',[
                 'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'address' => $address,
+                'users' => User::select('id', 'name')->get(),
+                'organizations' => Organization::select('id', 'name')->get(),
             ]);
         } else {
             return Inertia::render('Admin/Addresses/CreateUpdate',[
                 'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'address' => [],
+                'users' => User::select('id', 'name')->get(),
+                'organizations' => Organization::select('id', 'name')->get(),
             ]);
         }
     }

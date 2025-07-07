@@ -159,6 +159,7 @@ class AreaController extends CRUDController
             $area->parent_id = $validated['parent_id'] ?? null;
             $area->latitude  = $validated['latitude'];
             $area->longitude = $validated['longitude'];
+            $area->area_type = $validated['area_type'];
             
             $res = $area->save();
 

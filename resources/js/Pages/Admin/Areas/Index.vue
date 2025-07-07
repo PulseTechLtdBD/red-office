@@ -46,6 +46,7 @@ function onCreate() {
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Parent Area</th>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Latitude</th>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Longitude</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Area Type</th>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
@@ -56,6 +57,7 @@ function onCreate() {
                                 <td class="px-4 py-2 text-center">{{ item.parent?.name ?? '-' }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.latitude }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.longitude }}</td>
+                                <td class="px-4 py-2 text-center capitalize">{{ item.area_type }}</td>
                                 <td class="px-4 py-2 space-x-2">
                                     <div class="flex space-x-2 items-center justify-center">
                                         <PrimaryButton @click="onEdit(item.id)">Edit</PrimaryButton>

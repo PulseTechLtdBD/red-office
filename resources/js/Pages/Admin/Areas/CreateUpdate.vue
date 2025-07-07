@@ -19,6 +19,7 @@ const form  = useForm({
     parent_id: props.area?.parent_id ?? '',
     latitude: props.area?.latitude ?? '',
     longitude: props.area?.longitude ?? '',
+    area_type: props.area?.area_type ?? '',
     
 });
 
@@ -113,6 +114,24 @@ const createNewArea = () => {
                                 autocomplete="longitude"
                             />
                             <InputError :message="form.errors.longitude" class="mt-2" />
+                        </div>
+                        <!-- Area Type -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="areaType" value="Area Type" />
+                            <select 
+                                id="areaType"
+                                v-model="form.area_type"
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                                <option value="" disabled>-- Select Area Type --</option>
+                                <option value="district"> District </option>
+                                <option value="division"> Division </option>
+                                <option value="city"> City </option>
+                                <option value="zone"> Zone </option>
+                                <option value="area"> Area </option>
+                                <option value="sub-area"> Sub Area </option>
+                            </select>
+                            <InputError :message="form.errors.area_type" class="mt-2" />
                         </div>
                     </template>
 
