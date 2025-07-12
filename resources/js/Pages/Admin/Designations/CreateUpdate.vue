@@ -9,30 +9,29 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 const props = defineProps({
-    pageTitle: String,
-    designations: Object
+    designation: Object
 });
 
 const form  = useForm({
-    _method: props.designations?.id ? 'PUT' : 'POST',
-    name: props.designations?.name,
-    description: props.designations?.description,
-    level: props.designations?.level,
-    contact_email: props.designations?.contact_email,
-    contact_phone: props.designations?.contact_phone,
+    _method: props.designation?.id ? 'PUT' : 'POST',
+    name: props.designation?.name,
+    description: props.designation?.description,
+    level: props.designation?.level,
+    contact_email: props.designation?.contact_email,
+    contact_phone: props.designation?.contact_phone,
     
 });
 
 const createNewDesignation = () => {
-    const id = props.designations?.id ?? null;
+    const id = props.designation?.id ?? null;
     if(id) {
-        form.put(route('designations.update', [id])), {
+        form.put(route('designations.update', [id]), {
             preserveScroll: true,
-        }
+        });
     } else {
-        form.post(route('designations.store')), {
+        form.post(route('designations.store'), {
             preserveScroll: true,
-        }
+        });
     }
 };
 
@@ -53,7 +52,7 @@ const createNewDesignation = () => {
                         Designation Information
                     </template>
                     <template #description>
-                        This Section Creates New Designation
+                        {{ props.designation?.id ? 'This Section Updates A Designation' : 'This Section Creates A Designation'}}
                     </template>
                 
                     <template #form>
@@ -126,11 +125,11 @@ const createNewDesignation = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            {{ props.designations?.id ? 'Updated.' : 'Created' }}
+                            {{ props.designation?.id ? 'Updated.' : 'Created' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            {{ props.designations?.id ? 'Update' : 'Create' }}
+                            {{ props.designation?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

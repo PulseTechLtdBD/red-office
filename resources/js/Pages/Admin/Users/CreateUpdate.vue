@@ -8,29 +8,28 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 const props = defineProps({
-    pageTitle: String,
-    users: Object
+    user: Object
 });
 
 const form  = useForm({
-    _method: props.users?.id ? 'PUT' : 'POST',
-    name: props.users?.name ?? '',
-    email: props.users?.email ?? '',
+    _method: props.user?.id ? 'PUT' : 'POST',
+    name: props.user?.name ?? '',
+    email: props.user?.email ?? '',
     password: '',
     password_confirmation: '',
 });
 
 const createNewUser = () => {
-    const id = props.users?.id ?? null;
+    const id = props.user?.id ?? null;
 
     if (id) {
-        form.put(route('users.update', [id])), {
+        form.put(route('users.update', [id]), {
             preserveScroll: true,
-        }
+        });
     } else {
-        form.post(route('users.store')), {
+        form.post(route('users.store'), {
             preserveScroll: true,
-        }
+        });
     }
 };
 
@@ -51,7 +50,7 @@ const createNewUser = () => {
                         User Information
                     </template>
                     <template #description>
-                        This Section Creates New User
+                        {{ props.user?.id ? 'This Section Updates A User' : 'This Section Creates A User'}}
                     </template>
                 
                     <template #form>
@@ -111,11 +110,11 @@ const createNewUser = () => {
 
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                            {{ props.users?.id ? 'Updated.' : 'Created.' }}
+                            {{ props.user?.id ? 'Updated.' : 'Created.' }}
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            {{ props.users?.id ? 'Update' : 'Create' }}
+                            {{ props.user?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>

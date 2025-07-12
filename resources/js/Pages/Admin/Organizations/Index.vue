@@ -57,7 +57,7 @@ function onCreate() {
                                 <td class="px-4 py-2 text-center">{{ item.id }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.parent?.name ?? '-' }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.type }}</td>
+                                <td class="px-4 py-2 text-center capitalize">{{ item.type }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.contact_email }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.contact_name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.website_url }}</td>

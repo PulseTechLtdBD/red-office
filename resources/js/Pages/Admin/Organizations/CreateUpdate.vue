@@ -56,7 +56,7 @@ const createNewOrg = () => {
                         Organization Information
                     </template>
                     <template #description>
-                        This Section Creates New Organization
+                        {{ props.organization?.id ? 'This Section Updates An Organization' : 'This Section Creates An Organization'}}
                     </template>
                 
                     <template #form>
@@ -95,14 +95,15 @@ const createNewOrg = () => {
                         <!-- Type -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="type" value="Type" />
-                            <TextInput
+                            <select 
                                 id="type"
                                 v-model="form.type"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="type"
-                            />
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                            <option value="" disabled>-- Select Organization Type--</option>
+                            <option value="public">Public</option>
+                            <option value="private">Private</option>
+                            </select>
                             <InputError :message="form.errors.type" class="mt-2" />
                         </div>
                         <!-- Contact Email -->

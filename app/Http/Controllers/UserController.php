@@ -50,8 +50,7 @@ class UserController extends CRUDController
     public function create() : mixed
     {
        return Inertia::render('Admin/Users/CreateUpdate', [
-        'pageTitle' => 'User Create',
-        'users' => null,
+        'user' => null,
        ]);
     }
 
@@ -92,11 +91,11 @@ class UserController extends CRUDController
         $user = User::find($id);
         if($user) {
             return Inertia::render('Admin/Users/CreateUpdate', [
-                'users' => $user
+                'user' => $user
             ]);
         } else {
             return Inertia::render('Admin/Users/CreateUpdate', [
-                'users' => []
+                'user' => []
             ]);
         }
     }
@@ -136,30 +135,30 @@ class UserController extends CRUDController
         try{
             if($id > 0) {
                 $create = false;
-                $org    = User::find($id);
+                $user   = User::find($id);
 
-                if(!$org) {
+                if(!$user) {
                     return $this->sendResponseShowFailed();
                 }
             } else {
                 $create = true;
-                $org    = new User;
+                $user   = new User;
             }
 
             $validated = $request->validated();
     
             DB::beginTransaction();
 
-            $org->name          = $validated['name'];
-            $org->email         = $validated['email'];
-            $org->password      = $validated['password'];
+            $user->name          = $validated['name'];
+            $user->email         = $validated['email'];
+            $user->password      = $validated['password'];
             
-            $res = $org->save();
+            $res = $user->save();
 
             if ($res) {
                 DB::commit();
 
-                return $this->sendResponsestoreOrUpdateSuccess($org, $create);
+                return $this->sendResponsestoreOrUpdateSuccess($user, $create);
             } else {
                 return $this->sendResponsestoreOrUpdateFailed($create);
             }

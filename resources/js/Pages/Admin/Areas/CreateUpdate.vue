@@ -26,13 +26,13 @@ const form  = useForm({
 const createNewArea = () => {
     const id = props.area?.id ?? null;
     if(id) {
-        form.put(route('areas.update', [id])), {
+        form.put(route('areas.update', [id]), {
             preserveScroll: true,
-        }
+        });
     } else {
-        form.post(route('areas.store')), {
+        form.post(route('areas.store'), {
             preserveScroll: true,
-        }
+        });
     }
 };
 
@@ -53,7 +53,8 @@ const createNewArea = () => {
                         Area Information
                     </template>
                     <template #description>
-                        This Section Creates New Area
+                        <!-- This Section Creates New Area -->
+                        {{ props.area?.id ? 'This Section Updates An Area' : 'This Section Creates An Area'}}
                     </template>
                 
                     <template #form>

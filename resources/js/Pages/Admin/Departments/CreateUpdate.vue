@@ -30,13 +30,13 @@ const form  = useForm({
 const createNewDept = () => {
     const id = props.department?.id ?? null;
     if(id) {
-        form.put(route('departments.update', [id])), {
+        form.put(route('departments.update', [id]), {
             preserveScroll: true,
-        }
+        });
     } else {
-        form.post(route('departments.store')), {
+        form.post(route('departments.store'), {
             preserveScroll: true,
-        }
+        });
     }
 };
 
@@ -57,7 +57,7 @@ const createNewDept = () => {
                         Department Information
                     </template>
                     <template #description>
-                        This Section Creates New Department
+                        {{ props.department?.id ? 'This Section Updates A Department' : 'This Section Creates A Department' }}
                     </template>
                 
                     <template #form>

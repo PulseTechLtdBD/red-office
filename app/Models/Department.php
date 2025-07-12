@@ -13,11 +13,11 @@ class Department extends Model
     /** @use HasFactory<\Database\Factories\DepartmentFactory> */
     use HasFactory, SoftDeletes;
 
-    public function parent()
+    public function parent() : BelongsTo
     {
         return $this->belongsTo(Department::class, 'parent_department_id');
     }
-    public function head()
+    public function head() : BelongsTo
     {
         return $this->belongsTo(User::class, 'head_of_department_id');
     }

@@ -47,13 +47,13 @@ const createNewProfile = () => {
     const id = props.userProfile?.id ?? null;
 
     if(id) {
-        form.put(route('user-profiles.update', [id])), {
+        form.put(route('user-profiles.update', [id]), {
             preserveScroll: true,
-        }
+        });
     } else {
-        form.post(route('user-profiles.store')), {
+        form.post(route('user-profiles.store'), {
             preserveScroll: true,
-        }
+        });
     }    
 };
 
@@ -74,7 +74,7 @@ const createNewProfile = () => {
                         Profile Information
                     </template>
                     <template #description>
-                        This Section Creates New Profile
+                        {{ props.userProfile?.id ? 'This Section Updates A New Profile' : 'This Section Creates A New Profile' }}
                     </template>
                 
                     <template #form>
@@ -268,14 +268,22 @@ const createNewProfile = () => {
                         <!-- Gender -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="gender" value="Gender" />
-                            <TextInput
+                            <!-- <TextInput
                                 id="gender"
                                 v-model="form.gender"
                                 type="text"
                                 class="mt-1 block w-full"
                                 required
                                 autocomplete="gender"
-                            />
+                            /> -->
+                            <select id="gender"
+                                    v-model="form.gender"
+                                    class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    >
+                                <option value="" disabled>--Select Gender --</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
                             <InputError :message="form.errors.gender" class="mt-2" />
                         </div>
                         <!-- Blood Group -->
