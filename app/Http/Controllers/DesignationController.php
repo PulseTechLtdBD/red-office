@@ -52,7 +52,7 @@ class DesignationController extends CRUDController
     public function create() : mixed
     {
         return Inertia::render('Admin/Designations/CreateUpdate',[
-            'designations' => null,
+            'designation' => null,
         ]);
     }
 

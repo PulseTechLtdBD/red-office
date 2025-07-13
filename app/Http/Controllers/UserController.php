@@ -50,7 +50,7 @@ class UserController extends CRUDController
     public function create() : mixed
     {
        return Inertia::render('Admin/Users/CreateUpdate', [
-        'user' => null,
+            'user' => null,
        ]);
     }
 
