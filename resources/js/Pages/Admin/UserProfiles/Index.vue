@@ -85,7 +85,7 @@ function onCreate() {
                                 <td class="px-4 py-2 text-center">{{ item.joined_at }}</td>
                                 <td class="px-4 py-2 text-center capitalize">{{ item.employee_type }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.date_of_birth }}</td>
-                                <td class="px-4 py-2 text-center">{{ item.gender }}</td>
+                                <td class="px-4 py-2 text-center capitalize">{{ item.gender }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.blood_group }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.national_id }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.employee_id }}</td>

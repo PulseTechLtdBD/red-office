@@ -12,6 +12,7 @@ use App\Http\Requests\IndexUserProfileRequest;
 use App\Http\Requests\StoreUserProfileRequest;
 use App\Http\Requests\UpdateUserProfileRequest;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class UserProfileController extends CRUDController
@@ -147,6 +148,7 @@ class UserProfileController extends CRUDController
 
     private function storeOrUpdate($request, int $id = 0) : mixed
     {
+        info($request);
         try{
             if($id > 0) {
                 $create       = false;
@@ -187,7 +189,15 @@ class UserProfileController extends CRUDController
             $userProfile->nationality              = $validated['nationality'];
             $userProfile->emergency_contact_name   = $validated['emergency_contact_name'];
             $userProfile->emergency_contact_number = $validated['emergency_contact_number'];
-            $userProfile->profile_picture_src      = $validated['profile_picture_src'];
+            
+            if ($request->hasFile('profile_picture_src')) {
+                $file = $request->file('profile_picture_src');
+                $filename = 'profile_' . Str::uuid() . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('uploads/profile_pictures', $filename, 'public'); // stores in storage/app/public/uploads/profile_pictures
+                $userProfile->profile_picture_src = $path;
+            } elseif ($create) {
+                $userProfile->profile_picture_src = null;
+            }
 
             
             $res = $userProfile->save();

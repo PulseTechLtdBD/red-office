@@ -14,6 +14,7 @@ const props = defineProps({
     userProfile: Object
 });
 
+
 const form  = useForm({
     _method: props.userProfile? 'PUT' : 'POST',
     user_id: props.userProfile?.user_id ?? '',
@@ -28,8 +29,8 @@ const form  = useForm({
     joined_at: props.userProfile?.joined_at,
     employee_type: props.userProfile?.employee_type ?? '',
     date_of_birth: props.userProfile?.date_of_birth,
-    gender: props.userProfile?.gender,
-    blood_group: props.userProfile?.blood_group,
+    gender: props.userProfile?.gender ?? '',
+    blood_group: props.userProfile?.blood_group ?? '',
     national_id: props.userProfile?.national_id,
     employee_id: props.userProfile?.employee_id,
     passport_no: props.userProfile?.passport_no,
@@ -40,19 +41,22 @@ const form  = useForm({
     nationality: props.userProfile?.nationality,
     emergency_contact_name: props.userProfile?.emergency_contact_name,
     emergency_contact_number: props.userProfile?.emergency_contact_number,
-    profile_picture_src: props.userProfile?.profile_picture_src,
+    profile_picture_src: null,
 });
 
 const createNewProfile = () => {
-    const id = props.userProfile?.id ?? null;
+    const id = props.userProfile?.id ?? null;  
 
     if(id) {
-        form.put(route('user-profiles.update', [id]), {
+        form.post(route('user-profiles.update', [id]), {
             preserveScroll: true,
+            forceFormData: true,
+            _method: 'put'
         });
     } else {
         form.post(route('user-profiles.store'), {
             preserveScroll: true,
+            forceFormData: true,
         });
     }    
 };
@@ -105,7 +109,6 @@ const createNewProfile = () => {
                                 v-model="form.first_name"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="firstName"
                             />
                             <InputError :message="form.errors.first_name" class="mt-2" />
@@ -118,7 +121,6 @@ const createNewProfile = () => {
                                 v-model="form.middle_name"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="middleName"
                             />
                             <InputError :message="form.errors.middle_name" class="mt-2" />
@@ -131,7 +133,6 @@ const createNewProfile = () => {
                                 v-model="form.last_name"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="lastName"
                             />
                             <InputError :message="form.errors.last_name" class="mt-2" />
@@ -144,7 +145,6 @@ const createNewProfile = () => {
                                 v-model="form.father_name"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="fatherName"
                             />
                             <InputError :message="form.errors.father_name" class="mt-2" />
@@ -157,7 +157,6 @@ const createNewProfile = () => {
                                 v-model="form.mother_name"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="motherName"
                             />
                             <InputError :message="form.errors.mother_name" class="mt-2" />
@@ -170,7 +169,6 @@ const createNewProfile = () => {
                                 v-model="form.spouse_name"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="spouseName"
                             />
                             <InputError :message="form.errors.spouse_name" class="mt-2" />
@@ -182,7 +180,6 @@ const createNewProfile = () => {
                                 id="designation"
                                 v-model="form.designation_id"
                                 class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                                required
                                 >
                                 <option value="" disabled>-- Select Designation --</option>
                                 <option 
@@ -202,7 +199,6 @@ const createNewProfile = () => {
                                 id="department"
                                 v-model="form.department_id"
                                 class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                                required
                                 >
                                 <option value="" disabled>-- Select Department --</option>
                                 <option 
@@ -223,7 +219,6 @@ const createNewProfile = () => {
                                 v-model="form.joined_at"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="joinedAt"
                             />
                             <InputError :message="form.errors.joined_at" class="mt-2" />
@@ -231,18 +226,9 @@ const createNewProfile = () => {
                         <!-- Employee Type -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="employeeType" value="Employee Type" />
-                            <!-- <TextInput
-                                id="employeeType"
-                                v-model="form.employee_type"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="employeeType"
-                            /> -->
                             <select id="employeeType"
                                     v-model="form.employee_type" 
                                     class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                                    required
                                     >
                                     <option value="" disabled>-- Select Employee Type --</option>
                                     <option value="fulltime">FullTime</option>
@@ -260,7 +246,6 @@ const createNewProfile = () => {
                                 v-model="form.date_of_birth"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="dateOfBirth"
                             />
                             <InputError :message="form.errors.date_of_birth" class="mt-2" />
@@ -268,35 +253,33 @@ const createNewProfile = () => {
                         <!-- Gender -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="gender" value="Gender" />
-                            <!-- <TextInput
-                                id="gender"
-                                v-model="form.gender"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="gender"
-                            /> -->
                             <select id="gender"
                                     v-model="form.gender"
                                     class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                                     >
                                 <option value="" disabled>--Select Gender --</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                             </select>
                             <InputError :message="form.errors.gender" class="mt-2" />
                         </div>
                         <!-- Blood Group -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="bloodGroup" value="Blood Group" />
-                            <TextInput
-                                id="bloodGroup"
-                                v-model="form.blood_group"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="bloodGroup"
-                            />
+                            <select id="bloodGroup"
+                                    v-model="form.blood_group"
+                                    class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    >
+                                <option value="" disabled>--Select Blood Group --</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
                             <InputError :message="form.errors.blood_group" class="mt-2" />
                         </div>
                         <!-- National ID -->
@@ -307,7 +290,6 @@ const createNewProfile = () => {
                                 v-model="form.national_id"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="nationalId"
                             />
                             <InputError :message="form.errors.national_id" class="mt-2" />
@@ -320,7 +302,6 @@ const createNewProfile = () => {
                                 v-model="form.employee_id"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="employeeId"
                             />
                             <InputError :message="form.errors.employee_id" class="mt-2" />
@@ -333,7 +314,6 @@ const createNewProfile = () => {
                                 v-model="form.passport_no"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="passportNo"
                             />
                             <InputError :message="form.errors.passport_no" class="mt-2" />
@@ -346,7 +326,6 @@ const createNewProfile = () => {
                                 v-model="form.driving_license_no"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="drivingLicenseNo"
                             />
                             <InputError :message="form.errors.driving_license_no" class="mt-2" />
@@ -354,18 +333,9 @@ const createNewProfile = () => {
                         <!-- Employee Status -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="employeeStatus" value="Employee Status" />
-                            <!-- <TextInput
-                                id="employeeStatus"
-                                v-model="form.employee_status"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="employeeStatus"
-                            /> -->
                             <select id="employeeStatus"
                                     v-model="form.employee_status" 
                                     class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                                    required
                                     >
                                 <option value="" disabled>-- Select Employee Status --</option>
                                 <option value="1">Active</option>
@@ -376,17 +346,8 @@ const createNewProfile = () => {
                         <!-- Marital Status -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="maritalStatus" value="Marital Status" />
-                            <!-- <TextInput
-                                id="maritalStatus"
-                                v-model="form.marital_status"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="maritalStatus"
-                            /> -->
                             <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                                     id="maritalStatus"
-                                    required 
                                     v-model="form.marital_status"
                                     >
                                 <option value="" disabled>-- Select Marital Status --</option>
@@ -405,7 +366,6 @@ const createNewProfile = () => {
                                 v-model="form.religion"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="religion"
                             />
                             <InputError :message="form.errors.religion" class="mt-2" />
@@ -418,7 +378,6 @@ const createNewProfile = () => {
                                 v-model="form.nationality"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="nationality"
                             />
                             <InputError :message="form.errors.nationality" class="mt-2" />
@@ -431,7 +390,6 @@ const createNewProfile = () => {
                                 v-model="form.emergency_contact_name"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="emergencyContactName"
                             />
                             <InputError :message="form.errors.emergency_contact_name" class="mt-2" />
@@ -444,21 +402,18 @@ const createNewProfile = () => {
                                 v-model="form.emergency_contact_number"
                                 type="text"
                                 class="mt-1 block w-full"
-                                required
                                 autocomplete="emergencyContactNumber"
                             />
                             <InputError :message="form.errors.emergency_contact_number" class="mt-2" />
                         </div>
-                        <!-- Profile Picture -->
+                        <!-- Profile Picture Upload -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="profilePicture" value="Profile Picture" />
-                            <TextInput
+                            <input 
                                 id="profilePicture"
-                                v-model="form.profile_picture_src"
-                                type="text"
+                                type="file"
                                 class="mt-1 block w-full"
-                                required
-                                autocomplete="profilePicture"
+                                @change="e => form.profile_picture_src = e.target.files[0]"
                             />
                             <InputError :message="form.errors.profile_picture_src" class="mt-2" />
                         </div>

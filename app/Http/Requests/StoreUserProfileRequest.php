@@ -46,7 +46,7 @@ class StoreUserProfileRequest extends FormRequest
             'nationality'              => 'required|string|max:100',
             'emergency_contact_name'   => 'required|string|max:255',
             'emergency_contact_number' => 'required|string|max:20', // validate format if needed
-            'profile_picture_src'      => 'required|string|max:1024', // or use 'image' if handling uploads
+            'profile_picture_src'      => 'nullable|file|image|max:2048', // or use 'image' if handling uploads
         ];
     }
 }

@@ -185,7 +185,7 @@ const createNewDept = () => {
                         </ActionMessage>
                     
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            {{ props.department?.id ? 'Update' : 'Create.' }}
+                            {{ props.department?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
                     </template>
                 </FormSection>
