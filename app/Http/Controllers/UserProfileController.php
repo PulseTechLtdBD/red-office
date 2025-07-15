@@ -148,7 +148,6 @@ class UserProfileController extends CRUDController
 
     private function storeOrUpdate($request, int $id = 0) : mixed
     {
-        info($request);
         try{
             if($id > 0) {
                 $create       = false;
