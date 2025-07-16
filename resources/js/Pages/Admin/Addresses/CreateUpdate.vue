@@ -69,15 +69,6 @@ const createNewAddress = () => {
                         <!---Type-->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="type" value="Type" />
-                            <!-- <TextInput
-                                id="type"
-                                v-model="form.type"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="type"
-                            /> -->
-
                             <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                                     id="type"
                                     required
@@ -130,14 +121,6 @@ const createNewAddress = () => {
                         <!-- Area ID -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="areaID" value="Area" />
-                            <!-- <TextInput
-                                id="areaID"
-                                v-model="form.area_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="areaID"
-                            /> -->
                             <select 
                                 id="areaID"
                                 v-model="form.area_id"

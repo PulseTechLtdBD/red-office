@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Models\Area;
 use App\Http\Requests\StoreAreaRequest;
@@ -20,36 +20,36 @@ class AreaController extends CRUDController
      */
     public function index(IndexAreaRequest $request): mixed
     {
-        
-        try{
+
+        try {
             $validated = $request->validated();
-    
+
             $paginate = $validated['paginate'] ?? $this->paginate;
             $orderBy  = $validated['order_by'] ?? 'id';
             $order    = $validated['order'] ?? 'asc';
-    
+
             $data = Area::with('parent')->orderBy($orderBy, $order)->get();
-    
-            if($data){
+
+            if ($data) {
                 return Inertia::render('Admin/Areas/Index', [
                     'areas' => $data
                 ]);
-            } else{
+            } else {
                 return Inertia::render('Admin/Areas/Index', [
                     'areas' => []
                 ]);
-            }     
-        } catch(Exception $e){
+            }
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function create() : mixed
+    public function create(): mixed
     {
-       return Inertia::render('Admin/Areas/CreateUpdate', [
-        'area'   => null,
-        'areas'  => Area::select('id', 'name')->orderBy('name')->get(),
-       ]);
+        return Inertia::render('Admin/Areas/CreateUpdate', [
+            'area'   => null,
+            'areas'  => Area::select('id', 'name')->orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -57,36 +57,34 @@ class AreaController extends CRUDController
      */
     public function store(StoreAreaRequest $request): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, 0);
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
-
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id) : mixed
+    public function show(string $id): mixed
     {
-        try{
+        try {
             $area = Area::find($id);
-            if($area){
+            if ($area) {
                 return $this->sendResponseShowSuccess($area);
-            } else{
+            } else {
                 return $this->sendResponseShowFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function edit($id) : mixed
+    public function edit($id): mixed
     {
         $area = Area::find($id);
-        if($area) {
+        if ($area) {
             return Inertia::render('Admin/Areas/CreateUpdate', [
                 'area'  => $area,
                 'areas' => Area::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
@@ -105,10 +103,9 @@ class AreaController extends CRUDController
      */
     public function update(UpdateAreaRequest $request, int $id)
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, $id);
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -116,33 +113,32 @@ class AreaController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id) : mixed
+    public function destroy(int $id): mixed
     {
-        try{
+        try {
             $area = Area::find($id);
-            
-            if($area) {
+
+            if ($area) {
                 $area->delete();
 
                 return $this->sendResponseDeleteSuccess();
             } else {
                 return $this->sendResponseDeleteFailed();
             }
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
     private function storeOrUpdate($request, int $id = 0): mixed
     {
-        try{
+        try {
 
-            if($id > 0) {
+            if ($id > 0) {
                 $create = false;
                 $area   = Area::find($id);
 
-                if(!$area) {
+                if (!$area) {
                     return $this->sendResponseShowFailed();
                 }
             } else {
@@ -151,7 +147,7 @@ class AreaController extends CRUDController
             }
 
             $validated = $request->validated();
-    
+
             DB::beginTransaction();
 
             $area->name      = $validated['name'];
@@ -160,7 +156,7 @@ class AreaController extends CRUDController
             $area->latitude  = $validated['latitude'];
             $area->longitude = $validated['longitude'];
             $area->area_type = $validated['area_type'];
-            
+
             $res = $area->save();
 
             if ($res) {
@@ -170,8 +166,7 @@ class AreaController extends CRUDController
             } else {
                 return $this->sendResponsestoreOrUpdateFailed($create);
             }
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
 
             return $this->sendExceptionError($e);

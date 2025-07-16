@@ -67,6 +67,8 @@ function onCreate() {
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Emergency Contact Name</th>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Emergency Contact Number</th>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Profile Picture</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Present Address</th>
+                                <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Permanent Address</th>
                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
@@ -98,6 +100,8 @@ function onCreate() {
                                 <td class="px-4 py-2 text-center">{{ item.emergency_contact_name }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.emergency_contact_number }}</td>
                                 <td class="px-4 py-2 text-center">{{ item.profile_picture_src }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.present_address }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.permanent_address }}</td>
                                 <td class="px-4 py-2 text-center space-x-2">
                                     <div class="flex space-x-2 items-center justify-center">
                                         <PrimaryButton @click="onEdit(item.id)">Edit</PrimaryButton>

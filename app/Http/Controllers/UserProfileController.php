@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Exception;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\Department;
 use App\Models\Designation;
+use App\Models\Address;
 use App\Http\Requests\IndexUserProfileRequest;
 use App\Http\Requests\StoreUserProfileRequest;
 use App\Http\Requests\UpdateUserProfileRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -21,29 +22,28 @@ class UserProfileController extends CRUDController
     /**
      * Display a listing of the resource.
      */
-    public function index(IndexUserProfileRequest $request) : mixed
+    public function index(IndexUserProfileRequest $request): mixed
     {
-        try{
+        try {
             $validated = $request->validated();
 
-            $paginate = $validated['paginate']??$this->paginate;
-            $orderBy  = $validated['order_by']?? 'id';
-            $order    = $validated['order']?? 'asc';
+            $paginate = $validated['paginate'] ?? $this->paginate;
+            $orderBy  = $validated['order_by'] ?? 'id';
+            $order    = $validated['order'] ?? 'asc';
 
             $data = UserProfile::with('user', 'designation', 'department')->orderBy($orderBy, $order)->get();
-            if($data){
+            if ($data) {
                 return Inertia::render('Admin/UserProfiles/Index', [
                     'userProfiles' => $data,
                 ]);
                 // return $this->sendResponseIndexSuccess($data);
-            } else{
+            } else {
                 return Inertia::render('Admin/UserProfiles/Index', [
                     'userProfiles' => [],
                 ]);
                 // return $this->sendResponseIndexFailed();
             }
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -51,10 +51,11 @@ class UserProfileController extends CRUDController
     /**
      * Show the form for creating a new resource.
      */
-    public function create() : mixed
+    public function create(): mixed
     {
         return Inertia::render('Admin/UserProfiles/CreateUpdate', [
             'users' => User::select('id', 'name')->orderBy('name')->get(),
+            'addresses' => Address::select('id', 'name')->orderBy('name')->get(),
             'departments' => Department::select('id', 'name')->orderBy('name')->get(),
             'designations' => Designation::select('id', 'name')->orderBy('name')->get(),
             'userProfile' => null,
@@ -64,28 +65,28 @@ class UserProfileController extends CRUDController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserProfileRequest $request) : mixed
+    public function store(StoreUserProfileRequest $request): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, 0);
-        } catch(Exception $e){
-            return $this->sendExceptioError($e);
+        } catch (Exception $e) {
+            return $this->sendExceptionError($e);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(int $id) : mixed
+    public function show(int $id): mixed
     {
-        try{
+        try {
             $userProfile = UserProfile::find($id);
-            if($userProfile){
+            if ($userProfile) {
                 return $this->sendResponseShowSuccess($userProfile);
-            } else{
+            } else {
                 return $this->sendResponseShowSuccess();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -93,12 +94,13 @@ class UserProfileController extends CRUDController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id) : mixed
+    public function edit($id): mixed
     {
         $userProfiles = UserProfile::find($id);
-        if($userProfiles){
+        if ($userProfiles) {
             return Inertia::render('Admin/UserProfiles/CreateUpdate', [
                 'users' => User::select('id', 'name')->orderBy('name')->get(),
+                'addresses' => Address::select('id', 'name')->orderBy('name')->get(),
                 'departments' => Department::select('id', 'name')->orderBy('name')->get(),
                 'designations' => Designation::select('id', 'name')->orderBy('name')->get(),
                 'userProfile' => $userProfiles,
@@ -106,6 +108,7 @@ class UserProfileController extends CRUDController
         } else {
             return Inertia::render('Admin/UserProfiles/CreateUpdate', [
                 'users' => User::select('id', 'name')->orderBy('name')->get(),
+                'addresses' => Address::select('id', 'name')->orderBy('name')->get(),
                 'departments' => Department::select('id', 'name')->orderBy('name')->get(),
                 'designations' => Designation::select('id', 'name')->orderBy('name')->get(),
                 'userProfile' => [],
@@ -116,14 +119,14 @@ class UserProfileController extends CRUDController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserProfileRequest $request, int $id) : mixed
+    public function update(UpdateUserProfileRequest $request, int $id): mixed
     {
-        try{
+        try {
             $userProfile = UserProfile::find($id);
-            if($userProfile){
+            if ($userProfile) {
                 return $this->storeOrUpdate($request, $id);
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -131,29 +134,29 @@ class UserProfileController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id) : mixed
+    public function destroy(int $id): mixed
     {
-        try{
+        try {
             $userProfile = UserProfile::find($id);
-            if($userProfile){
+            if ($userProfile) {
                 $userProfile->delete();
                 return $this->sendResponseDeleteSuccess();
-            } else{
+            } else {
                 return $this->sendResponseDeleteFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    private function storeOrUpdate($request, int $id = 0) : mixed
+    private function storeOrUpdate($request, int $id = 0): mixed
     {
-        try{
-            if($id > 0) {
+        try {
+            if ($id > 0) {
                 $create       = false;
                 $userProfile  = UserProfile::find($id);
 
-                if(!$userProfile) {
+                if (!$userProfile) {
                     return $this->sendResponseShowFailed();
                 }
             } else {
@@ -162,8 +165,8 @@ class UserProfileController extends CRUDController
             }
 
             $validated = $request->validated();
-    
-            DB::beginTransaction(); 
+
+            DB::beginTransaction();
             $userProfile->user_id                  = $validated['user_id'];
             $userProfile->first_name               = $validated['first_name'];
             $userProfile->middle_name              = $validated['middle_name'];
@@ -188,7 +191,7 @@ class UserProfileController extends CRUDController
             $userProfile->nationality              = $validated['nationality'];
             $userProfile->emergency_contact_name   = $validated['emergency_contact_name'];
             $userProfile->emergency_contact_number = $validated['emergency_contact_number'];
-            
+
             if ($request->hasFile('profile_picture_src')) {
                 $file = $request->file('profile_picture_src');
                 $filename = 'profile_' . Str::uuid() . '.' . $file->getClientOriginalExtension();
@@ -198,7 +201,6 @@ class UserProfileController extends CRUDController
                 $userProfile->profile_picture_src = null;
             }
 
-            
             $res = $userProfile->save();
 
             if ($res) {
@@ -207,27 +209,25 @@ class UserProfileController extends CRUDController
             } else {
                 return $this->sendResponsestoreOrUpdateFailed($create);
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function assignDepartment(int $userId, int $deptId) : mixed
+    public function assignDepartment(int $userId, int $deptId): mixed
     {
         $user = User::find($userId);
         $dept = Department::find($deptId);
-        
+
         if (!$user || !$dept) {
             // No user or dept found
         }
-        
+
         $userProfile = $user->profile()->id;
         $res         = $userProfile->syncRoles([$dept->id]);
 
         if ($res) {
-
         } else {
-            
         }
     }
 }

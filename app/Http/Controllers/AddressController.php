@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use App\Models\Address;
 use App\Models\Area;
 use App\Models\User;
@@ -20,29 +20,29 @@ class AddressController extends CRUDController
     /**
      * Display a listing of the resource.
      */
-    public function index(IndexAddressRequest $request) : mixed
+    public function index(IndexAddressRequest $request): mixed
     {
-        try{
+        try {
             $validated = $request->validated();
 
-            $paginate = $validated['paginate']??$this->paginate;
-            $orderBy  = $validated['order_by']?? 'id';
-            $order    = $validated['order']?? 'asc';
+            $paginate = $validated['paginate'] ?? $this->paginate;
+            $orderBy  = $validated['order_by'] ?? 'id';
+            $order    = $validated['order'] ?? 'asc';
 
             $data = Address::with('area')->orderBy($orderBy, $order)->get();
 
-            if($data){
+            if ($data) {
                 return Inertia::render('Admin/Addresses/Index', [
                     'addresses' => $data,
                 ]);
                 // return $this->sendResponseIndexSuccess($data);
-            } else{
+            } else {
                 return Inertia::render('Admin/Addresses/Index', [
                     'addresses' => [],
                 ]);
                 // return $this->sendResponseIndexFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -50,24 +50,24 @@ class AddressController extends CRUDController
     /**
      * Show the form for creating a new resource.
      */
-    public function create() : mixed
+    public function create(): mixed
     {
         return Inertia::render('Admin/Addresses/CreateUpdate', [
             'areas' => Area::select('id', 'name')->orderBy('name')->get(),
             'address' => null,
             'users' => User::select('id', 'name')->get(),
             'organizations' => Organization::select('id', 'name')->get(),
-           ]);
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAddressRequest $request) : mixed
+    public function store(StoreAddressRequest $request): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, 0);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -75,17 +75,17 @@ class AddressController extends CRUDController
     /**
      * Display the specified resource.
      */
-    public function show(int $id) : mixed
+    public function show(int $id): mixed
     {
-        try{
+        try {
             $add = Address::find($id);
-    
-            if($add){
+
+            if ($add) {
                 return $this->sendResponseShowSuccess($add);
-            } else{
+            } else {
                 return $this->sendResponseShowFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -93,18 +93,18 @@ class AddressController extends CRUDController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id) : mixed
+    public function edit(int $id): mixed
     {
         $address = Address::find($id);
-        if($address){
-            return Inertia::render('Admin/Addresses/CreateUpdate',[
+        if ($address) {
+            return Inertia::render('Admin/Addresses/CreateUpdate', [
                 'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'address' => $address,
                 'users' => User::select('id', 'name')->get(),
                 'organizations' => Organization::select('id', 'name')->get(),
             ]);
         } else {
-            return Inertia::render('Admin/Addresses/CreateUpdate',[
+            return Inertia::render('Admin/Addresses/CreateUpdate', [
                 'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'address' => [],
                 'users' => User::select('id', 'name')->get(),
@@ -116,11 +116,11 @@ class AddressController extends CRUDController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAddressRequest $request, int $id) : mixed
+    public function update(UpdateAddressRequest $request, int $id): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, $id);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -128,28 +128,28 @@ class AddressController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id) : mixed
+    public function destroy(int $id): mixed
     {
-        try{
+        try {
             $add = Address::find($id);
-            if($add){
+            if ($add) {
                 $add->delete();
                 return $this->sendResponseDeleteSuccess();
-            } else{
+            } else {
                 return $this->sendResponseDeleteFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendResponseError($e);
         }
     }
     private function storeOrUpdate($request, int $id = 0): mixed
     {
-        try{
-            if($id > 0) {
+        try {
+            if ($id > 0) {
                 $create = false;
                 $add    = Address::find($id);
 
-                if(!$add) {
+                if (!$add) {
                     return $this->sendResponseShowFailed();
                 }
             } else {
@@ -158,7 +158,7 @@ class AddressController extends CRUDController
             }
 
             $validated = $request->validated();
-    
+
             DB::beginTransaction();
 
             $add->type              = $validated['type'];
@@ -175,10 +175,10 @@ class AddressController extends CRUDController
             $add->contact_phone     = $validated['contact_phone'];
             $add->addressable_type  = $validated['addressable_type'];
             $add->addressable_id    = $validated['addressable_id'];
-            
+
             $res = $add->save();
 
-            
+
 
             if ($res) {
                 DB::commit();
@@ -187,8 +187,7 @@ class AddressController extends CRUDController
             } else {
                 return $this->sendResponsestoreOrUpdateFailed($create);
             }
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
 
             return $this->sendExceptionError($e);

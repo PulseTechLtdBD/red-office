@@ -5,11 +5,13 @@ import { Link, router, useForm } from '@inertiajs/vue3';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
+import SectionBorder from '@/Components/SectionBorder.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 const props = defineProps({
     users: Array,
     departments: Array,
+    addresses: Array,
     designations: Array,
     userProfile: Object
 });
@@ -42,6 +44,21 @@ const form  = useForm({
     emergency_contact_name: props.userProfile?.emergency_contact_name,
     emergency_contact_number: props.userProfile?.emergency_contact_number,
     profile_picture_src: null,
+
+    type: props.addresses?.type ?? 'home',
+    name: props.addresses?.name ?? '',
+    street_address: props.addresses?.street_address ?? '',
+    apartment_address: props.addresses?.apartment_address ?? '',
+    area_id: props.addresses?.area_id ?? '',
+    zip_code: props.addresses?.zip_code ?? '',
+    latitude: props.addresses?.latitude ?? '',
+    longitude: props.addresses?.longitude ?? '',
+    is_primary: props.addresses?.is_primary ?? '',
+    contact_name: props.addresses?.contact_name ?? '',
+    contact_phone: props.addresses?.contact_phone ?? '',
+    addressable_id: props.addresses?.addressable_id ?? '',
+    addressable_type: props.addresses?.addressable_type ?? '',
+
 });
 
 const createNewProfile = () => {
@@ -173,25 +190,6 @@ const createNewProfile = () => {
                             />
                             <InputError :message="form.errors.spouse_name" class="mt-2" />
                         </div>
-                        <!-- Designation -->
-                        <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="designation" value="Designation" />
-                            <select 
-                                id="designation"
-                                v-model="form.designation_id"
-                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                                >
-                                <option value="" disabled>-- Select Designation --</option>
-                                <option 
-                                v-for="designation in props.designations"
-                                :key="designation.id"
-                                :value="designation.id"
-                                >
-                                {{ designation.name }}
-                                </option>
-                            </select>
-                            <InputError :message="form.errors.designation_id" class="mt-2" />
-                        </div>
                         <!-- Department -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="department" value="Department" />
@@ -211,13 +209,32 @@ const createNewProfile = () => {
                             </select>
                             <InputError :message="form.errors.department_id" class="mt-2" />
                         </div>
+                        <!-- Designation -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="designation" value="Designation" />
+                            <select 
+                                id="designation"
+                                v-model="form.designation_id"
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                >
+                                <option value="" disabled>-- Select Designation --</option>
+                                <option 
+                                v-for="designation in props.designations"
+                                :key="designation.id"
+                                :value="designation.id"
+                                >
+                                {{ designation.name }}
+                                </option>
+                            </select>
+                            <InputError :message="form.errors.designation_id" class="mt-2" />
+                        </div>
                         <!-- Joined At -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="joinedAt" value="Joined At" />
                             <TextInput
                                 id="joinedAt"
                                 v-model="form.joined_at"
-                                type="text"
+                                type="date"
                                 class="mt-1 block w-full"
                                 autocomplete="joinedAt"
                             />
@@ -244,7 +261,7 @@ const createNewProfile = () => {
                             <TextInput
                                 id="dateOfBirth"
                                 v-model="form.date_of_birth"
-                                type="text"
+                                type="date"
                                 class="mt-1 block w-full"
                                 autocomplete="dateOfBirth"
                             />
@@ -420,6 +437,7 @@ const createNewProfile = () => {
                         </div>
                     </template>
 
+
                     <template #actions>
                         <ActionMessage :on="form.recentlySuccessful" class="me-3">
                             {{ props.userProfile?.id ? 'Updated.' : 'Created.' }}
@@ -428,6 +446,102 @@ const createNewProfile = () => {
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             {{ props.userProfile?.id ? 'Update' : 'Create' }}
                         </PrimaryButton>
+                    </template>
+                </FormSection>
+            </div>
+            <SectionBorder/>
+            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+                <FormSection>
+                    <template #title>
+                        Permanent Address
+                    </template>
+
+                    <template #description>
+                        {{ props.userProfile?.id ? 'This Section Updates A Permanent Address' : 'This Section Creates A Permanent Address' }}
+                    </template>
+
+                    <template #form>
+                        <!---Type-->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="type" value="Type" />
+                            <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="type"
+                                    v-model="form.type"
+                                    >
+                                    <option value="home">Home Address</option>   
+                                    <option value="office">Office Address</option>
+                            </select>
+                            <InputError :message="form.errors.type" class="mt-2" />
+                        </div>
+                        <!---Name-->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="name" value="Name" />
+                            <TextInput
+                                id="name"
+                                v-model="form.name"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="name"
+                            />
+                            <InputError :message="form.errors.name" class="mt-2" />
+                        </div>
+                        <!-- Street Address -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="streetAddress" value="Street Address" />
+                            <TextInput
+                                id="streetAddress"
+                                v-model="form.street_address"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="streetAddress"
+                            />
+                            <InputError :message="form.errors.street_address" class="mt-2" />
+                        </div>
+                        <!-- Apartment Address -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="apartmentAddress" value="Apartment Address" />
+                            <TextInput
+                                id="apartmentAddress"
+                                v-model="form.apartment_address"
+                                type="text"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="apartmentAddress"
+                            />
+                            <InputError :message="form.errors.apartment_address" class="mt-2" />
+                        </div>
+                        <!-- Area ID -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="areaID" value="Area" />
+                            <select 
+                                id="areaID"
+                                v-model="form.area_id"
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                >
+                                <option value="" disabled>-- Select Area --</option>
+                                <option 
+                                v-for="area in props.areas"
+                                :key="area.id"
+                                :value="area.id"
+                            >
+                                {{ area.name }}
+                                </option>
+                            </select>
+                            <InputError :message="form.errors.area_id" class="mt-2" />
+                        </div>
+                        <!-- Zip Code -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="zipCode" value="Zip Code" />
+                            <TextInput
+                                id="zipCode"
+                                v-model="form.zip_code"
+                                type="text"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="zipCode"
+                            />
+                            <InputError :message="form.errors.zip_code" class="mt-2" />
+                        </div>
                     </template>
                 </FormSection>
             </div>
