@@ -139,7 +139,7 @@ class AddressController extends CRUDController
                 return $this->sendResponseDeleteFailed();
             }
         } catch (Exception $e) {
-            return $this->sendResponseError($e);
+            return $this->sendExceptionError($e);
         }
     }
     private function storeOrUpdate($request, int $id = 0): mixed

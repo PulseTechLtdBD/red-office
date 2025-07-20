@@ -10,10 +10,10 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 const props = defineProps({
     users: Array,
+    areas : Array,
     departments: Array,
-    addresses: Array,
     designations: Array,
-    userProfile: Object
+    userProfile: Object,
 });
 
 
@@ -45,19 +45,50 @@ const form  = useForm({
     emergency_contact_number: props.userProfile?.emergency_contact_number,
     profile_picture_src: null,
 
-    type: props.addresses?.type ?? 'home',
-    name: props.addresses?.name ?? '',
-    street_address: props.addresses?.street_address ?? '',
-    apartment_address: props.addresses?.apartment_address ?? '',
-    area_id: props.addresses?.area_id ?? '',
-    zip_code: props.addresses?.zip_code ?? '',
-    latitude: props.addresses?.latitude ?? '',
-    longitude: props.addresses?.longitude ?? '',
-    is_primary: props.addresses?.is_primary ?? '',
-    contact_name: props.addresses?.contact_name ?? '',
-    contact_phone: props.addresses?.contact_phone ?? '',
-    addressable_id: props.addresses?.addressable_id ?? '',
-    addressable_type: props.addresses?.addressable_type ?? '',
+    per_address_type: 'home',
+    per_address_name: 'permanent',
+    per_address_street_address: '',
+    per_address_apartment_address: '',
+    per_address_area_id: '',
+    per_address_zip_code: '',
+    per_address_latitude: '',
+    per_address_longitude: '',
+    per_address_is_primary: 1,
+    per_address_contact_name: '',
+    per_address_contact_phone: '',
+
+    pre_address_type: 'home',
+    pre_address_name: 'present',
+    pre_address_street_address: '',
+    pre_address_apartment_address: '',
+    pre_address_area_id: '',
+    pre_address_zip_code: '',
+    pre_address_latitude: '',
+    pre_address_longitude: '',
+    pre_address_is_primary: 1,
+    pre_address_contact_name: '',
+    pre_address_contact_phone: '',
+    // _method: props.address? 'PUT' : 'POST',
+    // type: props.address?.type ?? 'home',
+    // name: props.address?.name ?? '',
+    // street_address: props.address?.street_address ?? '',
+    // apartment_address: props.address?.apartment_address ?? '',
+    // area_id: props.address?.area_id ?? '',
+    // zip_code: props.address?.zip_code ?? '',
+    // latitude: props.address?.latitude ?? '',
+    // longitude: props.address?.longitude ?? '',
+    // is_primary: props.address?.is_primary ?? 1,
+    // contact_name: props.address?.contact_name ?? '',
+    // contact_phone: props.address?.contact_phone ?? '',
+    // addressable_id: props.address?.addressable_id ?? '',
+    // addressable_type: props.address?.addressable_type ?? '',
+
+    // _method: props.area?.id ? 'PUT' : 'POST',
+    // name: props.area?.name ?? '',
+    // parent_id: props.area?.parent_id ?? '',
+    // latitude: props.area?.latitude ?? '',
+    // longitude: props.area?.longitude ?? '',
+    // area_type: props.area?.area_type ?? '',
 
 });
 
@@ -203,7 +234,7 @@ const createNewProfile = () => {
                                 v-for="department in props.departments"
                                 :key="department.id"
                                 :value="department.id"
-                            >
+                                >
                                 {{ department.name }}
                                 </option>
                             </select>
@@ -435,6 +466,286 @@ const createNewProfile = () => {
                             />
                             <InputError :message="form.errors.profile_picture_src" class="mt-2" />
                         </div>
+                        <!---Permanent Address Type-->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentAddressType" value="Permanent Address Type" />
+                            <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="permanentAddressType"
+                                    v-model="form.per_address_type"
+                                    >
+                                    <option value="home">Home Address</option>   
+                                    <option value="office">Office Address</option>
+                            </select>
+                            <InputError :message="form.errors.per_address_type" class="mt-2" />
+                        </div>
+                        <!---Permanent Address Name-->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentAddressName" value="Permanent Address Name" />
+                            <TextInput
+                                id="permanentAddressName"
+                                v-model="form.per_address_name"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="permanentAddressName"
+                            />
+                            <InputError :message="form.errors.per_address_name" class="mt-2" />
+                        </div>
+                        <!-- Permanent Street Address -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentStreetAddress" value="Permanent Street Address" />
+                            <TextInput
+                                id="permanentStreetAddress"
+                                v-model="form.per_address_street_address"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="permanentStreetAddress"
+                            />
+                            <InputError :message="form.errors.per_address_street_address" class="mt-2" />
+                        </div>
+                        <!-- Permanent Apartment Address -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentApartmentAddress" value="Permanent Apartment Address" />
+                            <TextInput
+                                id="permanentApartmentAddress"
+                                v-model="form.per_address_apartment_address"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="permanentApartmentAddress"
+                            />
+                            <InputError :message="form.errors.per_address_apartment_address" class="mt-2" />
+                        </div>
+                        <!-- Permanent Area ID -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentAreaID" value="Permanent Area" />
+                            <select 
+                                id="permanentAreaID"
+                                v-model="form.per_address_area_id"
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                required
+                                >
+                                <option value="" disabled>-- Select Area --</option>
+                                <option 
+                                v-for="area in props.areas"
+                                :key="area.id"
+                                :value="area.id"
+                            >
+                                {{ area.name }}
+                                </option>
+                            </select>
+                            <InputError :message="form.errors.per_address_area_id" class="mt-2" />
+                        </div>
+                        <!-- Permanent Zip Code -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentZipCode" value="Permanent Zip Code" />
+                            <TextInput
+                                id="permanentZipCode"
+                                v-model="form.per_address_zip_code"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="permanentZipCode"
+                            />
+                            <InputError :message="form.errors.per_address_zip_code" class="mt-2" />
+                        </div>
+                        <!-- Permanent Latitude -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentLatitude" value="Permanent Latitude" />
+                            <TextInput
+                                id="permanentLatitude"
+                                v-model="form.per_address_latitude"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="permanentLatitude"
+                            />
+                            <InputError :message="form.errors.per_address_latitude" class="mt-2" />
+                        </div>
+                        <!-- Permanent Longitude -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentLongitude" value="Permanent Longitude" />
+                            <TextInput
+                                id="permanentLongitude"
+                                v-model="form.per_address_longitude"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="permanentLongitude"
+                            />
+                            <InputError :message="form.errors.per_address_longitude" class="mt-2" />
+                        </div>
+                        <!-- Permanent Is Primary -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentIsPrimary" value="Permanent Is Primary" />
+                            <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="permanentIsPrimary"
+                                    v-model="form.per_address_is_primary"
+                                    >
+                                <option value="1">Primary</option>
+                                <option value="0">Non-Primary</option>
+                            </select>
+                            <InputError :message="form.errors.per_address_is_primary" class="mt-2" />
+                        </div>
+                        <!-- Permanent Contact Name -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentContactName" value="Permanent Contact Name" />
+                            <TextInput
+                                id="permanentContactName"
+                                v-model="form.per_address_contact_name"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="permanentContactName"
+                            />
+                            <InputError :message="form.errors.per_address_contact_name" class="mt-2" />
+                        </div>
+                        <!-- Permanent Contact Phone -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="permanentContactPhone" value="Permanent Contact Phone" />
+                            <TextInput
+                                id="permanentContactPhone"
+                                v-model="form.per_address_contact_phone"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="permanentContactPhone"
+                            />
+                            <InputError :message="form.errors.per_address_contact_phone" class="mt-2" />
+                        </div>
+                        <!---Present Address Type-->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentAddressType" value="Present Address Type" />
+                            <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="presentAddressType"
+                                    v-model="form.pre_address_type"
+                                    >
+                                    <option value="home">Home Address</option>   
+                                    <option value="office">Office Address</option>
+                            </select>
+                            <InputError :message="form.errors.pre_address_type" class="mt-2" />
+                        </div>
+                        <!---Present Address Name-->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentAddressName" value="Present Address Name" />
+                            <TextInput
+                                id="presentAddressName"
+                                v-model="form.pre_address_name"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="presentAddressName"
+                            />
+                            <InputError :message="form.errors.pre_address_name" class="mt-2" />
+                        </div>
+                        <!-- Present Street Address -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentStreetAddress" value="Present Street Address" />
+                            <TextInput
+                                id="presentStreetAddress"
+                                v-model="form.pre_address_street_address"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="presentStreetAddress"
+                            />
+                            <InputError :message="form.errors.pre_address_street_address" class="mt-2" />
+                        </div>
+                        <!-- Present Apartment Address -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentApartmentAddress" value="Present Apartment Address" />
+                            <TextInput
+                                id="presentApartmentAddress"
+                                v-model="form.pre_address_apartment_address"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="presentApartmentAddress"
+                            />
+                            <InputError :message="form.errors.pre_address_apartment_address" class="mt-2" />
+                        </div>
+                        <!-- Present Area ID -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentAreaID" value="Present Area" />
+                            <select 
+                                id="presentAreaID"
+                                v-model="form.pre_address_area_id"
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                >
+                                <option value="" disabled>-- Select Area --</option>
+                                <option 
+                                v-for="area in props.areas"
+                                :key="area.id"
+                                :value="area.id"
+                            >
+                                {{ area.name }}
+                                </option>
+                            </select>
+                            <InputError :message="form.errors.pre_address_area_id" class="mt-2" />
+                        </div>
+                        <!-- Present Zip Code -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentZipCode" value="Present Zip Code" />
+                            <TextInput
+                                id="presentZipCode"
+                                v-model="form.pre_address_zip_code"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="presentZipCode"
+                            />
+                            <InputError :message="form.errors.pre_address_zip_code" class="mt-2" />
+                        </div>
+                        <!-- Present Latitude -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentLatitude" value="Present Latitude" />
+                            <TextInput
+                                id="presentLatitude"
+                                v-model="form.pre_address_latitude"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="presentLatitude"
+                            />
+                            <InputError :message="form.errors.pre_address_latitude" class="mt-2" />
+                        </div>
+                        <!-- Present Longitude -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentLongitude" value="Present Longitude" />
+                            <TextInput
+                                id="presentLongitude"
+                                v-model="form.pre_address_longitude"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="presentLongitude"
+                            />
+                            <InputError :message="form.errors.pre_address_longitude" class="mt-2" />
+                        </div>
+                        <!-- Present Is Primary -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentIsPrimary" value="Present Is Primary" />
+                            <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="presentIsPrimary"
+                                    v-model="form.pre_address_is_primary"
+                                    >
+                                <option value="1">Primary</option>
+                                <option value="0">Non-Primary</option>
+                            </select>
+                            <InputError :message="form.errors.pre_address_is_primary" class="mt-2" />
+                        </div>
+                        <!-- Present Contact Name -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentContactName" value="Present Contact Name" />
+                            <TextInput
+                                id="presentContactName"
+                                v-model="form.pre_address_contact_name"
+                                type="text"
+                                class="mt-1 block w-full"
+                                autocomplete="presentContactName"
+                            />
+                            <InputError :message="form.errors.pre_address_contact_name" class="mt-2" />
+                        </div>
+                        <!-- Present Contact Phone -->
+                        <div class="col-span-6 sm:col-span-4">
+                            <InputLabel for="presentContactPhone" value="Present Contact Phone" />
+                            <TextInput
+                                id="presentContactPhone"
+                                v-model="form.pre_address_contact_phone"
+                                type="text"
+                                class="mt-1 block w-full"
+                                required
+                                autocomplete="presentContactPhone"
+                            />
+                            <InputError :message="form.errors.pre_address_contact_phone" class="mt-2" />
+                        </div>
                     </template>
 
 
@@ -449,102 +760,7 @@ const createNewProfile = () => {
                     </template>
                 </FormSection>
             </div>
-            <SectionBorder/>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <FormSection>
-                    <template #title>
-                        Permanent Address
-                    </template>
-
-                    <template #description>
-                        {{ props.userProfile?.id ? 'This Section Updates A Permanent Address' : 'This Section Creates A Permanent Address' }}
-                    </template>
-
-                    <template #form>
-                        <!---Type-->
-                        <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="type" value="Type" />
-                            <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                                    id="type"
-                                    v-model="form.type"
-                                    >
-                                    <option value="home">Home Address</option>   
-                                    <option value="office">Office Address</option>
-                            </select>
-                            <InputError :message="form.errors.type" class="mt-2" />
-                        </div>
-                        <!---Name-->
-                        <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="name" value="Name" />
-                            <TextInput
-                                id="name"
-                                v-model="form.name"
-                                type="text"
-                                class="mt-1 block w-full"
-                                autocomplete="name"
-                            />
-                            <InputError :message="form.errors.name" class="mt-2" />
-                        </div>
-                        <!-- Street Address -->
-                        <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="streetAddress" value="Street Address" />
-                            <TextInput
-                                id="streetAddress"
-                                v-model="form.street_address"
-                                type="text"
-                                class="mt-1 block w-full"
-                                autocomplete="streetAddress"
-                            />
-                            <InputError :message="form.errors.street_address" class="mt-2" />
-                        </div>
-                        <!-- Apartment Address -->
-                        <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="apartmentAddress" value="Apartment Address" />
-                            <TextInput
-                                id="apartmentAddress"
-                                v-model="form.apartment_address"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="apartmentAddress"
-                            />
-                            <InputError :message="form.errors.apartment_address" class="mt-2" />
-                        </div>
-                        <!-- Area ID -->
-                        <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="areaID" value="Area" />
-                            <select 
-                                id="areaID"
-                                v-model="form.area_id"
-                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                                >
-                                <option value="" disabled>-- Select Area --</option>
-                                <option 
-                                v-for="area in props.areas"
-                                :key="area.id"
-                                :value="area.id"
-                            >
-                                {{ area.name }}
-                                </option>
-                            </select>
-                            <InputError :message="form.errors.area_id" class="mt-2" />
-                        </div>
-                        <!-- Zip Code -->
-                        <div class="col-span-6 sm:col-span-4">
-                            <InputLabel for="zipCode" value="Zip Code" />
-                            <TextInput
-                                id="zipCode"
-                                v-model="form.zip_code"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="zipCode"
-                            />
-                            <InputError :message="form.errors.zip_code" class="mt-2" />
-                        </div>
-                    </template>
-                </FormSection>
-            </div>
+           
         </div>
     </AppLayout>
 </template>

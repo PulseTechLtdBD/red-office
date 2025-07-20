@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Models\Permission;
 use App\Http\Requests\IndexPermissionRequest;
@@ -13,9 +13,9 @@ class PermissionController extends CRUDController
 {
     protected $modelName = 'Permission';
 
-    public function index(IndexPermissionRequest $request) : mixed
+    public function index(IndexPermissionRequest $request): mixed
     {
-        try{
+        try {
             $validated = $request->validated();
 
             $paginate = $validated['paginate'] ?? $this->paginate;
@@ -24,72 +24,72 @@ class PermissionController extends CRUDController
 
             $data = Permission::orderBy($orderBy, $order)->paginate($paginate);
 
-            if($data){
+            if ($data) {
                 return $this->sendResponseIndexSuccess($data);
-            } else{
+            } else {
                 return $this->sendResponseIndexFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function store(StorePermissionRequest $request) : mixed
+    public function store(StorePermissionRequest $request): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, 0);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function show(int $id) : mixed
+    public function show(int $id): mixed
     {
-        try{
+        try {
             $perm = Permission::find($id);
 
-            if($perm){
+            if ($perm) {
                 return $this->sendResponseShowSuccess($perm);
-            } else{
+            } else {
                 return $this->sendResponseShowFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
-    public function update(UpdatePermissionRequest $request, int $id) :mixed
+    public function update(UpdatePermissionRequest $request, int $id): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, $id);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function destroy(int $id) : mixed
+    public function destroy(int $id): mixed
     {
-        try{
+        try {
             $perm = Permission::find($id);
-            if($perm){
+            if ($perm) {
                 $perm->delete();
                 return $this->sendResponseDeleteSuccess();
-            } else{
+            } else {
                 return $this->sendResponseDeleteFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
     private function storeOrUpdate($request, int $id = 0): mixed
     {
-        try{
+        try {
 
-            if($id > 0) {
+            if ($id > 0) {
                 $create = false;
                 $perm   = Permission::find($id);
 
-                if(!$perm) {
+                if (!$perm) {
                     return $this->sendResponseShowFailed();
                 }
             } else {
@@ -98,13 +98,13 @@ class PermissionController extends CRUDController
             }
 
             $validated = $request->validated();
-    
+
             DB::beginTransaction();
-            
+
             $perm->name         = $validated['name'];
             $perm->display_name = $validated['display_name'];
             $perm->description  = $validated['description'];
-            
+
             $res = $perm->save();
 
             if ($res) {
@@ -114,8 +114,7 @@ class PermissionController extends CRUDController
             } else {
                 return $this->sendResponsestoreOrUpdateFailed($create);
             }
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
 
             return $this->sendExceptionError($e);

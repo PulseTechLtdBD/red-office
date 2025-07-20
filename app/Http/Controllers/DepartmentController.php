@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Models\User;
 use App\Models\Department;
@@ -19,29 +19,29 @@ class DepartmentController extends CRUDController
     /**
      * Display a listing of the resource.
      */
-    public function index(IndexDepartmentRequest $request) : mixed
+    public function index(IndexDepartmentRequest $request): mixed
     {
-        try{
+        try {
             $validated = $request->validated();
 
-            $paginate = $validated['paginate']??$this->paginate;
-            $orderBy  = $validated['order_by']?? 'id';
-            $order    = $validated['order']?? 'asc';
+            $paginate = $validated['paginate'] ?? $this->paginate;
+            $orderBy  = $validated['order_by'] ?? 'id';
+            $order    = $validated['order'] ?? 'asc';
 
             $data = Department::with('parent', 'head')->orderBy($orderBy, $order)->get();
-            
-            if($data){
-                return Inertia::render('Admin/Departments/Index',[
+
+            if ($data) {
+                return Inertia::render('Admin/Departments/Index', [
                     'departments' => $data,
                 ]);
                 // return $this->sendResponseIndexSuccess($data);
-            } else{
-                return Inertia::render('Admin/Departments/Index',[
+            } else {
+                return Inertia::render('Admin/Departments/Index', [
                     'departments' => []
                 ]);
                 // return $this->sendResponseIndexFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -49,7 +49,7 @@ class DepartmentController extends CRUDController
     /**
      * Show the form for creating a new resource.
      */
-    public function create() : mixed
+    public function create(): mixed
     {
         return Inertia::render('Admin/Departments/CreateUpdate', [
             'users' => User::select('id', 'name')->orderBy('name')->get(),
@@ -61,11 +61,11 @@ class DepartmentController extends CRUDController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDepartmentRequest $request) : mixed
+    public function store(StoreDepartmentRequest $request): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, 0);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -73,16 +73,16 @@ class DepartmentController extends CRUDController
     /**
      * Display the specified resource.
      */
-    public function show(int $id) : mixed
+    public function show(int $id): mixed
     {
-        try{
+        try {
             $dept = Department::find($id);
-            if($dept){
+            if ($dept) {
                 return $this->sendResponseShowSuccess($dept);
-            } else{
+            } else {
                 return $this->sendResponseShowFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -90,10 +90,10 @@ class DepartmentController extends CRUDController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id) : mixed
+    public function edit($id): mixed
     {
         $department = Department::find($id);
-        if($department){
+        if ($department) {
             return Inertia::render('Admin/Departments/CreateUpdate', [
                 'users' => User::select('id', 'name')->orderBy('name')->get(),
                 'departments' => Department::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
@@ -111,11 +111,11 @@ class DepartmentController extends CRUDController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDepartmentRequest $request, int $id) : mixed
+    public function update(UpdateDepartmentRequest $request, int $id): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, $id);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
@@ -123,29 +123,29 @@ class DepartmentController extends CRUDController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id) : mixed
+    public function destroy(int $id): mixed
     {
-        try{
+        try {
             $dept = Department::find($id);
-            if($dept){
+            if ($dept) {
                 $dept->delete();
                 return $this->sendResponseDeleteSuccess();
-            } else{
+            } else {
                 return $this->sendResponseDeleteFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    private function storeOrUpdate($request, int $id = 0) : mixed
+    private function storeOrUpdate($request, int $id = 0): mixed
     {
-        try{
-            if($id > 0) {
+        try {
+            if ($id > 0) {
                 $create = false;
                 $dept   = Department::find($id);
 
-                if(!$dept) {
+                if (!$dept) {
                     return $this->sendResponseShowFailed();
                 }
             } else {
@@ -154,7 +154,7 @@ class DepartmentController extends CRUDController
             }
 
             $validated = $request->validated();
-    
+
             DB::beginTransaction();
 
             $dept->name                  = $validated['name'];
@@ -166,7 +166,7 @@ class DepartmentController extends CRUDController
             $dept->budget                = $validated['budget'];
             $dept->contact_email         = $validated['contact_email'];
             $dept->contact_phone         = $validated['contact_phone'];
-            
+
             $res = $dept->save();
 
             if ($res) {
@@ -176,26 +176,23 @@ class DepartmentController extends CRUDController
             } else {
                 return $this->sendResponsestoreOrUpdateFailed($create);
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function assignOrganization(int $deptId, int $orgId) : mixed
+    public function assignOrganization(int $deptId, int $orgId): mixed
     {
         $dept = Department::find($id);
         $org  = Organization::find($id);
 
-        if(!$dept || !$org){
-
+        if (!$dept || !$org) {
         }
 
         $res = $dept->syncRoles($dept->id);
 
-        if($res){
-
-        } else{
-            
+        if ($res) {
+        } else {
         }
     }
 }

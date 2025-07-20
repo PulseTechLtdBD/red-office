@@ -180,14 +180,6 @@ const createNewAddress = () => {
                         <!-- Is Primary -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="isPrimary" value="Is Primary" />
-                            <!-- <TextInput
-                                id="isPrimary"
-                                v-model="form.is_primary"
-                                type="text"
-                                class="mt-1 block w-full"
-                                required
-                                autocomplete="isPrimary"
-                            /> -->
                             <select class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                                     id="isPrimary"
                                     required
@@ -225,7 +217,7 @@ const createNewAddress = () => {
                             <InputError :message="form.errors.contact_phone" class="mt-2" />
                         </div>
                         <!-- Address Type -->
-                        <!-- <div class="col-span-6 sm:col-span-4">
+                        <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="addressableType" value="Address Type" />
                             <TextInput
                                 id="addressableType"
@@ -238,7 +230,7 @@ const createNewAddress = () => {
                             <InputError :message="form.errors.addressable_type" class="mt-2" />
                         </div>
                         <!-- Address -->
-                        <!-- <div class="col-span-6 sm:col-span-4">
+                        <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="addressableId" value="Address" />
                             <TextInput
                                 id="addressableId"
@@ -249,43 +241,6 @@ const createNewAddress = () => {
                                 autocomplete="addressableId"
                             />
                             <InputError :message="form.errors.addressable_id" class="mt-2" />
-                        </div> -->
-
-                        <!-- Type dropdown -->
-                        <div class="col-span-6 sm:col-span-4">
-                          <InputLabel value="Address Type"/>
-                          <select
-                            class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                            v-model="form.addressable_type"
-                          >
-                            <option disabled value="">-- Select Addressable Type --</option>
-                            <option value="App\\Models\\User">User</option>
-                            <option value="App\\Models\\Organization">Organization</option>
-                          </select>
-                        </div>
-
-                        <!-- User ID selector -->
-                        <div v-if="form.addressable_type === 'App\\Models\\User'" class="col-span-6 sm:col-span-4">
-                          <InputLabel value="Select User"/>
-                          <select
-                            class="mt-1 block w-full rounded-md border-gray-300"
-                            v-model="form.addressable_id"
-                          >
-                            <option value="">-- Select User --</option>
-                            <option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }}</option>
-                          </select>
-                        </div>
-
-                        <!-- Organization ID selector -->
-                        <div v-if="form.addressable_type === 'App\\Models\\Organization'" class="col-span-6 sm:col-span-4">
-                          <InputLabel value="Select Organization"/>
-                          <select
-                            class="mt-1 block w-full rounded-md border-gray-300"
-                            v-model="form.addressable_id"
-                          >
-                            <option value="">-- Select Organization --</option>
-                            <option v-for="org in organizations" :key="org.id" :value="org.id">{{ org.name }}</option>
-                          </select>
                         </div>
                     </template>
 

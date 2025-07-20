@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Models\Role;
 use App\Http\Requests\IndexRoleRequest;
@@ -13,9 +13,9 @@ class RoleController extends CRUDController
 {
     protected $modelName = 'Role';
 
-    public function index(IndexRoleRequest $request) : mixed
+    public function index(IndexRoleRequest $request): mixed
     {
-        try{
+        try {
             $validated = $request->validated();
 
             $paginate = $validated['paginate'] ?? $this->paginate;
@@ -24,73 +24,73 @@ class RoleController extends CRUDController
 
             $data = Role::orderBy($orderBy, $order)->paginate($paginate);
 
-            if($data){
+            if ($data) {
                 return $this->sendResponseIndexSuccess($data);
-            } else{
+            } else {
                 return $this->sendResponseIndexFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function store(StoreRoleRequest $request) : mixed
+    public function store(StoreRoleRequest $request): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, 0);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function show(int $id) : mixed
+    public function show(int $id): mixed
     {
-        try{
+        try {
             $role = Role::find($id);
 
-            if($role){
+            if ($role) {
                 return $this->sendResponseShowSuccess($role);
-            } else{
+            } else {
                 return $this->sendResponseShowFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function update(UpdateRoleRequest $request, int $id) : mixed
+    public function update(UpdateRoleRequest $request, int $id): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, $id);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function destroy(int $id) : mixed
+    public function destroy(int $id): mixed
     {
-        try{
+        try {
             $role = Role::find($id);
-            if($role){
+            if ($role) {
                 $role->delete();
                 return $this->sendResponseDeleteSuccess();
-            } else{
+            } else {
                 return $this->sendResponseDeleteFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
     private function storeOrUpdate($request, int $id = 0): mixed
     {
-        try{
+        try {
 
-            if($id > 0) {
+            if ($id > 0) {
                 $create = false;
                 $role   = Role::find($id);
 
-                if(!$role) {
+                if (!$role) {
                     return $this->sendResponseShowFailed();
                 }
             } else {
@@ -99,13 +99,13 @@ class RoleController extends CRUDController
             }
 
             $validated = $request->validated();
-    
+
             DB::beginTransaction();
-            
+
             $role->name         = $validated['name'];
             $role->display_name = $validated['display_name'];
             $role->description  = $validated['description'];
-            
+
             $res = $role->save();
 
             if ($res) {
@@ -115,8 +115,7 @@ class RoleController extends CRUDController
             } else {
                 return $this->sendResponsestoreOrUpdateFailed($create);
             }
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
 
             return $this->sendExceptionError($e);

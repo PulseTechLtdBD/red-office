@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use App\Models\Organization;
+use App\Models\Area;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use App\Http\Requests\IndexOrganizationRequest;
@@ -19,7 +20,7 @@ class OrganizationController extends CRUDController
      */
     public function index(IndexOrganizationRequest $request): mixed
     {
-        try{
+        try {
             $validated = $request->validated();
 
             $paginate = $validated['paginate'] ?? $this->paginate;
@@ -28,112 +29,115 @@ class OrganizationController extends CRUDController
 
             $data = Organization::with('parent')->orderBy($orderBy, $order)->get();
 
-            if($data){
+            if ($data) {
                 return Inertia::render('Admin/Organizations/Index', [
                     'organizations' => $data
                 ]);
-            } else{
+            } else {
                 return Inertia::render('Admin/Organizations/Index', [
                     'organizations' => []
                 ]);
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    public function create() : mixed
+    public function create(): mixed
     {
-       return Inertia::render('Admin/Organizations/CreateUpdate', [
-        'organization' => null,
-        'organizations' => Organization::select('id', 'name')->orderBy('name')->get(),
-       ]);
+        return Inertia::render('Admin/Organizations/CreateUpdate', [
+            'organization' => null,
+            'areas' => Area::select('id', 'name')->orderBy('name')->get(),
+            'organizations' => Organization::select('id', 'name')->orderBy('name')->get(),
+        ]);
     }
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrganizationRequest $request) : mixed
+    public function store(StoreOrganizationRequest $request): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, 0);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
-    
+
     /**
      * Display the specified resource.
      */
-    public function show(int $id) : mixed
+    public function show(int $id): mixed
     {
-        try{
+        try {
             $org = Organization::find($id);
-            if($org){
+            if ($org) {
                 return $this->sendResponseShowSuccess($org);
-            } else{
+            } else {
                 return $this->sendResponseShowFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
-    
-    public function edit($id) : mixed
+
+    public function edit($id): mixed
     {
         $org = Organization::find($id);
-        if($org){
+        if ($org) {
             return Inertia::render('Admin/Organizations/CreateUpdate', [
                 'organization' => $org,
+                'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'organizations' => Organization::where('id', '!=', $id)->select('id', 'name')->orderBy('name')->get(),
             ]);
         } else {
             return Inertia::render('Admin/Organizations/CreateUpdate', [
                 'organization' => [],
+                'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'organizations' => Organization::select('id', 'name')->orderBy('name')->get(),
             ]);
         }
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrganizationRequest $request, int $id) : mixed
+    public function update(UpdateOrganizationRequest $request, int $id): mixed
     {
-        try{
+        try {
             return $this->storeOrUpdate($request, $id);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
-    
-    
+
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id) : mixed
+    public function destroy(int $id): mixed
     {
-        try{
+        try {
             $org = Organization::find($id);
-            if($org){
+            if ($org) {
                 $org->delete();
                 return $this->sendResponseDeleteSuccess();
             } else {
                 return $this->sendResponseDeleteFailed();
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return $this->sendExceptionError($e);
         }
     }
 
     private function storeOrUpdate($request, int $id = 0): mixed
     {
-        try{
-            if($id > 0) {
+        try {
+            if ($id > 0) {
                 $create = false;
                 $org    = Organization::find($id);
 
-                if(!$org) {
+                if (!$org) {
                     return $this->sendResponseShowFailed();
                 }
             } else {
@@ -142,7 +146,7 @@ class OrganizationController extends CRUDController
             }
 
             $validated = $request->validated();
-    
+
             DB::beginTransaction();
 
             $org->name          = $validated['name'];
@@ -153,7 +157,7 @@ class OrganizationController extends CRUDController
             $org->contact_name  = $validated['contact_name'];
             $org->website_url   = $validated['website_url'];
             $org->founded_at    = $validated['founded_at'];
-            
+
             $res = $org->save();
 
             if ($res) {
@@ -163,8 +167,7 @@ class OrganizationController extends CRUDController
             } else {
                 return $this->sendResponsestoreOrUpdateFailed($create);
             }
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
 
             return $this->sendExceptionError($e);

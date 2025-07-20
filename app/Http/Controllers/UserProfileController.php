@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\Department;
 use App\Models\Designation;
-use App\Models\Address;
+use App\Models\Area;
 use App\Http\Requests\IndexUserProfileRequest;
 use App\Http\Requests\StoreUserProfileRequest;
 use App\Http\Requests\UpdateUserProfileRequest;
@@ -55,7 +55,7 @@ class UserProfileController extends CRUDController
     {
         return Inertia::render('Admin/UserProfiles/CreateUpdate', [
             'users' => User::select('id', 'name')->orderBy('name')->get(),
-            'addresses' => Address::select('id', 'name')->orderBy('name')->get(),
+            'areas' => Area::select('id', 'name')->orderBy('name')->get(),
             'departments' => Department::select('id', 'name')->orderBy('name')->get(),
             'designations' => Designation::select('id', 'name')->orderBy('name')->get(),
             'userProfile' => null,
@@ -100,7 +100,7 @@ class UserProfileController extends CRUDController
         if ($userProfiles) {
             return Inertia::render('Admin/UserProfiles/CreateUpdate', [
                 'users' => User::select('id', 'name')->orderBy('name')->get(),
-                'addresses' => Address::select('id', 'name')->orderBy('name')->get(),
+                'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'departments' => Department::select('id', 'name')->orderBy('name')->get(),
                 'designations' => Designation::select('id', 'name')->orderBy('name')->get(),
                 'userProfile' => $userProfiles,
@@ -108,7 +108,7 @@ class UserProfileController extends CRUDController
         } else {
             return Inertia::render('Admin/UserProfiles/CreateUpdate', [
                 'users' => User::select('id', 'name')->orderBy('name')->get(),
-                'addresses' => Address::select('id', 'name')->orderBy('name')->get(),
+                'areas' => Area::select('id', 'name')->orderBy('name')->get(),
                 'departments' => Department::select('id', 'name')->orderBy('name')->get(),
                 'designations' => Designation::select('id', 'name')->orderBy('name')->get(),
                 'userProfile' => [],
